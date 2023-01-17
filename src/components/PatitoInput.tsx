@@ -7,9 +7,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     display: "flex",
     justifyContent: "flex-start",
+    flexDirection: "row",
     width: "100%",
+    alignItems: "center",
   },
   input: {
+    height: 50,
     flex: 1,
   },
 });
