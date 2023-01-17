@@ -1,15 +1,20 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import ResultList from "./Stack/ResultList";
-import Search from "./Stack/Search";
+import HomeSearch from "./Stack/HomeSearch";
 
-const Stack = createStackNavigator();
+export type RootStackParamList = {
+  HomeSearch: undefined;
+  Detail: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 const SearchStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="HomeSearch"
-        component={Search}
+        component={HomeSearch}
         options={{ headerShown: false }}
       />
       <Stack.Screen
