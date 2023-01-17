@@ -35,6 +35,3 @@ jobs:
 
       - name: Install dependencies
         run: npm install --immutable
-
-      - name: Publish update
-        run: eas update --auto
