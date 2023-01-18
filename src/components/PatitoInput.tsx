@@ -1,5 +1,9 @@
-import { Ionicons } from "@expo/vector-icons";
-import { Image, StyleSheet, TextInput, View } from "react-native";
+import { useState } from "react"
+import { StyleSheet, TextInput, View } from "react-native"
+
+interface PatitoInput {
+  icon?: JSX.Element
+}
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -10,20 +14,36 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     alignItems: "center",
+    paddingLeft: 5,
   },
   input: {
     height: 50,
     flex: 1,
+    outlineStyle: "none",
+    paddingLeft: "1%",
   },
-});
+  focused: {
+    borderColor: "blue",
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+})
 
-const PatitoInput = () => {
+const PatitoInput: React.FC<PatitoInput> = ({ icon }) => {
+  const [isFocused, setIsFocused] = useState(false)
   return (
-    <View style={styles.inputContainer}>
-      <Ionicons name="search-sharp" size={24} color="black" />
-      <TextInput style={styles.input} inlineImageLeft="search_icon" />
+    <View style={[styles.inputContainer, isFocused && styles.focused]}>
+      {icon}
+      <TextInput
+        style={styles.input}
+        inlineImageLeft="search_icon"
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+      />
     </View>
-  );
-};
+  )
+}
 
-export default PatitoInput;
+export default PatitoInput
