@@ -3,17 +3,24 @@ import TabMenuStackNaigator from './src/components/navigation'
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import {
+  API_KEY,
+  APP_ID,
+  AUTH_DOMAIN,
+  MEASURAMENT_ID,
+  MESSAGING_SENDER_ID,
+  PROJECT_ID,
+  STORAGE_BUCKET
+} from '@env'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBRwbRuV9QroBbqsXOTrgXwRTNTd07O4jY',
-  authDomain: 'boardgamee-1fb35.firebaseapp.com',
-  projectId: 'boardgamee-1fb35',
-  storageBucket: 'boardgamee-1fb35.appspot.com',
-  messagingSenderId: '21668682949',
-  appId: '1:21668682949:web:002ff0b9dc532d39ea24ac',
-  measurementId: 'G-Z02DWFS1SM'
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASURAMENT_ID
 }
 
 // Initialize Firebase
@@ -22,7 +29,7 @@ const analytics = getAnalytics(app)
 import { getAuth } from 'firebase/auth'
 
 const App = () => {
-  console.log('app', getAuth())
+  console.log('getAuth()', getAuth())
   return (
     <NavigationContainer>
       <TabMenuStackNaigator />
