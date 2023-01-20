@@ -1,17 +1,16 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
-import { Alert, Button, StyleSheet, View } from 'react-native'
-import { signUp } from '../../auth'
+import { Button, StyleSheet, Text, View } from 'react-native'
+import { logIn } from '../../auth'
 import PatitoInput from '../PatitoInput'
 
-const SignUp: React.FC = () => {
+const SignIn: React.FC = ({ navigation }) => {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
-  const [repeatPassword, setRepeatPassword] = useState<string>()
 
   const handleSubmit = () => {
-    if (email && password && password === repeatPassword) {
-      signUp(email, password)
+    if (email && password) {
+      logIn(email, password)
     } else {
       alert('Oops, sth went wrong!')
     }
@@ -29,12 +28,10 @@ const SignUp: React.FC = () => {
         onChange={(e) => setPassword(e.nativeEvent.text)}
         placeholder='Password'
       />
-      <PatitoInput
-        icon={<Ionicons name='lock-closed' size={20} color='#000' />}
-        onChange={(e) => setRepeatPassword(e.nativeEvent.text)}
-        placeholder='Repeat password'
-      />
-      <Button title='Sign up' onPress={handleSubmit} />
+      <Button title='Sign in' onPress={handleSubmit} />
+      <Text onPress={() => navigation.navigate('SignUp')}>
+        Don't have an account?
+      </Text>
     </View>
   )
 }
@@ -49,4 +46,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default SignUp
+export default SignIn

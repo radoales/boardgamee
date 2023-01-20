@@ -10,6 +10,7 @@ import {
   PROJECT_ID,
   STORAGE_BUCKET
 } from '@env'
+import { AuthUserProvider } from './src/auth/AuthUserprovider'
 
 const firebaseConfig = {
   apiKey: API_KEY,
@@ -26,7 +27,9 @@ initializeApp(firebaseConfig)
 const App = () => {
   return (
     <NavigationContainer>
-      <TabMenuStackNaigator />
+      <AuthUserProvider>
+        <TabMenuStackNaigator />
+      </AuthUserProvider>
     </NavigationContainer>
   )
 }

@@ -1,19 +1,24 @@
 import { createStackNavigator } from '@react-navigation/stack'
+import SignIn from '../auth/SignIn'
+import SignUp from '../auth/SignUp'
 
-import SignIn from '../../components/auth/SignIn'
-import SignUp from '../../components/auth/SignUp'
-const Stack = createStackNavigator<any>()
+export type RootStackParamList = {
+  HomeSearch: undefined
+  Detail: undefined
+}
 
-const Profile: React.FC = () => {
+const Stack = createStackNavigator<RootStackParamList>()
+
+const ProfileStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='Login'
+        name='HomeSearch'
         component={SignIn}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name='SignUp'
+        name='Detail'
         component={SignUp}
         options={{ headerTitle: '', headerTransparent: true }}
       />
@@ -21,4 +26,4 @@ const Profile: React.FC = () => {
   )
 }
 
-export default Profile
+export default ProfileStack
