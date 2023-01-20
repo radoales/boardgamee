@@ -6,4 +6,5 @@ declare module '@env' {
   export const MESSAGING_SENDER_ID: string
   export const APP_ID: string
   export const MEASURAMENT_ID: string
+  export const PUBLIC_BOARDGAME_CLIENT_ID: string
 }
