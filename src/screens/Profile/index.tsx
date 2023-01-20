@@ -15,7 +15,7 @@ const Profile: React.FC = () => {
       <Stack.Screen
         name='SignUp'
         component={SignUp}
-        options={{ headerTitle: '', headerTransparent: true }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   )

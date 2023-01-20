@@ -20,7 +20,7 @@ const SignIn: React.FC<any> = ({ navigation }) => {
   return (
     <View style={styles.signIn}>
       <View style={styles.inner}>
-        <Text>Log in</Text>
+        <Text style={styles.header}>Log in</Text>
         <PatitoInput
           icon={
             <Ionicons name='mail-outline' size={20} color={colors.gray[700]} />
@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    height: '100%'
+    height: '100%',
+    backgroundColor: colors.blue[100]
   },
   inner: {
     padding: '1rem',
@@ -61,6 +62,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     gap: '1rem'
+  },
+  header: {
+    fontSize: 20
   }
 })
 
