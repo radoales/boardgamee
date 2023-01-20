@@ -35,20 +35,6 @@ export const logIn = (email: string, password: string) => {
     })
 }
 
-export const getLoggedUser = () => {
-  const auth = getAuth()
-  let token
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log('user', user.uid)
-      token = user
-      // ...
-    }
-  })
-
-  return token
-}
-
 export const logOut = () => {
   const auth = getAuth()
   signOut(auth)

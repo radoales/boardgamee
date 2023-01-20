@@ -11,7 +11,6 @@ type Props = NativeStackScreenProps<RootStackParamList, 'HomeSearch'>
 const HomeSearch = ({ navigation }: Props) => {
   const [inputText, setInputText] = useState<string>('')
   const { results, isLoading } = useGetBoardgames(inputText)
-  console.log(isLoading, results)
 
   const styles = StyleSheet.create({
     container: {
