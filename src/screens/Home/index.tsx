@@ -1,9 +1,26 @@
-import { Text, View } from "react-native"
+import { StyleSheet, View, Image } from 'react-native'
+import colors from '../../styles/colors'
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.blue[100],
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  image: {
+    height: 220,
+    aspectRatio: 1.5,
+    resizeMode: 'contain'
+  }
+})
 
 const Home: React.FC = () => {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
+    <View style={styles.container}>
+      <Image
+        style={styles.image}
+        source={require('../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png')}
+      />
     </View>
   )
 }
