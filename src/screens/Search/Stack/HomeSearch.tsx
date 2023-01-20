@@ -1,18 +1,18 @@
 import { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { LogBox, StyleSheet, Text, View } from 'react-native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RootStackParamList } from '..'
 import PatitoInput from '../../../components/PatitoInput'
 import { Ionicons } from '@expo/vector-icons'
-import useDebounce from '../../../hooks/useDebounce'
 import useGetBoardgames from '../../../hooks/useGetBoardgames'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'HomeSearch'>
 
 const HomeSearch = ({ navigation }: Props) => {
   const [inputText, setInputText] = useState<string>('')
-  const value = useDebounce(inputText)
-  const { results } = useGetBoardgames(value)
+  const { results, isLoading } = useGetBoardgames(inputText)
+  console.log(isLoading, results)
+
   const styles = StyleSheet.create({
     container: {
       display: 'flex',
@@ -37,6 +37,7 @@ const HomeSearch = ({ navigation }: Props) => {
         style={styles.text}
         //onPress={() => navigation.navigate('Detail')}
       >
+        {isLoading && <Text>...loading</Text>}
         <Text>Search using a boardgame name</Text>
       </View>
     </View>

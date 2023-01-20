@@ -1,14 +1,24 @@
 import { PUBLIC_BOARDGAME_CLIENT_ID } from '@env'
 import { useEffect, useState } from 'react'
 import { boardgames } from '../types/boardgame'
+import useDebounce from './useDebounce'
 
 const useGetBoardgames = (search: string) => {
   const [results, setResults] = useState<boardgames>()
   const [error, setError] = useState<string>()
+  const [isLoading, setIsLoading] = useState(false)
+  const value = useDebounce(search)
+
   useEffect(() => {
-    if (search.length) {
+    if (search) {
+      setIsLoading(true)
+    }
+  }, [search])
+
+  useEffect(() => {
+    if (value.length) {
       fetch(
-        `https://api.boardgameatlas.com/api/search?name=${search}&client_id=${PUBLIC_BOARDGAME_CLIENT_ID}&fuzzy_match=true&exact=true`
+        `https://api.boardgameatlas.com/api/search?name=${value}&client_id=${PUBLIC_BOARDGAME_CLIENT_ID}&fuzzy_match=true&exact=true`
       )
         .then((res) => {
           if (!res.ok) {
@@ -16,11 +26,17 @@ const useGetBoardgames = (search: string) => {
           }
           return res.json()
         })
-        .then((res) => setResults(res))
-        .catch((error) => setError(`fetch error: ${error}`))
+        .then((res) => {
+          setResults(res)
+          setIsLoading(false)
+        })
+        .catch((error) => {
+          setError(`fetch error: ${error}`)
+          setIsLoading(false)
+        })
     }
-  }, [search])
-  return { results, error }
+  }, [value])
+  return { results, error, isLoading }
 }
 
 export default useGetBoardgames
