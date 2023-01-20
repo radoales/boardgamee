@@ -8,7 +8,7 @@ const Profile: React.FC = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='Login'
+        name='LogIn'
         component={SignIn}
         options={{ headerShown: false }}
       />
