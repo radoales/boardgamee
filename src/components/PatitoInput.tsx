@@ -1,8 +1,15 @@
 import { useState } from "react"
-import { StyleSheet, TextInput, View } from "react-native"
+import {
+  NativeSyntheticEvent,
+  StyleSheet,
+  TextInput,
+  TextInputChangeEventData,
+  View,
+} from "react-native"
 
 interface PatitoInput {
   icon?: JSX.Element
+  onChange: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void
 }
 
 const styles = StyleSheet.create({
@@ -31,7 +38,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const PatitoInput: React.FC<PatitoInput> = ({ icon }) => {
+const PatitoInput: React.FC<PatitoInput> = ({ icon, onChange }) => {
   const [isFocused, setIsFocused] = useState(false)
   return (
     <View style={[styles.inputContainer, isFocused && styles.focused]}>
@@ -41,6 +48,7 @@ const PatitoInput: React.FC<PatitoInput> = ({ icon }) => {
         inlineImageLeft="search_icon"
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        onChange={onChange}
       />
     </View>
   )
