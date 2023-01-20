@@ -19,6 +19,12 @@ const HomeSearch = ({ navigation }: Props) => {
       justifyContent: 'space-between',
       flex: 1,
       padding: '2%'
+    },
+    text: {
+      margin: 'auto',
+      alignSelf: 'center',
+      marginVertical: 'auto',
+      flex: 1
     }
   })
   return (
@@ -27,7 +33,12 @@ const HomeSearch = ({ navigation }: Props) => {
         icon={<Ionicons name='search-sharp' size={24} color='black' />}
         onChange={(e) => setInputText(e.nativeEvent.text)}
       />
-      <Text onPress={() => navigation.navigate('Detail')}>Search Screen</Text>
+      <View
+        style={styles.text}
+        //onPress={() => navigation.navigate('Detail')}
+      >
+        <Text>Search using a boardgame name</Text>
+      </View>
     </View>
   )
 }
