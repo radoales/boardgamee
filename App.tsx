@@ -1,8 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native'
 import TabMenuStackNaigator from './src/components/navigation'
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
-import { getAnalytics } from 'firebase/analytics'
 import {
   API_KEY,
   APP_ID,
@@ -23,13 +21,9 @@ const firebaseConfig = {
   measurementId: MEASURAMENT_ID
 }
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig)
-const analytics = getAnalytics(app)
-import { getAuth } from 'firebase/auth'
+initializeApp(firebaseConfig)
 
 const App = () => {
-  console.log('getAuth()', getAuth())
   return (
     <NavigationContainer>
       <TabMenuStackNaigator />

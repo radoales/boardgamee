@@ -1,11 +1,12 @@
-import { Text, View } from "react-native";
+import { Text, View } from 'react-native'
+import SignUp from '../../components/auth/SignUp'
 
 const Profile: React.FC = () => {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Profile Screen</Text>
+    <View>
+      <SignUp />
     </View>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
