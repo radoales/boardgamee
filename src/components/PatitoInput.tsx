@@ -12,6 +12,7 @@ interface PatitoInput {
   onChange: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void
   placeholder?: string
   style?: {}
+  value?: string
 }
 
 const styles = StyleSheet.create({
@@ -44,7 +45,8 @@ const PatitoInput: React.FC<PatitoInput> = ({
   icon,
   onChange,
   placeholder,
-  style
+  style,
+  value
 }) => {
   const [isFocused, setIsFocused] = useState(false)
   return (
@@ -57,6 +59,7 @@ const PatitoInput: React.FC<PatitoInput> = ({
         onBlur={() => setIsFocused(false)}
         onChange={onChange}
         placeholder={placeholder}
+        value={value}
       />
     </View>
   )

@@ -2,8 +2,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
+  signOut,
+  updateProfile
 } from 'firebase/auth'
 
 export const signUp = (email: string, password: string) => {
@@ -43,4 +43,21 @@ export const logOut = () => {
       const errorCode = error.code
       const errorMessage = error.message
     })
+}
+
+export const updateUserProfile = (name: string) => {
+  const auth = getAuth()
+  if (auth.currentUser) {
+    updateProfile(auth.currentUser, {
+      displayName: name
+    })
+      .then(() => {
+        // Profile updated!
+        // ...
+      })
+      .catch((error) => {
+        // An error occurred
+        // ...
+      })
+  }
 }

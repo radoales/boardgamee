@@ -1,6 +1,6 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { createContext, useContext, useState, useEffect, useMemo } from 'react'
-import { logIn, logOut } from '.'
+import { logIn, logOut, updateUserProfile } from '.'
 
 interface AuthUser {
   name: string
@@ -13,6 +13,7 @@ interface ContextValue {
   isAuthenticated: boolean
   signIn: (email: string, password: string) => void
   signOut: () => void
+  updateUserProfile: (name: string) => void
 }
 
 interface AuthUserContext {
@@ -33,7 +34,8 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
       isLoading: isLoading,
       isAuthenticated: isAuthenticated,
       signIn: (email: string, password: string) => logIn(email, password),
-      signOut: () => logOut()
+      signOut: () => logOut(),
+      updateUserProfile: (name: string) => updateUserProfile(name)
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [authUser]
