@@ -6,5 +6,6 @@ export enum Route {
   DEATIL = 'Detail',
   LOG_IN = 'LogIn',
   SIGN_UP = 'SignUp',
-  USER_PROFILE = 'UserProfile'
+  USER_PROFILE = 'UserProfile',
+  EDIT_USER_PROFILE = 'EditUserProfile'
 }
