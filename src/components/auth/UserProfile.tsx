@@ -18,15 +18,15 @@ const UserProfile = ({ navigation }: Props) => {
   return (
     <View style={styles.userProfile}>
       <View style={styles.header}>
-        <Ionicons name='person' size={70} color={colors.gray[700]} />
+        <Ionicons name='person' size={70} color={colors.blue[700]} />
       </View>
       <View style={styles.inner}>
         <View style={styles.entryRow}>
-          <Ionicons name='mail-outline' size={20} color={colors.gray[700]} />
+          <Ionicons name='mail-outline' size={25} color={colors.blue[700]} />
           <Text style={styles.label}>{user.email}</Text>
         </View>
         <View style={styles.entryRow}>
-          <Ionicons name='person-outline' size={20} color={colors.gray[700]} />
+          <Ionicons name='person-outline' size={25} color={colors.blue[700]} />
           <Text style={styles.label}>{user.name}</Text>
         </View>
         <View style={styles.button}>
@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 16,
     borderRadius: 50,
-    borderWidth: 5,
-    borderColor: colors.gray[700],
+    borderWidth: 2,
+    borderColor: colors.blue[700],
     width: 100,
     height: 100
   },
   label: {
-    fontSize: 20,
-    marginLeft: 5,
+    fontSize: 22,
+    marginLeft: 25,
     color: colors.gray[700]
   },
   button: {
@@ -85,7 +85,10 @@ const styles = StyleSheet.create({
   entryRow: {
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: 16
+    marginBottom: 16,
+    borderBottomWidth: 2,
+    borderColor: colors.blue[700],
+    height: 50
   }
 })
 
