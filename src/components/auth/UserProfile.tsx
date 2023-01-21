@@ -48,11 +48,9 @@ const styles = StyleSheet.create({
   userProfile: {
     display: 'flex',
     flexDirection: 'column',
-    // justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
     padding: 16,
-
     backgroundColor: colors.blue[50]
   },
   inner: {
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginBottom: 16,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderColor: colors.blue[700],
     height: 50
   }

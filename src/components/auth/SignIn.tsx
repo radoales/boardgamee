@@ -61,13 +61,14 @@ const styles = StyleSheet.create({
   signIn: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    alignItems: 'center',
     height: '100%',
+    padding: 16,
     backgroundColor: colors.blue[50]
   },
   inner: {
     padding: 16,
-    height: '50%',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column'
   },

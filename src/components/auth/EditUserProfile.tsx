@@ -25,9 +25,12 @@ const EditUserProfile = ({ navigation }: Props) => {
   }, [user])
 
   return (
-    <View style={styles.userProfile}>
+    <View style={styles.editUserProfile}>
+      <View style={styles.header}>
+        <Ionicons name='person' size={70} color={colors.blue[700]} />
+      </View>
       <View style={styles.inner}>
-        <Text style={styles.header}>{user.email}</Text>
+        <Text style={styles.label}>{user.email}</Text>
         <PatitoInput
           icon={
             <Ionicons name='mail-outline' size={20} color={colors.gray[700]} />
@@ -47,22 +50,37 @@ const EditUserProfile = ({ navigation }: Props) => {
 }
 
 const styles = StyleSheet.create({
-  userProfile: {
+  editUserProfile: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    alignItems: 'center',
     height: '100%',
+    padding: 16,
     backgroundColor: colors.blue[50]
   },
   inner: {
     padding: 16,
-    height: '50%',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column'
   },
   header: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     fontSize: 20,
-    marginBottom: 16
+    marginBottom: 16,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: colors.blue[700],
+    width: 100,
+    height: 100
+  },
+  label: {
+    fontSize: 22,
+    marginLeft: 25,
+    color: colors.gray[700]
   },
   input: {
     marginBottom: 16
