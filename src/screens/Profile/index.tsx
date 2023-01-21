@@ -30,25 +30,12 @@ const Profile = ({ navigation }: any) => {
     <Stack.Navigator
       initialRouteName={isAuthenticated ? Route.USER_PROFILE : Route.LOG_IN}
     >
-      <Stack.Screen
-        name={Route.LOG_IN}
-        component={SignIn}
-        // options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name={Route.SIGN_UP}
-        component={SignUp}
-        // options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name={Route.USER_PROFILE}
-        component={UserProfile}
-        // options={{ headerShown: false }}
-      />
+      <Stack.Screen name={Route.LOG_IN} component={SignIn} />
+      <Stack.Screen name={Route.SIGN_UP} component={SignUp} />
+      <Stack.Screen name={Route.USER_PROFILE} component={UserProfile} />
       <Stack.Screen
         name={Route.EDIT_USER_PROFILE}
         component={EditUserProfile}
-        // options={{ headerShown: false }}
       />
     </Stack.Navigator>
   )

@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import { logOut } from '../../auth'
 import { useAuth } from '../../auth/AuthUserprovider'
@@ -14,7 +13,7 @@ type Props = NativeStackScreenProps<
 >
 
 const UserProfile = ({ navigation }: Props) => {
-  const { user, updateUserProfile } = useAuth()
+  const { user } = useAuth()
 
   return (
     <View style={styles.userProfile}>
@@ -49,15 +48,16 @@ const styles = StyleSheet.create({
   userProfile: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
+    padding: 16,
 
     backgroundColor: colors.blue[50]
   },
   inner: {
     padding: 16,
-    height: '50%',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column'
   },

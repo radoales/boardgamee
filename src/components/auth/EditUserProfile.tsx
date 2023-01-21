@@ -2,7 +2,6 @@ import { Ionicons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
-import { logOut } from '../../auth'
 import { useAuth } from '../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '../../screens/Profile'
 import colors from '../../styles/colors'
@@ -40,10 +39,7 @@ const EditUserProfile = ({ navigation }: Props) => {
         />
 
         <View style={styles.button}>
-          <Button title='Update' onPress={() => updateUserProfile(name)} />
-        </View>
-        <View style={styles.button}>
-          <Button title='Log out' onPress={() => logOut()} />
+          <Button title='Save' onPress={() => updateUserProfile(name)} />
         </View>
       </View>
     </View>
