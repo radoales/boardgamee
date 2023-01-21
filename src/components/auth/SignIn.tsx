@@ -1,17 +1,18 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
-import { logIn } from '../../auth'
+import { useAuth } from '../../auth/AuthUserprovider'
 import colors from '../../styles/colors'
 import PatitoInput from '../PatitoInput'
 
 const SignIn: React.FC<any> = ({ navigation }) => {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
+  const { signIn } = useAuth()
 
   const handleSubmit = () => {
     if (email && password) {
-      logIn(email, password)
+      signIn(email, password)
     } else {
       alert('Oops, sth went wrong!')
     }
