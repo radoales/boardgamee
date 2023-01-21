@@ -6,9 +6,13 @@ import { logOut } from '../../auth'
 import { useAuth } from '../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '../../screens/Profile'
 import colors from '../../styles/colors'
+import { Route } from '../../utils/routes'
 import PatitoInput from '../PatitoInput'
 
-type Props = NativeStackScreenProps<ProfileRootStackParamList, 'UserProfile'>
+type Props = NativeStackScreenProps<
+  ProfileRootStackParamList,
+  Route.USER_PROFILE
+>
 
 const UserProfile = ({ navigation }: Props) => {
   const [name, setName] = useState<string>('')

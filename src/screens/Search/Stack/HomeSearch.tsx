@@ -5,8 +5,9 @@ import { RootStackParamList } from '..'
 import PatitoInput from '../../../components/PatitoInput'
 import { Ionicons } from '@expo/vector-icons'
 import useGetBoardgames from '../../../hooks/useGetBoardgames'
+import { Route } from '../../../utils/routes'
 
-type Props = NativeStackScreenProps<RootStackParamList, 'HomeSearch'>
+type Props = NativeStackScreenProps<RootStackParamList, Route.HOME_SEARCH>
 
 const HomeSearch = ({ navigation }: Props) => {
   const [inputText, setInputText] = useState<string>('')

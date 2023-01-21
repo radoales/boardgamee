@@ -5,6 +5,7 @@ import UserProfile from '../../components/auth/UserProfile'
 import SignIn from '../../components/auth/SignIn'
 import SignUp from '../../components/auth/SignUp'
 import { useEffect } from 'react'
+import { Route } from '../../utils/routes'
 
 export type ProfileRootStackParamList = {
   LogIn: undefined
@@ -18,27 +19,27 @@ const Profile = ({ navigation }: any) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigation.navigate('UserProfile')
+      navigation.navigate(Route.USER_PROFILE)
     } else {
-      navigation.navigate('LogIn')
+      navigation.navigate(Route.LOG_IN)
     }
   }, [isAuthenticated])
   return (
     <Stack.Navigator
-      initialRouteName={isAuthenticated ? 'UserProfile' : 'LogIn'}
+      initialRouteName={isAuthenticated ? Route.USER_PROFILE : Route.LOG_IN}
     >
       <Stack.Screen
-        name='LogIn'
+        name={Route.LOG_IN}
         component={SignIn}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name='SignUp'
+        name={Route.SIGN_UP}
         component={SignUp}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name='UserProfile'
+        name={Route.USER_PROFILE}
         component={UserProfile}
         options={{ headerShown: false }}
       />
