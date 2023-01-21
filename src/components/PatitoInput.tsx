@@ -11,6 +11,7 @@ interface PatitoInput {
   icon?: JSX.Element
   onChange: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void
   placeholder?: string
+  style?: {}
 }
 
 const styles = StyleSheet.create({
@@ -42,11 +43,12 @@ const styles = StyleSheet.create({
 const PatitoInput: React.FC<PatitoInput> = ({
   icon,
   onChange,
-  placeholder
+  placeholder,
+  style
 }) => {
   const [isFocused, setIsFocused] = useState(false)
   return (
-    <View style={[styles.inputContainer, isFocused && styles.focused]}>
+    <View style={[styles.inputContainer, isFocused && styles.focused, style]}>
       {icon}
       <TextInput
         style={styles.input}

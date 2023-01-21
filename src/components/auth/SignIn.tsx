@@ -27,6 +27,7 @@ const SignIn: React.FC<any> = ({ navigation }) => {
           }
           onChange={(e) => setEmail(e.nativeEvent.text)}
           placeholder='Email'
+          style={styles.input}
         />
         <PatitoInput
           icon={
@@ -38,8 +39,11 @@ const SignIn: React.FC<any> = ({ navigation }) => {
           }
           onChange={(e) => setPassword(e.nativeEvent.text)}
           placeholder='Password'
+          style={styles.input}
         />
-        <Button title='Sign in' onPress={handleSubmit} />
+        <View style={styles.button}>
+          <Button title='Sign in' onPress={handleSubmit} />
+        </View>
         <Text onPress={() => navigation.navigate('SignUp')}>
           Don't have an account?
         </Text>
@@ -57,14 +61,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue[100]
   },
   inner: {
-    padding: '1rem',
+    padding: 16,
     height: '50%',
     display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem'
+    flexDirection: 'column'
   },
   header: {
-    fontSize: 20
+    fontSize: 20,
+    marginBottom: 16
+  },
+  input: {
+    marginBottom: 16
+  },
+  button: {
+    marginBottom: 16
   }
 })
 
