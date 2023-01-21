@@ -1,11 +1,15 @@
 import { Ionicons } from '@expo/vector-icons'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import { useAuth } from '../../auth/AuthUserprovider'
+import { ProfileRootStackParamList } from '../../screens/Profile'
 import colors from '../../styles/colors'
 import PatitoInput from '../PatitoInput'
 
-const SignIn: React.FC<any> = ({ navigation }) => {
+type Props = NativeStackScreenProps<ProfileRootStackParamList, 'LogIn'>
+
+const SignIn = ({ navigation }: Props) => {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
   const { signIn } = useAuth()

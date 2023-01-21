@@ -1,11 +1,16 @@
 import { Ionicons } from '@expo/vector-icons'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
+import { logOut } from '../../auth'
 import { useAuth } from '../../auth/AuthUserprovider'
+import { ProfileRootStackParamList } from '../../screens/Profile'
 import colors from '../../styles/colors'
 import PatitoInput from '../PatitoInput'
 
-const UserProfile: React.FC<any> = ({ navigation }) => {
+type Props = NativeStackScreenProps<ProfileRootStackParamList, 'UserProfile'>
+
+const UserProfile = ({ navigation }: Props) => {
   const [name, setName] = useState<string>('')
 
   const { user, updateUserProfile } = useAuth()
@@ -17,7 +22,7 @@ const UserProfile: React.FC<any> = ({ navigation }) => {
   }, [user])
 
   return (
-    <View style={styles.signUp}>
+    <View style={styles.userProfile}>
       <View style={styles.inner}>
         <Text style={styles.header}>Profile</Text>
         <PatitoInput
@@ -33,13 +38,16 @@ const UserProfile: React.FC<any> = ({ navigation }) => {
         <View style={styles.button}>
           <Button title='Update' onPress={() => updateUserProfile(name)} />
         </View>
+        <View style={styles.button}>
+          <Button title='Log out' onPress={() => logOut()} />
+        </View>
       </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  signUp: {
+  userProfile: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

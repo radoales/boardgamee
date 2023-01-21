@@ -1,13 +1,28 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { useAuth } from '../../auth/AuthUserprovider'
-import UserProfile from '../../components/auth/Profile'
+import UserProfile from '../../components/auth/UserProfile'
 
 import SignIn from '../../components/auth/SignIn'
 import SignUp from '../../components/auth/SignUp'
-const Stack = createStackNavigator<any>()
+import { useEffect } from 'react'
 
-const Profile: React.FC = () => {
+export type ProfileRootStackParamList = {
+  LogIn: undefined
+  SignUp: undefined
+  UserProfile: undefined
+}
+const Stack = createStackNavigator<ProfileRootStackParamList>()
+
+const Profile = ({ navigation }: any) => {
   const { isAuthenticated } = useAuth()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigation.navigate('UserProfile')
+    } else {
+      navigation.navigate('LogIn')
+    }
+  }, [isAuthenticated])
   return (
     <Stack.Navigator
       initialRouteName={isAuthenticated ? 'UserProfile' : 'LogIn'}
