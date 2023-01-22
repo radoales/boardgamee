@@ -48,6 +48,7 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
       updateUserProfile: (name: string) => updateUserProfile(name),
       error: error
     }),
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [authUser]
   )
