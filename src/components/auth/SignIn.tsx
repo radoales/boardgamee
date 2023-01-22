@@ -1,7 +1,14 @@
 import { Ionicons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useEffect, useState } from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import {
+  Button,
+  Platform,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View
+} from 'react-native'
 import { useAuth } from '../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '../../screens/Profile'
 import colors from '../../styles/colors'
@@ -18,9 +25,27 @@ const SignIn = ({ navigation }: Props) => {
     if (email && password) {
       signIn(email, password)
     } else {
-      alert('Oops, sth went wrong!')
+      if (Platform.OS === 'android') {
+        ToastAndroid.showWithGravity(
+          'please fill in the missing fields!',
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP
+        )
+      }
     }
   }
+
+  useEffect(() => {
+    if (error) {
+      if (Platform.OS === 'android') {
+        ToastAndroid.showWithGravity(
+          'Wrong credentials!',
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP
+        )
+      }
+    }
+  }, [error])
 
   return (
     <View style={styles.signIn}>
