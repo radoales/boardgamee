@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+  KeyboardTypeOptions,
   NativeSyntheticEvent,
   StyleSheet,
   Text,
@@ -16,6 +17,7 @@ interface PatitoInput {
   style?: {}
   value?: string
   error?: string | null
+  type?: KeyboardTypeOptions | undefined
 }
 
 const styles = StyleSheet.create({
@@ -59,7 +61,8 @@ const PatitoInput: React.FC<PatitoInput> = ({
   placeholder,
   style,
   value,
-  error
+  error,
+  type
 }) => {
   const [isFocused, setIsFocused] = useState(false)
   return (
@@ -74,6 +77,7 @@ const PatitoInput: React.FC<PatitoInput> = ({
           onChange={onChange}
           placeholder={placeholder}
           value={value}
+          keyboardType={type}
         />
       </View>
       {error && <Text style={styles.error}>{error}</Text>}

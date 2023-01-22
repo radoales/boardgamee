@@ -60,6 +60,7 @@ const SignIn = ({ navigation }: Props) => {
           placeholder='Email'
           error={email && !emailRegex.test(email) ? 'Wrong email format' : null}
           style={styles.input}
+          type='email-address'
         />
         <PatitoInput
           icon={
