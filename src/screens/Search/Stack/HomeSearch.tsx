@@ -27,6 +27,7 @@ const HomeSearch = ({ navigation }: Props) => {
       flex: 1
     }
   })
+
   return (
     <View style={styles.container}>
       <PatitoInput
@@ -39,6 +40,8 @@ const HomeSearch = ({ navigation }: Props) => {
       >
         {isLoading && <Text>...loading</Text>}
         <Text>Search using a boardgame name</Text>
+        {results &&
+          results.games.map((item) => <li key={item.id}>{item.name}</li>)}
       </View>
     </View>
   )
