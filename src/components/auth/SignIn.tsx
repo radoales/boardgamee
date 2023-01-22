@@ -12,6 +12,7 @@ import {
 import { useAuth } from '../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '../../screens/Profile'
 import colors from '../../styles/colors'
+import { emailRegex } from '../../utils/regex'
 import PatitoInput from '../PatitoInput'
 
 type Props = NativeStackScreenProps<ProfileRootStackParamList, 'LogIn'>
@@ -57,6 +58,7 @@ const SignIn = ({ navigation }: Props) => {
           }
           onChange={(e) => setEmail(e.nativeEvent.text)}
           placeholder='Email'
+          error={email && !emailRegex.test(email) ? 'Wrong email format' : null}
           style={styles.input}
         />
         <PatitoInput
