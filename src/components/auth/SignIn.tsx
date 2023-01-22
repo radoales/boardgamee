@@ -21,11 +21,14 @@ const SignIn = ({ navigation }: Props) => {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
   const { signIn, error } = useAuth()
+  const [passwordError, setPasswordError] = useState(false)
 
   const handleSubmit = () => {
     if (email && password) {
       signIn(email, password)
+      setPasswordError(false)
     } else {
+      setPasswordError(true)
       if (Platform.OS === 'android') {
         ToastAndroid.showWithGravity(
           'please fill in the missing fields!',
@@ -73,6 +76,8 @@ const SignIn = ({ navigation }: Props) => {
           onChange={(e) => setPassword(e.nativeEvent.text)}
           placeholder='Password'
           style={styles.input}
+          error={passwordError ? 'Please fill in password' : null}
+          isPassword
         />
         <View style={styles.button}>
           <Button title='Sign in' onPress={handleSubmit} />

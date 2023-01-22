@@ -18,6 +18,7 @@ interface PatitoInput {
   value?: string
   error?: string | null
   type?: KeyboardTypeOptions | undefined
+  isPassword?: boolean
 }
 
 const styles = StyleSheet.create({
@@ -28,16 +29,17 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 25,
     display: 'flex',
     justifyContent: 'flex-start',
     flexDirection: 'row',
     width: '100%',
     alignItems: 'center',
-    paddingLeft: 5
+    paddingLeft: 10,
+    borderColor: colors.gray[700]
   },
   input: {
-    height: 50,
+    height: 45,
     flex: 1,
     outlineStyle: 'none',
     paddingLeft: '1%'
@@ -62,7 +64,8 @@ const PatitoInput: React.FC<PatitoInput> = ({
   style,
   value,
   error,
-  type
+  type,
+  isPassword
 }) => {
   const [isFocused, setIsFocused] = useState(false)
   return (
@@ -78,6 +81,7 @@ const PatitoInput: React.FC<PatitoInput> = ({
           placeholder={placeholder}
           value={value}
           keyboardType={type}
+          secureTextEntry={isPassword}
         />
       </View>
       {error && <Text style={styles.error}>{error}</Text>}

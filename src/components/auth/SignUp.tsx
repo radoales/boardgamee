@@ -17,8 +17,6 @@ const SignUp = ({ navigation }: Props) => {
   const handleSubmit = () => {
     if (email && password && password === repeatPassword) {
       signUp(email, password)
-    } else {
-      alert('Oops, sth went wrong!')
     }
   }
 
@@ -45,6 +43,7 @@ const SignUp = ({ navigation }: Props) => {
           onChange={(e) => setPassword(e.nativeEvent.text)}
           placeholder='Password'
           style={styles.input}
+          isPassword
         />
         <PatitoInput
           icon={
@@ -57,6 +56,12 @@ const SignUp = ({ navigation }: Props) => {
           onChange={(e) => setRepeatPassword(e.nativeEvent.text)}
           placeholder='Repeat password'
           style={styles.input}
+          error={
+            repeatPassword && password !== repeatPassword
+              ? "Passwords don't match"
+              : null
+          }
+          isPassword
         />
         <View style={styles.button}>
           <Button title='Sign up' onPress={handleSubmit} />
