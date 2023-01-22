@@ -10,8 +10,11 @@ const useGetBoardgames = (search: string) => {
   const value = useDebounce(search)
 
   useEffect(() => {
-    if (search) {
+    if (search.length) {
       setIsLoading(true)
+    } else {
+      setIsLoading(false)
+      setResults(undefined)
     }
   }, [search])
 
