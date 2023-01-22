@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { LogBox, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, LogBox, StyleSheet, Text, View } from 'react-native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RootStackParamList } from '..'
 import PatitoInput from '../../../components/PatitoInput'
 import { Ionicons } from '@expo/vector-icons'
 import useGetBoardgames from '../../../hooks/useGetBoardgames'
 import { Route } from '../../../utils/routes'
+import SearchResult from '../../../components/search/SearchResult'
 
 type Props = NativeStackScreenProps<RootStackParamList, Route.HOME_SEARCH>
 
@@ -16,7 +17,7 @@ const HomeSearch = ({ navigation }: Props) => {
   const styles = StyleSheet.create({
     container: {
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-start',
       flex: 1,
       padding: '2%'
     },
@@ -34,14 +35,19 @@ const HomeSearch = ({ navigation }: Props) => {
         icon={<Ionicons name='search-sharp' size={24} color='black' />}
         onChange={(e) => setInputText(e.nativeEvent.text)}
       />
-      <View
-        style={styles.text}
-        //onPress={() => navigation.navigate('Detail')}
-      >
-        {isLoading && <Text>...loading</Text>}
-        <Text>Search using a boardgame name</Text>
+      <View>
+        {!isLoading && !results && (
+          <Text style={styles.text}>Search using a boardgame name</Text>
+        )}
+        {isLoading && <ActivityIndicator size='large' />}
         {results &&
-          results.games.map((item) => <li key={item.id}>{item.name}</li>)}
+          results.games.map((item) => (
+            <SearchResult
+              name={item.name}
+              image={item.image_url}
+              key={item.id}
+            />
+          ))}
       </View>
     </View>
   )
