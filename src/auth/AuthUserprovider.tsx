@@ -1,6 +1,6 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { createContext, useContext, useState, useEffect, useMemo } from 'react'
-import { logIn, logOut, updateUserProfile } from '.'
+import { logOut, updateUserProfile, useSignIn } from '.'
 
 interface AuthUser {
   name: string
@@ -14,6 +14,7 @@ interface ContextValue {
   signIn: (email: string, password: string) => void
   signOut: () => void
   updateUserProfile: (name: string) => void
+  error?: string | null
 }
 
 interface AuthUserContext {
@@ -27,16 +28,27 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
   const [authUser, setAuthUser] = useState({} as AuthUser)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>()
+  const { handleSignIn, signInError } = useSignIn()
+
+  useEffect(() => {
+    if (typeof signInError.error === 'string') {
+      setError(signInError.error)
+    }
+  }, [signInError])
 
   const values = useMemo(
     () => ({
       user: authUser,
       isLoading: isLoading,
       isAuthenticated: isAuthenticated,
-      signIn: (email: string, password: string) => logIn(email, password),
+      signIn: (email: string, password: string) =>
+        handleSignIn(email, password),
       signOut: () => logOut(),
-      updateUserProfile: (name: string) => updateUserProfile(name)
+      updateUserProfile: (name: string) => updateUserProfile(name),
+      error: error
     }),
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [authUser]
   )
@@ -55,7 +67,7 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
         setAuthUser({} as AuthUser)
       }
     })
-  }, [auth])
+  }, [auth, signInError])
 
   return (
     <AuthUserContext.Provider value={{ ...values }}>

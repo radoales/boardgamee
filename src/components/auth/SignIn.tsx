@@ -1,10 +1,18 @@
 import { Ionicons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { useState } from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { useEffect, useState } from 'react'
+import {
+  Button,
+  Platform,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View
+} from 'react-native'
 import { useAuth } from '../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '../../screens/Profile'
 import colors from '../../styles/colors'
+import { emailRegex } from '../../utils/regex'
 import PatitoInput from '../PatitoInput'
 
 type Props = NativeStackScreenProps<ProfileRootStackParamList, 'LogIn'>
@@ -12,15 +20,33 @@ type Props = NativeStackScreenProps<ProfileRootStackParamList, 'LogIn'>
 const SignIn = ({ navigation }: Props) => {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
-  const { signIn } = useAuth()
+  const { signIn, error } = useAuth()
 
   const handleSubmit = () => {
     if (email && password) {
       signIn(email, password)
     } else {
-      alert('Oops, sth went wrong!')
+      if (Platform.OS === 'android') {
+        ToastAndroid.showWithGravity(
+          'please fill in the missing fields!',
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP
+        )
+      }
     }
   }
+
+  useEffect(() => {
+    if (error) {
+      if (Platform.OS === 'android') {
+        ToastAndroid.showWithGravity(
+          'Wrong credentials!',
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP
+        )
+      }
+    }
+  }, [error])
 
   return (
     <View style={styles.signIn}>
@@ -32,7 +58,9 @@ const SignIn = ({ navigation }: Props) => {
           }
           onChange={(e) => setEmail(e.nativeEvent.text)}
           placeholder='Email'
+          error={email && !emailRegex.test(email) ? 'Wrong email format' : null}
           style={styles.input}
+          type='email-address'
         />
         <PatitoInput
           icon={

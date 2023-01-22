@@ -5,6 +5,7 @@ import {
   signOut,
   updateProfile
 } from 'firebase/auth'
+import { useState } from 'react'
 
 export const signUp = (email: string, password: string) => {
   const auth = getAuth()
@@ -21,18 +22,25 @@ export const signUp = (email: string, password: string) => {
     })
 }
 
-export const logIn = (email: string, password: string) => {
-  const auth = getAuth()
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code
-      const errorMessage = error.message
-    })
+export const useSignIn = () => {
+  const [signInError, setSignInError] = useState<{
+    isLoading: boolean
+    error: null | string
+  }>({
+    isLoading: false,
+    error: null
+  })
+  const handleSignIn = async (email: string, password: string) => {
+    const auth = getAuth()
+    setSignInError({ isLoading: true, error: null })
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+      setSignInError({ isLoading: false, error: null })
+    } catch (error: any) {
+      setSignInError({ isLoading: false, error: error.code })
+    }
+  }
+  return { handleSignIn, signInError }
 }
 
 export const logOut = () => {
