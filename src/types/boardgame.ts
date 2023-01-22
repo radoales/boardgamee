@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from 'react-native'
+
 export type boardgames = {
   count: number
   games: games[]
@@ -9,7 +11,7 @@ type games = {
   description_preview: string
   description: string
   handle: string
-  images: { thumb: string }
+  image_url: ImageSourcePropType
   name: string
   max_players: number
   min_players: number
