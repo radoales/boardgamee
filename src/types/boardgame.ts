@@ -11,7 +11,7 @@ type games = {
   description_preview: string
   description: string
   handle: string
-  image_url: ImageSourcePropType
+  image_url: string
   name: string
   max_players: number
   min_players: number

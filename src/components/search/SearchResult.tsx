@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 
 interface SearchResultProps {
-  image: ImageSourcePropType
+  image: string
   name: string
 }
 
@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    flex: 1,
     marginVertical: '3%'
   },
   image: {
@@ -30,7 +29,7 @@ const styles = StyleSheet.create({
 const SearchResult: React.FC<SearchResultProps> = ({ image, name }) => {
   return (
     <View style={styles.container}>
-      <Image source={image} style={styles.image} />
+      <Image source={{ uri: image }} style={styles.image} />
       <Text>{name}</Text>
     </View>
   )
