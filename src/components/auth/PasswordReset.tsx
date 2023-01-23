@@ -6,7 +6,6 @@ import {
   Image,
   Platform,
   StyleSheet,
-  Text,
   ToastAndroid,
   View
 } from 'react-native'
@@ -17,20 +16,19 @@ import { emailRegex } from '../../utils/regex'
 import { Route } from '../../utils/routes'
 import PatitoInput from '../PatitoInput'
 
-type Props = NativeStackScreenProps<ProfileRootStackParamList, Route.LOG_IN>
+type Props = NativeStackScreenProps<
+  ProfileRootStackParamList,
+  Route.PASSWORD_RESET
+>
 
-const SignIn = ({ navigation }: Props) => {
+const PassswordReset = ({ navigation }: Props) => {
   const [email, setEmail] = useState<string>()
-  const [password, setPassword] = useState<string>()
-  const { signIn, error } = useAuth()
-  const [passwordError, setPasswordError] = useState(false)
+  const { resetPassword, error } = useAuth()
 
   const handleSubmit = () => {
-    if (email && password) {
-      signIn(email, password)
-      setPasswordError(false)
+    if (email) {
+      resetPassword(email)
     } else {
-      setPasswordError(true)
       if (Platform.OS === 'android') {
         ToastAndroid.showWithGravity(
           'please fill in the missing fields!',
@@ -72,35 +70,9 @@ const SignIn = ({ navigation }: Props) => {
           style={styles.input}
           type='email-address'
         />
-        <PatitoInput
-          icon={
-            <Ionicons
-              name='lock-closed-outline'
-              size={20}
-              color={colors.blue[700]}
-            />
-          }
-          onChange={(e) => setPassword(e.nativeEvent.text)}
-          placeholder='Password'
-          style={styles.input}
-          error={passwordError ? 'Please fill in password' : null}
-          isPassword
-        />
         <View style={styles.button}>
-          <Button title='Sign in' onPress={handleSubmit} />
+          <Button title='Reset' onPress={handleSubmit} />
         </View>
-        <Text
-          style={styles.options}
-          onPress={() => navigation.navigate(Route.SIGN_UP)}
-        >
-          DON'T HAVE AN ACCOUNT?
-        </Text>
-        <Text
-          style={styles.options}
-          onPress={() => navigation.navigate(Route.PASSWORD_RESET)}
-        >
-          FORGOT PASSWORD?
-        </Text>
       </View>
     </View>
   )
@@ -136,8 +108,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    color: colors.blue[700],
-    marginBottom: 10
+    color: colors.blue[700]
   },
   logoContainer: {
     display: 'flex',
@@ -152,4 +123,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default SignIn
+export default PassswordReset

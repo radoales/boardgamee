@@ -3,7 +3,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile
+  updateProfile,
+  sendPasswordResetEmail
 } from 'firebase/auth'
 import { useState } from 'react'
 
@@ -41,6 +42,27 @@ export const useSignIn = () => {
     }
   }
   return { handleSignIn, signInError }
+}
+
+export const useResetPassword = () => {
+  const [resetPasswordError, setResetPasswordError] = useState<{
+    isLoading: boolean
+    error: null | string
+  }>({
+    isLoading: false,
+    error: null
+  })
+  const handleResetPassword = async (email: string) => {
+    const auth = getAuth()
+    setResetPasswordError({ isLoading: true, error: null })
+    try {
+      await sendPasswordResetEmail(auth, email)
+      setResetPasswordError({ isLoading: false, error: null })
+    } catch (error: any) {
+      setResetPasswordError({ isLoading: false, error: error.code })
+    }
+  }
+  return { handleResetPassword, resetPasswordError }
 }
 
 export const logOut = () => {

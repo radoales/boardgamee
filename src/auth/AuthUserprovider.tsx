@@ -1,6 +1,6 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { createContext, useContext, useState, useEffect, useMemo } from 'react'
-import { logOut, updateUserProfile, useSignIn } from '.'
+import { logOut, updateUserProfile, useResetPassword, useSignIn } from '.'
 
 interface AuthUser {
   name: string
@@ -14,6 +14,7 @@ interface ContextValue {
   signIn: (email: string, password: string) => void
   signOut: () => void
   updateUserProfile: (name: string) => void
+  resetPassword: (email: string) => void
   error?: string | null
 }
 
@@ -30,6 +31,7 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>()
   const { handleSignIn, signInError } = useSignIn()
+  const { handleResetPassword } = useResetPassword()
 
   useEffect(() => {
     if (typeof signInError.error === 'string') {
@@ -45,6 +47,7 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
       signIn: (email: string, password: string) =>
         handleSignIn(email, password),
       signOut: () => logOut(),
+      resetPassword: (email: string) => handleResetPassword(email),
       updateUserProfile: (name: string) => updateUserProfile(name),
       error: error
     }),

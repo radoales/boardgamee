@@ -6,12 +6,14 @@ import SignUp from '../../components/auth/SignUp'
 import { useEffect } from 'react'
 import { Route } from '../../utils/routes'
 import EditUserProfile from '../../components/auth/EditUserProfile'
+import PassswordReset from '../../components/auth/PasswordReset'
 
 export type ProfileRootStackParamList = {
   LogIn: undefined
   SignUp: undefined
   UserProfile: undefined
   EditUserProfile: undefined
+  PasswordReset: undefined
 }
 const Stack = createStackNavigator<ProfileRootStackParamList>()
 
@@ -43,6 +45,11 @@ const Profile = ({ navigation }: any) => {
       <Stack.Screen
         name={Route.EDIT_USER_PROFILE}
         component={EditUserProfile}
+      />
+      <Stack.Screen
+        name={Route.PASSWORD_RESET}
+        component={PassswordReset}
+        options={{ title: 'Reset password' }}
       />
     </Stack.Navigator>
   )
