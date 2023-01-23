@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useState } from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, Image, StyleSheet, Text, View } from 'react-native'
 import { signUp } from '../../auth'
 import { ProfileRootStackParamList } from '../../screens/Profile'
 import colors from '../../styles/colors'
@@ -22,8 +22,13 @@ const SignUp = ({ navigation }: Props) => {
 
   return (
     <View style={styles.signUp}>
+      <View style={styles.logoContainer}>
+        <Image
+          style={styles.logo}
+          source={require('../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png')}
+        />
+      </View>
       <View style={styles.inner}>
-        <Text style={styles.header}>Sign in</Text>
         <PatitoInput
           icon={
             <Ionicons name='mail-outline' size={20} color={colors.gray[700]} />
@@ -66,9 +71,11 @@ const SignUp = ({ navigation }: Props) => {
         <View style={styles.button}>
           <Button title='Sign up' onPress={handleSubmit} />
         </View>
-
-        <Text onPress={() => navigation.navigate('LogIn')}>
-          Have an account?
+        <Text
+          style={styles.options}
+          onPress={() => navigation.navigate('LogIn')}
+        >
+          HAVE AN ACCOUNT?
         </Text>
       </View>
     </View>
@@ -84,10 +91,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue[50]
   },
   inner: {
-    padding: 16,
-    height: '50%',
+    padding: 32,
+    width: '100%',
+    height: '80%', // WHY?
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: colors.white
   },
   header: {
     fontSize: 20,
@@ -98,6 +107,24 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: 16
+  },
+  options: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    color: colors.blue[700]
+  },
+  logoContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 200
+  },
+  logo: {
+    height: 100,
+    aspectRatio: 1.5,
+    resizeMode: 'contain'
   }
 })
 

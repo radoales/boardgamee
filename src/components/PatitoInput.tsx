@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     paddingLeft: 10,
-    borderColor: colors.gray[700]
+    borderColor: colors.blue[200],
+    overflow: 'hidden'
   },
   input: {
     height: 45,
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     paddingLeft: '1%'
   },
   focused: {
-    borderColor: 'blue',
+    borderColor: colors.blue[500],
     shadowColor: '#171717',
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.2,
@@ -54,6 +55,9 @@ const styles = StyleSheet.create({
   error: {
     color: colors.orange,
     paddingLeft: 15
+  },
+  icon: {
+    paddingRight: 10
   }
 })
 
@@ -71,7 +75,7 @@ const PatitoInput: React.FC<PatitoInput> = ({
   return (
     <View style={[styles.patitoInput, style]}>
       <View style={[styles.inputContainer, isFocused && styles.focused]}>
-        {icon}
+        <View style={styles.icon}>{icon}</View>
         <TextInput
           style={styles.input}
           inlineImageLeft='search_icon'

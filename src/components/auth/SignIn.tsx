@@ -3,6 +3,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useEffect, useState } from 'react'
 import {
   Button,
+  Image,
   Platform,
   StyleSheet,
   Text,
@@ -53,11 +54,16 @@ const SignIn = ({ navigation }: Props) => {
 
   return (
     <View style={styles.signIn}>
+      <View style={styles.logoContainer}>
+        <Image
+          style={styles.logo}
+          source={require('../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png')}
+        />
+      </View>
       <View style={styles.inner}>
-        <Text style={styles.header}>Log in</Text>
         <PatitoInput
           icon={
-            <Ionicons name='mail-outline' size={20} color={colors.gray[700]} />
+            <Ionicons name='mail-outline' size={20} color={colors.blue[700]} />
           }
           onChange={(e) => setEmail(e.nativeEvent.text)}
           placeholder='Email'
@@ -70,7 +76,7 @@ const SignIn = ({ navigation }: Props) => {
             <Ionicons
               name='lock-closed-outline'
               size={20}
-              color={colors.gray[700]}
+              color={colors.blue[700]}
             />
           }
           onChange={(e) => setPassword(e.nativeEvent.text)}
@@ -82,8 +88,11 @@ const SignIn = ({ navigation }: Props) => {
         <View style={styles.button}>
           <Button title='Sign in' onPress={handleSubmit} />
         </View>
-        <Text onPress={() => navigation.navigate('SignUp')}>
-          Don't have an account?
+        <Text
+          style={styles.options}
+          onPress={() => navigation.navigate('SignUp')}
+        >
+          DON'T HAVE AN ACCOUNT?
         </Text>
       </View>
     </View>
@@ -96,14 +105,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     height: '100%',
-    padding: 16,
     backgroundColor: colors.blue[50]
   },
   inner: {
-    padding: 16,
+    padding: 32,
     width: '100%',
+    height: '100%',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: colors.white
   },
   header: {
     fontSize: 20,
@@ -114,6 +124,23 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: 16
+  },
+  options: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    color: colors.blue[700]
+  },
+  logoContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: 200
+  },
+  logo: {
+    height: 100,
+    aspectRatio: 1.5,
+    resizeMode: 'contain'
   }
 })
 

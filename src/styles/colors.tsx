@@ -37,7 +37,8 @@ const colors = {
   },
   orange: '#D67213',
   lightGreen: '#C0F716',
-  pink: '#E321ED'
+  pink: '#E321ED',
+  white: '#fff'
 }
 
 export default colors
