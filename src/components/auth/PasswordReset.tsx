@@ -23,7 +23,7 @@ type Props = NativeStackScreenProps<
 
 const PassswordReset = ({ navigation }: Props) => {
   const [email, setEmail] = useState<string>()
-  const { resetPassword, error } = useAuth()
+  const { resetPassword, error, resetPasswordError } = useAuth()
 
   const handleSubmit = () => {
     if (email) {
@@ -38,6 +38,12 @@ const PassswordReset = ({ navigation }: Props) => {
       }
     }
   }
+
+  useEffect(() => {
+    if (resetPasswordError.isSuccess) {
+      navigation.navigate(Route.LOG_IN)
+    }
+  }, [resetPasswordError])
 
   useEffect(() => {
     if (error) {

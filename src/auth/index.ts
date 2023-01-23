@@ -48,18 +48,24 @@ export const useResetPassword = () => {
   const [resetPasswordError, setResetPasswordError] = useState<{
     isLoading: boolean
     error: null | string
+    isSuccess: null | boolean
   }>({
     isLoading: false,
-    error: null
+    error: null,
+    isSuccess: null
   })
   const handleResetPassword = async (email: string) => {
     const auth = getAuth()
-    setResetPasswordError({ isLoading: true, error: null })
+    setResetPasswordError({ isLoading: true, error: null, isSuccess: null })
     try {
       await sendPasswordResetEmail(auth, email)
-      setResetPasswordError({ isLoading: false, error: null })
+      setResetPasswordError({ isLoading: false, error: null, isSuccess: true })
     } catch (error: any) {
-      setResetPasswordError({ isLoading: false, error: error.code })
+      setResetPasswordError({
+        isLoading: false,
+        error: error.code,
+        isSuccess: false
+      })
     }
   }
   return { handleResetPassword, resetPasswordError }

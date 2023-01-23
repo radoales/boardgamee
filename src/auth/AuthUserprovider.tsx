@@ -16,6 +16,11 @@ interface ContextValue {
   updateUserProfile: (name: string) => void
   resetPassword: (email: string) => void
   error?: string | null
+  resetPasswordError: {
+    isLoading: boolean
+    error: string | null
+    isSuccess: boolean | null
+  }
 }
 
 interface AuthUserContext {
@@ -31,7 +36,7 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>()
   const { handleSignIn, signInError } = useSignIn()
-  const { handleResetPassword } = useResetPassword()
+  const { handleResetPassword, resetPasswordError } = useResetPassword()
 
   useEffect(() => {
     if (typeof signInError.error === 'string') {
@@ -49,11 +54,12 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
       signOut: () => logOut(),
       resetPassword: (email: string) => handleResetPassword(email),
       updateUserProfile: (name: string) => updateUserProfile(name),
-      error: error
+      error: error,
+      resetPasswordError
     }),
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [authUser]
+    [authUser, resetPasswordError]
   )
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
