@@ -1,6 +1,12 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { createContext, useContext, useState, useEffect, useMemo } from 'react'
-import { logOut, updateUserProfile, useResetPassword, useSignIn } from '.'
+import {
+  useLogOut,
+  useUpdateUserProfile,
+  useResetPassword,
+  useSignIn,
+  useSignUp
+} from '../hooks/auth'
 
 interface AuthUser {
   name: string
@@ -11,6 +17,7 @@ interface ContextValue {
   user: AuthUser
   isLoading: boolean
   isAuthenticated: boolean
+  signUp: (email: string, password: string) => void
   signIn: (email: string, password: string) => void
   signOut: () => void
   updateUserProfile: (name: string) => void
@@ -36,7 +43,11 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>()
   const { handleSignIn, signInError } = useSignIn()
+  const { handleLogOut } = useLogOut()
   const { handleResetPassword, resetPasswordError } = useResetPassword()
+  const { handleUpdateUserProfile, updateUserProfileError } =
+    useUpdateUserProfile()
+  const { handleSignUp, signUpError } = useSignUp()
 
   useEffect(() => {
     if (typeof signInError.error === 'string') {
@@ -49,11 +60,13 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
       user: authUser,
       isLoading: isLoading,
       isAuthenticated: isAuthenticated,
+      signUp: (email: string, password: string) =>
+        handleSignUp(email, password),
       signIn: (email: string, password: string) =>
         handleSignIn(email, password),
-      signOut: () => logOut(),
+      signOut: () => handleLogOut(),
       resetPassword: (email: string) => handleResetPassword(email),
-      updateUserProfile: (name: string) => updateUserProfile(name),
+      updateUserProfile: (name: string) => handleUpdateUserProfile(name),
       error: error,
       resetPasswordError
     }),
@@ -76,7 +89,7 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
         setAuthUser({} as AuthUser)
       }
     })
-  }, [auth, signInError])
+  }, [auth, signInError, updateUserProfileError, signUpError])
 
   return (
     <AuthUserContext.Provider value={{ ...values }}>

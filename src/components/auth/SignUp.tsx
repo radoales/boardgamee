@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useState } from 'react'
 import { Button, Image, StyleSheet, Text, View } from 'react-native'
-import { signUp } from '../../auth'
+import { useAuth } from '../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '../../screens/Profile'
 import colors from '../../styles/colors'
 import PatitoInput from '../PatitoInput'
@@ -13,6 +13,7 @@ const SignUp = ({ navigation }: Props) => {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
   const [repeatPassword, setRepeatPassword] = useState<string>()
+  const { signUp } = useAuth()
 
   const handleSubmit = () => {
     if (email && password && password === repeatPassword) {

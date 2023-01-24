@@ -1,7 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { Button, StyleSheet, Text, View } from 'react-native'
-import { logOut } from '../../auth'
 import { useAuth } from '../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '../../screens/Profile'
 import colors from '../../styles/colors'
@@ -13,7 +12,7 @@ type Props = NativeStackScreenProps<
 >
 
 const UserProfile = ({ navigation }: Props) => {
-  const { user } = useAuth()
+  const { user, signOut } = useAuth()
 
   return (
     <View style={styles.userProfile}>
@@ -37,7 +36,7 @@ const UserProfile = ({ navigation }: Props) => {
         </View>
 
         <View style={styles.button}>
-          <Button title='Log out' onPress={() => logOut()} />
+          <Button title='Log out' onPress={() => signOut()} />
         </View>
       </View>
     </View>
