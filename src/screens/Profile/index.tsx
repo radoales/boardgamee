@@ -34,22 +34,35 @@ const Profile = ({ navigation }: any) => {
       <Stack.Screen
         name={Route.LOG_IN}
         component={SignIn}
-        options={{ title: 'Log in' }}
+        options={{
+          title: '',
+          headerTitleAlign: 'center'
+        }}
       />
       <Stack.Screen
         name={Route.SIGN_UP}
         component={SignUp}
-        options={{ title: 'Register' }}
+        options={{
+          title: '',
+          headerTitleAlign: 'center'
+        }}
       />
       <Stack.Screen name={Route.USER_PROFILE} component={UserProfile} />
       <Stack.Screen
         name={Route.EDIT_USER_PROFILE}
         component={EditUserProfile}
+        options={{
+          title: '',
+          headerTitleAlign: 'center'
+        }}
       />
       <Stack.Screen
         name={Route.PASSWORD_RESET}
         component={PassswordReset}
-        options={{ title: 'Reset password' }}
+        options={{
+          title: '',
+          headerTitleAlign: 'center'
+        }}
       />
     </Stack.Navigator>
   )

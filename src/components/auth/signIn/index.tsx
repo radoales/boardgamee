@@ -8,7 +8,8 @@ import colors from '../../../styles/colors'
 import { emailRegex } from '../../../utils/regex'
 import { Route } from '../../../utils/routes'
 import PatitoInput from '../../PatitoInput'
-import styles from './style'
+import authStyles from '../style'
+import signInStyles from './style'
 
 type Props = NativeStackScreenProps<ProfileRootStackParamList, Route.LOG_IN>
 
@@ -47,16 +48,16 @@ const SignIn = ({ navigation }: Props) => {
   }, [error])
 
   return (
-    <View style={styles.signIn}>
-      <View style={styles.logoContainer}>
+    <View style={authStyles.container}>
+      <View style={authStyles.logoContainer}>
         <Image
-          style={styles.logo}
+          style={authStyles.logo}
           source={require('../../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png')}
         />
       </View>
-      <View style={styles.inner}>
-        <View style={styles.center}>
-          <Text style={styles.title}>Log in</Text>
+      <View style={authStyles.inner}>
+        <View style={authStyles.center}>
+          <Text style={authStyles.title}>Log in</Text>
         </View>
         <PatitoInput
           icon={
@@ -65,7 +66,7 @@ const SignIn = ({ navigation }: Props) => {
           onChange={(e) => setEmail(e.nativeEvent.text)}
           placeholder='Email'
           error={email && !emailRegex.test(email) ? 'Wrong email format' : null}
-          style={styles.input}
+          style={authStyles.input}
           type='email-address'
         />
         <PatitoInput
@@ -78,25 +79,25 @@ const SignIn = ({ navigation }: Props) => {
           }
           onChange={(e) => setPassword(e.nativeEvent.text)}
           placeholder='Password'
-          style={styles.input}
+          style={authStyles.input}
           error={passwordError ? 'Please fill in password' : null}
           isPassword
         />
-        <View style={styles.button}>
+        <View style={authStyles.button}>
           <Button title='Sign in' onPress={handleSubmit} />
         </View>
-        <View style={styles.center}>
+        <View style={authStyles.center}>
           <Text
-            style={styles.link}
+            style={authStyles.link}
             onPress={() => navigation.navigate(Route.PASSWORD_RESET)}
           >
             forgot password?
           </Text>
         </View>
-        <View style={styles.create}>
+        <View style={signInStyles.create}>
           <Text>Not a user yet? - </Text>
           <Text
-            style={styles.link}
+            style={authStyles.link}
             onPress={() => navigation.navigate(Route.SIGN_UP)}
           >
             Create an account
