@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { useAuth } from '../../auth/AuthUserprovider'
 import UserProfile from '../../components/auth/UserProfile'
-import SignIn from '../../components/auth/SignIn'
+import SignIn from '../../components/auth/signIn'
 import SignUp from '../../components/auth/SignUp'
 import { useEffect } from 'react'
 import { Route } from '../../utils/routes'
