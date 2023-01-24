@@ -62,6 +62,7 @@ const SignIn = ({ navigation }: Props) => {
         />
       </View>
       <View style={styles.inner}>
+        <Text style={styles.title}>Log in</Text>
         <PatitoInput
           icon={
             <Ionicons name='mail-outline' size={20} color={colors.blue[700]} />
@@ -89,18 +90,22 @@ const SignIn = ({ navigation }: Props) => {
         <View style={styles.button}>
           <Button title='Sign in' onPress={handleSubmit} />
         </View>
-        <Text
-          style={styles.options}
-          onPress={() => navigation.navigate(Route.SIGN_UP)}
-        >
-          DON'T HAVE AN ACCOUNT?
-        </Text>
+
         <Text
           style={styles.options}
           onPress={() => navigation.navigate(Route.PASSWORD_RESET)}
         >
           FORGOT PASSWORD?
         </Text>
+        <View style={styles.create}>
+          <Text>Not a user yet? - </Text>
+          <Text
+            style={styles.options}
+            onPress={() => navigation.navigate(Route.SIGN_UP)}
+          >
+            Create an account
+          </Text>
+        </View>
       </View>
     </View>
   )
@@ -139,6 +144,15 @@ const styles = StyleSheet.create({
     color: colors.blue[700],
     marginBottom: 10
   },
+  title: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    color: colors.gray[900],
+    marginBottom: 10,
+    fontSize: 20,
+    fontWeight: 500
+  },
   logoContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -149,6 +163,11 @@ const styles = StyleSheet.create({
     height: 100,
     aspectRatio: 1.5,
     resizeMode: 'contain'
+  },
+  create: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
   }
 })
 
