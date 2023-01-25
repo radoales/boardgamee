@@ -2,12 +2,12 @@ import { Ionicons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useEffect, useState } from 'react'
 import { Button, Image, Platform, Text, ToastAndroid, View } from 'react-native'
-import { useAuth } from '../../../auth/AuthUserprovider'
-import { ProfileRootStackParamList } from '../../../screens/Profile'
-import colors from '../../../styles/colors'
-import { emailRegex } from '../../../utils/regex'
-import { Route } from '../../../utils/routes'
-import PatitoInput from '../../PatitoInput'
+import { useAuth } from '../../../../auth/AuthUserprovider'
+import { ProfileRootStackParamList } from '../..'
+import colors from '../../../../styles/colors'
+import { emailRegex } from '../../../../utils/regex'
+import { Route } from '../../../../utils/routes'
+import PatitoInput from '../../../../components/PatitoInput'
 import authStyles from '../style'
 import signInStyles from './style'
 
@@ -52,7 +52,7 @@ const SignIn = ({ navigation }: Props) => {
       <View style={authStyles.logoContainer}>
         <Image
           style={authStyles.logo}
-          source={require('../../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png')}
+          source={require('../../../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png')}
         />
       </View>
       <View style={authStyles.inner}>

@@ -2,10 +2,10 @@ import { Ionicons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useState } from 'react'
 import { Button, Image, StyleSheet, Text, View } from 'react-native'
-import { useAuth } from '../../auth/AuthUserprovider'
-import { ProfileRootStackParamList } from '../../screens/Profile'
-import colors from '../../styles/colors'
-import PatitoInput from '../PatitoInput'
+import { useAuth } from '../../../auth/AuthUserprovider'
+import { ProfileRootStackParamList } from '..'
+import colors from '../../../styles/colors'
+import PatitoInput from '../../../components/PatitoInput'
 
 type Props = NativeStackScreenProps<ProfileRootStackParamList, 'SignUp'>
 
@@ -26,7 +26,7 @@ const SignUp = ({ navigation }: Props) => {
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
-          source={require('../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png')}
+          source={require('../../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png')}
         />
       </View>
       <View style={styles.inner}>

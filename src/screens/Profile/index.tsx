@@ -1,12 +1,12 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { useAuth } from '../../auth/AuthUserprovider'
-import UserProfile from '../../components/auth/UserProfile'
-import SignIn from '../../components/auth/signIn'
-import SignUp from '../../components/auth/SignUp'
+import UserProfile from './stack/UserProfile'
+import SignIn from './stack/signIn'
+import SignUp from './stack/SignUp'
 import { useEffect } from 'react'
 import { Route } from '../../utils/routes'
-import EditUserProfile from '../../components/auth/EditUserProfile'
-import PassswordReset from '../../components/auth/PasswordReset'
+import EditUserProfile from './stack/EditUserProfile'
+import PassswordReset from './stack/PasswordReset'
 
 export type ProfileRootStackParamList = {
   LogIn: undefined
