@@ -7,12 +7,16 @@ import { Ionicons } from '@expo/vector-icons'
 import useGetBoardgames from '../../../hooks/useGetBoardgames'
 import { Route } from '../../../utils/routes'
 import SearchResult from '../../../components/search/SearchResult'
+import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 
 type Props = NativeStackScreenProps<RootStackParamList, Route.HOME_SEARCH>
 
 const HomeSearch = ({ navigation }: Props) => {
   const [inputText, setInputText] = useState<string>('')
   const { results, isLoading } = useGetBoardgames(inputText)
+  let [fontsLoaded] = useFonts({
+    Montserrat_400Regular
+  })
 
   const styles = StyleSheet.create({
     container: {
@@ -25,7 +29,8 @@ const HomeSearch = ({ navigation }: Props) => {
       margin: 'auto',
       alignSelf: 'center',
       marginVertical: 'auto',
-      flex: 1
+      flex: 1,
+      fontFamily: 'Montserrat_400Regular'
     }
   })
 
