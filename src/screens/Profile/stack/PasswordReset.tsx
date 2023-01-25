@@ -6,6 +6,7 @@ import {
   Image,
   Platform,
   StyleSheet,
+  Text,
   ToastAndroid,
   View
 } from 'react-native'
@@ -15,6 +16,7 @@ import colors from '../../../styles/colors'
 import { emailRegex } from '../../../utils/regex'
 import { Route } from '../../../utils/routes'
 import PatitoInput from '../../../components/PatitoInput'
+import authStyles from './style'
 
 type Props = NativeStackScreenProps<
   ProfileRootStackParamList,
@@ -58,14 +60,17 @@ const PassswordReset = ({ navigation }: Props) => {
   }, [error])
 
   return (
-    <View style={styles.signIn}>
-      <View style={styles.logoContainer}>
+    <View style={authStyles.container}>
+      <View style={authStyles.logoContainer}>
         <Image
-          style={styles.logo}
-          source={require('../../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png')}
+          style={authStyles.logo}
+          source={require(`../../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png`)}
         />
       </View>
-      <View style={styles.inner}>
+      <View style={authStyles.inner}>
+        <View style={authStyles.center}>
+          <Text style={authStyles.title}>Reset password</Text>
+        </View>
         <PatitoInput
           icon={
             <Ionicons name='mail-outline' size={20} color={colors.blue[700]} />
@@ -73,60 +78,15 @@ const PassswordReset = ({ navigation }: Props) => {
           onChange={(e) => setEmail(e.nativeEvent.text)}
           placeholder='Email'
           error={email && !emailRegex.test(email) ? 'Wrong email format' : null}
-          style={styles.input}
+          style={authStyles.input}
           type='email-address'
         />
-        <View style={styles.button}>
+        <View style={authStyles.button}>
           <Button title='Reset' onPress={handleSubmit} />
         </View>
       </View>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  signIn: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    height: '100%',
-    backgroundColor: colors.blue[50]
-  },
-  inner: {
-    padding: 32,
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: colors.white
-  },
-  header: {
-    fontSize: 20,
-    marginBottom: 16
-  },
-  input: {
-    marginBottom: 16
-  },
-  button: {
-    marginBottom: 16
-  },
-  options: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    color: colors.blue[700]
-  },
-  logoContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    height: 200
-  },
-  logo: {
-    height: 100,
-    aspectRatio: 1.5,
-    resizeMode: 'contain'
-  }
-})
 
 export default PassswordReset

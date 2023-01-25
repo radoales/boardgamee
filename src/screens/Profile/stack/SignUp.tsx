@@ -6,6 +6,7 @@ import { useAuth } from '../../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '..'
 import colors from '../../../styles/colors'
 import PatitoInput from '../../../components/PatitoInput'
+import authStyles from './style'
 
 type Props = NativeStackScreenProps<ProfileRootStackParamList, 'SignUp'>
 
@@ -22,21 +23,24 @@ const SignUp = ({ navigation }: Props) => {
   }
 
   return (
-    <View style={styles.signUp}>
-      <View style={styles.logoContainer}>
+    <View style={authStyles.container}>
+      <View style={authStyles.logoContainer}>
         <Image
-          style={styles.logo}
+          style={authStyles.logo}
           source={require('../../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png')}
         />
       </View>
-      <View style={styles.inner}>
+      <View style={authStyles.inner}>
+        <View style={authStyles.center}>
+          <Text style={authStyles.title}>Create an account</Text>
+        </View>
         <PatitoInput
           icon={
             <Ionicons name='mail-outline' size={20} color={colors.gray[700]} />
           }
           onChange={(e) => setEmail(e.nativeEvent.text)}
           placeholder='Email'
-          style={styles.input}
+          style={authStyles.input}
         />
         <PatitoInput
           icon={
@@ -48,7 +52,7 @@ const SignUp = ({ navigation }: Props) => {
           }
           onChange={(e) => setPassword(e.nativeEvent.text)}
           placeholder='Password'
-          style={styles.input}
+          style={authStyles.input}
           isPassword
         />
         <PatitoInput
@@ -61,7 +65,7 @@ const SignUp = ({ navigation }: Props) => {
           }
           onChange={(e) => setRepeatPassword(e.nativeEvent.text)}
           placeholder='Repeat password'
-          style={styles.input}
+          style={authStyles.input}
           error={
             repeatPassword && password !== repeatPassword
               ? "Passwords don't match"
@@ -69,11 +73,11 @@ const SignUp = ({ navigation }: Props) => {
           }
           isPassword
         />
-        <View style={styles.button}>
+        <View style={authStyles.button}>
           <Button title='Sign up' onPress={handleSubmit} />
         </View>
         <Text
-          style={styles.options}
+          style={authStyles.link}
           onPress={() => navigation.navigate('LogIn')}
         >
           HAVE AN ACCOUNT?
@@ -82,51 +86,5 @@ const SignUp = ({ navigation }: Props) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  signUp: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    height: '100%',
-    backgroundColor: colors.blue[50]
-  },
-  inner: {
-    padding: 32,
-    width: '100%',
-    height: '80%', // WHY?
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: colors.white
-  },
-  header: {
-    fontSize: 20,
-    marginBottom: 16
-  },
-  input: {
-    marginBottom: 16
-  },
-  button: {
-    marginBottom: 16
-  },
-  options: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    color: colors.blue[700]
-  },
-  logoContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 200
-  },
-  logo: {
-    height: 100,
-    aspectRatio: 1.5,
-    resizeMode: 'contain'
-  }
-})
 
 export default SignUp

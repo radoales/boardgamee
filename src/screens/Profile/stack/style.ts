@@ -12,7 +12,6 @@ const authStyles = StyleSheet.create({
   inner: {
     padding: 32,
     width: '100%',
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: colors.white
@@ -52,6 +51,22 @@ const authStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center'
+  },
+  userIcon: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 20,
+    borderRadius: 100,
+    backgroundColor: colors.blue[500],
+    width: 170,
+    height: 170
+  },
+  userEmail: {
+    fontSize: 20,
+    color: colors.blue[500],
+    marginBottom: 16
   }
 })
 

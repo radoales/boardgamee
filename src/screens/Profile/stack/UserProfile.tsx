@@ -5,6 +5,7 @@ import { useAuth } from '../../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '..'
 import colors from '../../../styles/colors'
 import { Route } from '../../../utils/routes'
+import authStyles from './style'
 
 type Props = NativeStackScreenProps<
   ProfileRootStackParamList,
@@ -15,28 +16,39 @@ const UserProfile = ({ navigation }: Props) => {
   const { user, signOut } = useAuth()
 
   return (
-    <View style={styles.userProfile}>
-      <View style={styles.header}>
-        <Ionicons name='person' size={70} color={colors.blue[700]} />
+    <View style={authStyles.container}>
+      <View style={authStyles.userIcon}>
+        <Ionicons name='person' size={100} color={colors.blue[50]} />
       </View>
-      <View style={styles.inner}>
-        <View style={styles.entryRow}>
-          <Ionicons name='mail-outline' size={25} color={colors.blue[700]} />
-          <Text style={styles.label}>{user.email}</Text>
+      <View style={authStyles.inner}>
+        <View style={styles.userInfo}>
+          <View style={authStyles.center}>
+            <Text style={styles.userName}>{user.name}</Text>
+          </View>
+          <View style={authStyles.center}>
+            <Text style={authStyles.userEmail}>{user.email}</Text>
+          </View>
         </View>
-        <View style={styles.entryRow}>
-          <Ionicons name='person-outline' size={25} color={colors.blue[700]} />
-          <Text style={styles.label}>{user.name}</Text>
-        </View>
-        <View style={styles.button}>
+        <View style={authStyles.button}>
           <Button
             title='Edit profile'
             onPress={() => navigation.navigate(Route.EDIT_USER_PROFILE)}
           />
         </View>
-
-        <View style={styles.button}>
+        <View style={authStyles.button}>
           <Button title='Log out' onPress={() => signOut()} />
+        </View>
+      </View>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Content</Text>
+        <View style={styles.sectionContent}>
+          <View style={styles.sectionItemRow}>
+            <View style={styles.sectionItem}>
+              <Ionicons name='heart-outline' size={25} />
+              <Text style={styles.sectionItetitle}>Favourites</Text>
+            </View>
+            <Ionicons name='chevron-forward' size={25} />
+          </View>
         </View>
       </View>
     </View>
@@ -44,48 +56,45 @@ const UserProfile = ({ navigation }: Props) => {
 }
 
 const styles = StyleSheet.create({
-  userProfile: {
+  userInfo: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    height: '100%',
-    padding: 16,
-    backgroundColor: colors.blue[50]
+    paddingBottom: 16
   },
-  inner: {
-    padding: 16,
-    width: '100%',
+  userName: {
+    fontSize: 30,
+    color: colors.gray[900]
+  },
+  section: {
+    width: '100%'
+  },
+  sectionTitle: {
     display: 'flex',
-    flexDirection: 'column'
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 20,
-    marginBottom: 16,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: colors.blue[700],
-    width: 100,
-    height: 100
-  },
-  label: {
-    fontSize: 22,
-    marginLeft: 25,
-    color: colors.gray[700]
-  },
-  button: {
+    backgroundColor: colors.blue[50],
+    paddingLeft: 32,
+    paddingTop: 8,
+    paddingBottom: 8,
+    fontSize: 25,
     marginBottom: 16
   },
-  entryRow: {
+  sectionContent: {
+    paddingLeft: 32,
+    paddingRight: 32
+  },
+  sectionItemRow: {
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: 16,
-    borderBottomWidth: 1,
-    borderColor: colors.blue[700],
-    height: 50
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  sectionItem: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  sectionItetitle: {
+    fontSize: 25,
+    marginLeft: 10
   }
 })
 
