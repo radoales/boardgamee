@@ -25,13 +25,21 @@ const TabMenuStackNaigator: React.FC = () => {
         tabBarStyle: { padding: 5 }
       })}
     >
-      <Tab.Screen name={Route.HOME} component={Home} />
+      <Tab.Screen
+        name={Route.HOME}
+        component={Home}
+        options={{ headerShown: false }}
+      />
       <Tab.Screen
         name={Route.PROFILE}
         component={Profile}
         options={{ headerShown: false }}
       />
-      <Tab.Screen name={Route.SEARCH} component={SearchStack} />
+      <Tab.Screen
+        name={Route.SEARCH}
+        component={SearchStack}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   )
 }

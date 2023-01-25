@@ -42,7 +42,6 @@ const EditUserProfile = ({ navigation }: Props) => {
           style={authStyles.input}
           value={name}
         />
-
         <View style={authStyles.button}>
           <Button title='Save' onPress={() => updateUserProfile(name)} />
         </View>

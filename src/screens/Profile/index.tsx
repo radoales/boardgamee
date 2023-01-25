@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { useAuth } from '../../auth/AuthUserprovider'
 import UserProfile from './stack/UserProfile'
-import SignIn from './stack/signIn'
+import SignIn from './stack/SignIn'
 import SignUp from './stack/SignUp'
 import { useEffect } from 'react'
 import { Route } from '../../utils/routes'
@@ -47,7 +47,14 @@ const Profile = ({ navigation }: any) => {
           headerTitleAlign: 'center'
         }}
       />
-      <Stack.Screen name={Route.USER_PROFILE} component={UserProfile} />
+      <Stack.Screen
+        name={Route.USER_PROFILE}
+        options={{
+          title: '',
+          headerTitleAlign: 'center'
+        }}
+        component={UserProfile}
+      />
       <Stack.Screen
         name={Route.EDIT_USER_PROFILE}
         component={EditUserProfile}
