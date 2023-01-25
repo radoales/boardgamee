@@ -6,6 +6,7 @@ import { ProfileRootStackParamList } from '..'
 import colors from '../../../styles/colors'
 import { Route } from '../../../utils/routes'
 import authStyles from './style'
+import PatitoButton from '../../../components/PatitoButton'
 
 type Props = NativeStackScreenProps<
   ProfileRootStackParamList,
@@ -30,13 +31,13 @@ const UserProfile = ({ navigation }: Props) => {
           </View>
         </View>
         <View style={authStyles.button}>
-          <Button
+          <PatitoButton
             title='Edit profile'
             onPress={() => navigation.navigate(Route.EDIT_USER_PROFILE)}
           />
         </View>
         <View style={authStyles.button}>
-          <Button title='Log out' onPress={() => signOut()} />
+          <PatitoButton title='Log out' onPress={() => signOut()} />
         </View>
       </View>
       <View style={styles.section}>
