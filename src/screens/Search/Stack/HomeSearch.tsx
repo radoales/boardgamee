@@ -1,5 +1,13 @@
 import { useState } from 'react'
-import { ActivityIndicator, LogBox, StyleSheet, Text, View } from 'react-native'
+import {
+  ActivityIndicator,
+  LogBox,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View
+} from 'react-native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { RootStackParamList } from '..'
 import PatitoInput from '../../../components/PatitoInput'
@@ -8,6 +16,8 @@ import useGetBoardgames from '../../../hooks/useGetBoardgames'
 import { Route } from '../../../utils/routes'
 import SearchResult from '../../../components/search/SearchResult'
 import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
+import globalStyles from '../../../styles/global'
+import colors from '../../../styles/colors'
 
 type Props = NativeStackScreenProps<RootStackParamList, Route.HOME_SEARCH>
 
@@ -31,29 +41,38 @@ const HomeSearch = ({ navigation }: Props) => {
       marginVertical: 'auto',
       flex: 1,
       fontFamily: 'Montserrat_400Regular'
+    },
+    touchable: {
+      //height: '100%'
     }
   })
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, globalStyles.container]}>
       <PatitoInput
         icon={<Ionicons name='search-sharp' size={24} color='black' />}
         onChange={(e) => setInputText(e.nativeEvent.text)}
       />
-      <View>
-        {!isLoading && !results && (
-          <Text style={styles.text}>Search using a boardgame name</Text>
-        )}
-        {isLoading && <ActivityIndicator size='large' />}
-        {results &&
-          results.games.map((item) => (
-            <SearchResult
-              name={item.name}
-              image={item.image_url}
+
+      {!isLoading && !results && (
+        <Text style={styles.text}>Search using a boardgame name</Text>
+      )}
+      {isLoading && <ActivityIndicator size='large' />}
+      {results && (
+        <ScrollView>
+          {results.games.map((item) => (
+            <TouchableHighlight
               key={item.id}
-            />
+              activeOpacity={0.6}
+              underlayColor={colors.gray[200]}
+              style={styles.touchable}
+              onPress={() => navigation.navigate(Route.DETAIL)}
+            >
+              <SearchResult data={item} />
+            </TouchableHighlight>
           ))}
-      </View>
+        </ScrollView>
+      )}
     </View>
   )
 }
