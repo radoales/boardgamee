@@ -41,9 +41,6 @@ const HomeSearch = ({ navigation }: Props) => {
       marginVertical: 'auto',
       flex: 1,
       fontFamily: 'Montserrat_400Regular'
-    },
-    touchable: {
-      //height: '100%'
     }
   })
 
@@ -65,7 +62,6 @@ const HomeSearch = ({ navigation }: Props) => {
               key={item.id}
               activeOpacity={0.6}
               underlayColor={colors.gray[200]}
-              style={styles.touchable}
               onPress={() => navigation.navigate(Route.DETAIL)}
             >
               <SearchResult data={item} />

@@ -71,7 +71,6 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
   const ratingWhole = Math.floor(data.average_user_rating)
   const ratingDecimal = data.average_user_rating - ratingWhole
   const remaining = ratingDecimal > 0.3 ? 5 - ratingWhole - 1 : 5 - ratingWhole
-  console.log(ratingDecimal)
 
   return (
     <View style={styles.container}>
