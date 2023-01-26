@@ -45,7 +45,11 @@ const Home: React.FC = () => {
       >
         {results &&
           results.games.map((item) => (
-            <Image source={{ uri: item.image_url }} style={styles.image} />
+            <Image
+              key={item.id}
+              source={{ uri: item.image_url }}
+              style={styles.image}
+            />
           ))}
       </ScrollView>
     </View>
