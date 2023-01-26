@@ -5,7 +5,7 @@ export type boardgames = {
   games: games[]
 }
 
-type games = {
+export type games = {
   id: string
   artists: string[]
   description_preview: string
@@ -19,4 +19,7 @@ type games = {
   min_playtime: number
   max_playtime: number
   rules: string
+  type: string
+  average_user_rating: number
+  num_user_ratings: number
 }
