@@ -2,6 +2,7 @@ import { StyleSheet, View, Image, Text, ScrollView } from 'react-native'
 import colors from '../../styles/colors'
 import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 import useGetBoardgames from '../../hooks/useGetBoardgames'
+import ScrollViewCard from '../../components/cards/ScrollViewCard'
 
 const styles = StyleSheet.create({
   container: {
@@ -30,12 +31,15 @@ const Home: React.FC = () => {
     Montserrat_400Regular
   })
 
-  const { results, isLoading } = useGetBoardgames('catan')
+  const { results, isLoading } = useGetBoardgames(
+    'catan',
+    'id,name,type,average_user_rating,num_user_ratings,image_url,thumb_url'
+  )
   return (
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={require('../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png')}
+        source={require('../../../assets/main_logo.png')}
       />
       <ScrollView
         horizontal
@@ -44,11 +48,13 @@ const Home: React.FC = () => {
         style={styles.scroll}
       >
         {results &&
-          results.games.map((item) => (
-            <Image
-              key={item.id}
-              source={{ uri: item.image_url }}
-              style={styles.image}
+          results.games.map((item, index) => (
+            <ScrollViewCard
+              key={index}
+              name={item.name}
+              imageUrl={item.thumb_url}
+              players={[item.min_players, item.max_players]}
+              rating={item.average_user_rating}
             />
           ))}
       </ScrollView>

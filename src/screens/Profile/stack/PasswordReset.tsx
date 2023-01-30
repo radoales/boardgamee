@@ -64,7 +64,7 @@ const PassswordReset = ({ navigation }: Props) => {
       <View style={authStyles.logoContainer}>
         <Image
           style={authStyles.logo}
-          source={require(`../../../../assets/boardgamee-high-resolution-logo-color-on-transparent-background.png`)}
+          source={require(`../../../../assets/main_logo.png`)}
         />
       </View>
       <View style={authStyles.inner}>
