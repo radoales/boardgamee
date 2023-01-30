@@ -75,7 +75,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: data.image_url }} style={styles.image} />
+        <Image source={{ uri: data.thumb_url }} style={styles.image} />
       </View>
 
       <View style={styles.textContainer}>

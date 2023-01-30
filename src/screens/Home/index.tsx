@@ -33,7 +33,7 @@ const Home: React.FC = () => {
 
   const { results, isLoading } = useGetBoardgames(
     'catan',
-    'id,name,type,average_user_rating,num_user_ratings,image_url,thumb_url'
+    'id,name,type,average_user_rating,num_user_ratings,thumb_url'
   )
   return (
     <View style={styles.container}>

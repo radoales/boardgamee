@@ -12,6 +12,7 @@ export type games = {
   description: string
   handle: string
   image_url: string
+  thumb_url: string
   name: string
   max_players: number
   min_players: number
