@@ -1,11 +1,11 @@
 import { ImageSourcePropType } from 'react-native'
 
-export type boardgames = {
+export type Boardgames = {
   count: number
-  games: games[]
+  games: game[]
 }
 
-export type games = {
+export type game = {
   id: string
   artists: string[]
   description_preview: string

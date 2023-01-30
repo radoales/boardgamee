@@ -5,11 +5,11 @@ import {
 } from '@expo-google-fonts/montserrat'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import colors from '../../styles/colors'
-import { games } from '../../types/boardgame'
+import { game } from '../../types/boardgame'
 import { FontAwesome } from '@expo/vector-icons'
 
 interface SearchResultProps {
-  data: games
+  data: game
 }
 
 const styles = StyleSheet.create({

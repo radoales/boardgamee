@@ -1,10 +1,10 @@
 import { PUBLIC_BOARDGAME_CLIENT_ID } from '@env'
 import { useEffect, useState } from 'react'
-import { boardgames } from '../types/boardgame'
+import { Boardgames } from '../types/boardgame'
 import useDebounce from './useDebounce'
 
 const useGetBoardgames = (search: string, fields?: string) => {
-  const [results, setResults] = useState<boardgames>()
+  const [results, setResults] = useState<Boardgames>()
   const [error, setError] = useState<string>()
   const [isLoading, setIsLoading] = useState(false)
   const value = useDebounce(search)
