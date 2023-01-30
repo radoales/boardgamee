@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { boardgames } from '../types/boardgame'
 import useDebounce from './useDebounce'
 
-const useGetBoardgames = (search: string) => {
+const useGetBoardgames = (search: string, fields?: string) => {
   const [results, setResults] = useState<boardgames>()
   const [error, setError] = useState<string>()
   const [isLoading, setIsLoading] = useState(false)
@@ -21,7 +21,9 @@ const useGetBoardgames = (search: string) => {
   useEffect(() => {
     if (value.length) {
       fetch(
-        `https://api.boardgameatlas.com/api/search?name=${value}&client_id=${PUBLIC_BOARDGAME_CLIENT_ID}&fuzzy_match=true&exact=true`
+        `https://api.boardgameatlas.com/api/search?name=${value}&client_id=${PUBLIC_BOARDGAME_CLIENT_ID}&fuzzy_match=true&exact=true${
+          fields ? `&fields=${fields}` : ''
+        }`
       )
         .then((res) => {
           if (!res.ok) {

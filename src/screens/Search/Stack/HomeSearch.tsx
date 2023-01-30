@@ -23,7 +23,10 @@ type Props = NativeStackScreenProps<RootStackParamList, Route.HOME_SEARCH>
 
 const HomeSearch = ({ navigation }: Props) => {
   const [inputText, setInputText] = useState<string>('')
-  const { results, isLoading } = useGetBoardgames(inputText)
+  const { results, isLoading } = useGetBoardgames(
+    inputText,
+    'id,name,type,average_user_rating,num_user_ratings,image_url'
+  )
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular
   })
