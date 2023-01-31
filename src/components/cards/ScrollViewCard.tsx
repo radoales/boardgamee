@@ -20,10 +20,20 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
       <View style={styles.imageContainer}>
         <Image source={{ uri: imageUrl }} style={styles.image} />
       </View>
-      <Text>{name}</Text>
+      <Text style={styles.title}>{name}</Text>
       <View style={styles.inner}>
-        <Ionicons name='people-outline' size={24} color={colors.orange} />
-        <Text>{players[0] - players[1]}</Text>
+        <View style={styles.players}>
+          <Ionicons name='people-outline' size={24} color={colors.orange} />
+          <Text
+            style={styles.playersResult}
+          >{`${players[0]} - ${players[1]}`}</Text>
+        </View>
+        <View style={styles.players}>
+          <Ionicons name='people-outline' size={24} color={colors.orange} />
+          <Text
+            style={styles.playersResult}
+          >{`${players[0]} - ${players[1]}`}</Text>
+        </View>
       </View>
     </View>
   )
@@ -33,21 +43,20 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    paddingTop: 10,
+    justifyContent: 'center',
+    padding: 10,
     borderWidth: 2,
-    borderColor: colors.blue[100],
+    borderColor: colors.green[700],
     borderRadius: 15,
-    height: 200,
+    height: 250,
     aspectRatio: 1,
     margin: 10,
     overflow: 'hidden'
   },
   imageContainer: {
-    position: 'relative',
-    bottom: 40,
     height: 150,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    marginBottom: 16
   },
   image: {
     height: 200,
@@ -57,7 +66,21 @@ const styles = StyleSheet.create({
   inner: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    justifyContent: 'space-between'
+  },
+  title: {
+    fontSize: 25
+  },
+  players: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  playersResult: {
+    fontSize: 20,
+    fontWeight: '300',
+    paddingLeft: 5
   }
 })
 

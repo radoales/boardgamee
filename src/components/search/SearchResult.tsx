@@ -5,11 +5,11 @@ import {
 } from '@expo-google-fonts/montserrat'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import colors from '../../styles/colors'
-import { game } from '../../types/boardgame'
+import { Game } from '../../types/boardgame'
 import { FontAwesome } from '@expo/vector-icons'
 
 interface SearchResultProps {
-  data: game
+  data: Game
 }
 
 const styles = StyleSheet.create({
@@ -97,9 +97,9 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
               color={colors.orange}
             />
           )}
-          {Array.from({ length: remaining }, (v, i) => i).map((item) => (
+          {Array.from({ length: remaining }).map((item, index) => (
             <FontAwesome
-              key={item}
+              key={index}
               name='star-o'
               size={24}
               color={colors.orange}
