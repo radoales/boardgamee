@@ -5,12 +5,16 @@ import ScrollViewCard from '../cards/ScrollViewCard'
 
 interface BoardGameScrollViewProps {
   data: Game[]
+  title: string
 }
 
-const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({ data }) => {
+const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
+  data,
+  title
+}) => {
   return (
     <View style={styles.scroll}>
-      <Text style={styles.scrollTitle}>Featured Games</Text>
+      <Text style={styles.scrollTitle}>{title}</Text>
       <ScrollView
         horizontal
         pagingEnabled
@@ -32,10 +36,12 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({ data }) => {
 }
 
 const styles = StyleSheet.create({
-  scroll: {},
+  scroll: {
+    marginBottom: 16
+  },
   scrollTitle: {
-    color: colors.green[700],
-    fontSize: 40
+    color: colors.blue[700],
+    fontSize: 35
   }
 })
 

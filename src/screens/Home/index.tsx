@@ -17,17 +17,31 @@ const Home: React.FC = () => {
   )
   return (
     <View style={[styles.container, globalStyles.container]}>
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={require('../../../assets/main_logo.png')}
-        />
-      </View>
-      <View style={styles.inner}>
-        <Text style={styles.title}>Discovery</Text>
-        <BoardGameScrollView data={results?.games ?? []} />
-        <BoardGameScrollView data={results?.games ?? []} />
-      </View>
+      {results?.games?.length && (
+        <ScrollView>
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              source={require('../../../assets/main_logo.png')}
+            />
+          </View>
+          <View style={styles.inner}>
+            <Text style={styles.title}>Discovery</Text>
+            <BoardGameScrollView
+              title='Featured Games'
+              data={results?.games.slice(4) ?? []}
+            />
+            <BoardGameScrollView
+              title='New Games'
+              data={results?.games.slice(6) ?? []}
+            />
+            <BoardGameScrollView
+              title='More Games'
+              data={results?.games ?? []}
+            />
+          </View>
+        </ScrollView>
+      )}
     </View>
   )
 }
@@ -59,7 +73,7 @@ const styles = StyleSheet.create({
     color: colors.gray[900]
   },
   inner: {
-    height: 400
+    height: 1000
   }
 })
 
