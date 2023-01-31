@@ -1,6 +1,10 @@
 import { StyleSheet, View, Image, Text, ScrollView } from 'react-native'
 import colors from '../../styles/colors'
-import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
+import {
+  useFonts,
+  Montserrat_400Regular,
+  Montserrat_700Bold
+} from '@expo-google-fonts/montserrat'
 import useGetBoardgames from '../../hooks/useGetBoardgames'
 import ScrollViewCard from '../../components/cards/ScrollViewCard'
 import globalStyles from '../../styles/global'
@@ -16,7 +20,7 @@ const Home: React.FC = () => {
     'id,name,type,average_user_rating,num_user_ratings,thumb_url,min_players,max_players'
   )
   return (
-    <View style={[styles.container, globalStyles.container]}>
+    <View style={[styles.container]}>
       {results?.games?.length && (
         <ScrollView>
           <View style={styles.imageContainer}>
@@ -51,7 +55,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    paddingTop: '10%'
   },
   imageContainer: {
     alignItems: 'flex-end',
@@ -61,19 +66,19 @@ const styles = StyleSheet.create({
   image: {
     height: 50,
     aspectRatio: 1.5,
-    resizeMode: 'contain'
-  },
-  text: {
-    fontFamily: 'Montserrat_400Regular',
-    fontSize: 48
+    resizeMode: 'contain',
+    marginRight: '3%'
   },
   title: {
     fontSize: 50,
-    fontWeight: '500',
-    color: colors.gray[900]
+    fontWeight: '400',
+    color: colors.gray[900],
+    marginBottom: 16,
+    marginLeft: '3%',
+    fontFamily: 'Montserrat_700Bold'
   },
   inner: {
-    height: 1300
+    height: '100%'
   }
 })
 

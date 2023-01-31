@@ -15,8 +15,8 @@ const PatitoButton: React.FC<PatitoButton> = ({
   onPress
 }) => {
   return (
-    <Pressable style={[styles.container]} onPress={onPress}>
-      <View style={styles.icon}>{icon}</View>
+    <Pressable style={[styles.container, style]} onPress={onPress}>
+      {icon && <View style={styles.icon}>{icon}</View>}
       <Text style={styles.title}>{title}</Text>
     </Pressable>
   )

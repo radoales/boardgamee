@@ -82,9 +82,9 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
         <Text style={styles.header}>{data.type}</Text>
         <Text style={styles.name}>{data.name}</Text>
         <View style={styles.reviewContainer}>
-          {Array.from({ length: ratingWhole }, (v, i) => i).map((item) => (
+          {Array.from({ length: ratingWhole }).map((item, index) => (
             <FontAwesome
-              key={item}
+              key={index}
               name='star'
               size={24}
               color={colors.orange}
