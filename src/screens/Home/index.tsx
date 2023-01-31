@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     color: colors.gray[900]
   },
   inner: {
-    height: 1000
+    height: 1300
   }
 })
 

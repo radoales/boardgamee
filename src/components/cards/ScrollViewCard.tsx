@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import colors from '../../styles/colors'
 
@@ -19,8 +19,9 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image source={{ uri: imageUrl }} style={styles.image} />
+        <Text style={styles.title}>{name}</Text>
       </View>
-      <Text style={styles.title}>{name}</Text>
+
       <View style={styles.inner}>
         <View style={styles.players}>
           <Ionicons name='people-outline' size={24} color={colors.orange} />
@@ -29,10 +30,10 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
           >{`${players[0]} - ${players[1]}`}</Text>
         </View>
         <View style={styles.players}>
-          <Ionicons name='people-outline' size={24} color={colors.orange} />
-          <Text
-            style={styles.playersResult}
-          >{`${players[0]} - ${players[1]}`}</Text>
+          <FontAwesome name='star-o' size={24} color={colors.orange} />
+          <Text style={styles.playersResult}>{`${rating.toFixed(
+            1
+          )}/${5}`}</Text>
         </View>
       </View>
     </View>
@@ -43,18 +44,21 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 10,
     borderWidth: 2,
     borderColor: colors.blue[700],
+    backgroundColor: colors.white,
     borderRadius: 15,
-    height: 250,
-    aspectRatio: 1,
-    margin: 10,
+    height: 320,
+    aspectRatio: 0.7,
+    marginRight: 20,
+    marginTop: 20,
     overflow: 'hidden'
   },
   imageContainer: {
-    height: 150,
+    height: 250,
     overflow: 'hidden',
     marginBottom: 16
   },
@@ -66,7 +70,8 @@ const styles = StyleSheet.create({
   inner: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    width: '100%'
   },
   title: {
     fontSize: 25
