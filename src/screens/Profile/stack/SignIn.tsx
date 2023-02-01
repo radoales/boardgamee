@@ -1,7 +1,15 @@
 import { Ionicons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useEffect, useState } from 'react'
-import { Button, Image, Platform, Text, ToastAndroid, View } from 'react-native'
+import {
+  Button,
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View
+} from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '..'
 import colors from '../../../styles/colors'
@@ -9,7 +17,6 @@ import { emailRegex } from '../../../utils/regex'
 import { Route } from '../../../utils/routes'
 import PatitoInput from '../../../components/PatitoInput'
 import authStyles from './style'
-import signInStyles from './signIn/style'
 
 type Props = NativeStackScreenProps<ProfileRootStackParamList, Route.LOG_IN>
 
@@ -107,5 +114,13 @@ const SignIn = ({ navigation }: Props) => {
     </View>
   )
 }
+
+const signInStyles = StyleSheet.create({
+  create: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
+  }
+})
 
 export default SignIn
