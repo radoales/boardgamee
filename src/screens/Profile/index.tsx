@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import { Route } from '../../utils/routes'
 import EditUserProfile from './stack/EditUserProfile'
 import PassswordReset from './stack/PasswordReset'
+import SearchUsers from './stack/SearchUsers'
 
 export type ProfileRootStackParamList = {
   LogIn: undefined
@@ -14,6 +15,7 @@ export type ProfileRootStackParamList = {
   UserProfile: undefined
   EditUserProfile: undefined
   PasswordReset: undefined
+  SearchUsers: undefined
 }
 const Stack = createStackNavigator<ProfileRootStackParamList>()
 
@@ -54,6 +56,14 @@ const Profile = ({ navigation }: any) => {
           headerTitleAlign: 'center'
         }}
         component={UserProfile}
+      />
+      <Stack.Screen
+        name={Route.SEARCH_USERS}
+        component={SearchUsers}
+        options={{
+          title: '',
+          headerTitleAlign: 'center'
+        }}
       />
       <Stack.Screen
         name={Route.EDIT_USER_PROFILE}

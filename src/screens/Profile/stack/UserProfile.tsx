@@ -1,6 +1,12 @@
 import { Ionicons } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View
+} from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '..'
 import colors from '../../../styles/colors'
@@ -49,10 +55,23 @@ const UserProfile = ({ navigation }: Props) => {
             <View style={styles.sectionItemRow}>
               <View style={styles.sectionItem}>
                 <Ionicons name='heart-outline' size={25} />
-                <Text style={styles.sectionItetitle}>Favourites</Text>
+                <Text style={styles.sectionItetitle}>Favourite Games</Text>
               </View>
               <Ionicons name='chevron-forward' size={25} />
             </View>
+            <TouchableHighlight
+              onPress={() => navigation.navigate(Route.SEARCH_USERS)}
+              activeOpacity={0.6}
+              underlayColor={colors.gray[200]}
+            >
+              <View style={styles.sectionItemRow}>
+                <View style={styles.sectionItem}>
+                  <Ionicons name='people-outline' size={25} />
+                  <Text style={styles.sectionItetitle}>Friends</Text>
+                </View>
+                <Ionicons name='chevron-forward' size={25} />
+              </View>
+            </TouchableHighlight>
           </View>
         </View>
       </View>
@@ -90,7 +109,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 16
   },
   sectionItem: {
     display: 'flex',

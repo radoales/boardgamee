@@ -4,8 +4,9 @@ import { getDatabase, onValue, push, ref, set } from 'firebase/database'
 import { app } from '../../App'
 import { AuthUser } from '../auth/AuthUserprovider'
 
-export const UseGetUsers = (): { data?: AuthUser[] } => {
+export const UseGetUsers = (): { data?: AuthUser[]; isLoading: boolean } => {
   const [data, setData] = useState<AuthUser[]>()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const db = getDatabase(app)
@@ -13,10 +14,11 @@ export const UseGetUsers = (): { data?: AuthUser[] } => {
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val()
       setData(data)
+      setIsLoading(false)
     })
   }, [])
 
-  return { data }
+  return { data, isLoading }
 }
 
 export const UseGetUserById = (id: string): { data?: AuthUser } => {
