@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import {
   ActivityIndicator,
   LogBox,
@@ -18,6 +18,8 @@ import SearchResult from '../../../components/search/SearchResult'
 import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 import globalStyles from '../../../styles/global'
 import colors from '../../../styles/colors'
+import { GameContext } from '../../../hooks/gameContext'
+import { Game } from '../../../types/boardgame'
 
 type Props = NativeStackScreenProps<RootStackParamList, Route.HOME_SEARCH>
 
@@ -27,6 +29,7 @@ const HomeSearch = ({ navigation }: Props) => {
     inputText,
     'id,name,type,average_user_rating,num_user_ratings,thumb_url'
   )
+  const { setSelectedGame } = useContext(GameContext)
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular
   })
@@ -47,6 +50,11 @@ const HomeSearch = ({ navigation }: Props) => {
     }
   })
 
+  const handlePress = (item: Game) => {
+    setSelectedGame(item)
+    navigation.navigate(Route.DETAIL)
+  }
+
   return (
     <View style={[styles.container, globalStyles.container]}>
       <PatitoInput
@@ -65,7 +73,7 @@ const HomeSearch = ({ navigation }: Props) => {
               key={item.id}
               activeOpacity={0.6}
               underlayColor={colors.gray[200]}
-              onPress={() => navigation.navigate(Route.DETAIL)}
+              onPress={() => handlePress(item)}
             >
               <SearchResult data={item} />
             </TouchableHighlight>
