@@ -12,18 +12,30 @@ export const useSignUp = () => {
   const [signUpError, setSignUpError] = useState<{
     isLoading: boolean
     error: null | string
+    isSuccess: null | boolean
+    id?: string
   }>({
     isLoading: false,
-    error: null
+    error: null,
+    isSuccess: null
   })
   const handleSignUp = async (email: string, password: string) => {
     const auth = getAuth()
-    setSignUpError({ isLoading: true, error: null })
+    setSignUpError({ isLoading: true, error: null, isSuccess: null })
     try {
-      await createUserWithEmailAndPassword(auth, email, password)
-      setSignUpError({ isLoading: false, error: null })
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      )
+      setSignUpError({
+        isLoading: false,
+        error: null,
+        isSuccess: true,
+        id: response.user.uid
+      })
     } catch (error: any) {
-      setSignUpError({ isLoading: false, error: error.code })
+      setSignUpError({ isLoading: false, error: error.code, isSuccess: false })
     }
   }
   return { handleSignUp, signUpError }

@@ -25,10 +25,11 @@ const firebaseConfig = {
   storageBucket: STORAGE_BUCKET,
   messagingSenderId: MESSAGING_SENDER_ID,
   appId: APP_ID,
-  measurementId: MEASURAMENT_ID
+  measurementId: MEASURAMENT_ID,
+  databaseURL: 'https://boardgamee-1fb35-default-rtdb.firebaseio.com'
 }
 
-initializeApp(firebaseConfig)
+export const app = initializeApp(firebaseConfig)
 
 const App = () => {
   return (

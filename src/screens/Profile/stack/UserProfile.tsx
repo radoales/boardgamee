@@ -7,6 +7,7 @@ import colors from '../../../styles/colors'
 import { Route } from '../../../utils/routes'
 import authStyles from './style'
 import PatitoButton from '../../../components/PatitoButton'
+import { UseGetUserById } from '../../../hooks/users'
 
 type Props = NativeStackScreenProps<
   ProfileRootStackParamList,
@@ -15,44 +16,47 @@ type Props = NativeStackScreenProps<
 
 const UserProfile = ({ navigation }: Props) => {
   const { user, signOut } = useAuth()
+  const { data: userDetails } = UseGetUserById(user.id)
 
   return (
-    <View style={authStyles.container}>
-      <View style={authStyles.userIcon}>
-        <Ionicons name='person' size={100} color={colors.blue[50]} />
-      </View>
-      <View style={authStyles.inner}>
-        <View style={styles.userInfo}>
-          <View style={authStyles.center}>
-            <Text style={styles.userName}>{user.name}</Text>
-          </View>
-          <View style={authStyles.center}>
-            <Text style={authStyles.userEmail}>{user.email}</Text>
-          </View>
+    userDetails && (
+      <View style={authStyles.container}>
+        <View style={authStyles.userIcon}>
+          <Ionicons name='person' size={100} color={colors.blue[50]} />
         </View>
-        <View style={authStyles.button}>
-          <PatitoButton
-            title='Edit profile'
-            onPress={() => navigation.navigate(Route.EDIT_USER_PROFILE)}
-          />
-        </View>
-        <View style={authStyles.button}>
-          <PatitoButton title='Log out' onPress={() => signOut()} />
-        </View>
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Content</Text>
-        <View style={styles.sectionContent}>
-          <View style={styles.sectionItemRow}>
-            <View style={styles.sectionItem}>
-              <Ionicons name='heart-outline' size={25} />
-              <Text style={styles.sectionItetitle}>Favourites</Text>
+        <View style={authStyles.inner}>
+          <View style={styles.userInfo}>
+            <View style={authStyles.center}>
+              <Text style={styles.userName}>{userDetails.name}</Text>
             </View>
-            <Ionicons name='chevron-forward' size={25} />
+            <View style={authStyles.center}>
+              <Text style={authStyles.userEmail}>{userDetails.email}</Text>
+            </View>
+          </View>
+          <View style={authStyles.button}>
+            <PatitoButton
+              title='Edit profile'
+              onPress={() => navigation.navigate(Route.EDIT_USER_PROFILE)}
+            />
+          </View>
+          <View style={authStyles.button}>
+            <PatitoButton title='Log out' onPress={() => signOut()} />
+          </View>
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Content</Text>
+          <View style={styles.sectionContent}>
+            <View style={styles.sectionItemRow}>
+              <View style={styles.sectionItem}>
+                <Ionicons name='heart-outline' size={25} />
+                <Text style={styles.sectionItetitle}>Favourites</Text>
+              </View>
+              <Ionicons name='chevron-forward' size={25} />
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    )
   )
 }
 

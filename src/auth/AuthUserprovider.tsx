@@ -8,7 +8,8 @@ import {
   useSignUp
 } from '../hooks/auth'
 
-interface AuthUser {
+export interface AuthUser {
+  id: string
   name: string
   email: string
 }
@@ -23,6 +24,12 @@ interface ContextValue {
   updateUserProfile: (name: string) => void
   resetPassword: (email: string) => void
   error?: string | null
+  signUpError?: {
+    isLoading: boolean
+    error: string | null
+    isSuccess: boolean | null
+    id?: string
+  }
   resetPasswordError: {
     isLoading: boolean
     error: string | null
@@ -68,7 +75,8 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
       resetPassword: (email: string) => handleResetPassword(email),
       updateUserProfile: (name: string) => handleUpdateUserProfile(name),
       error: error,
-      resetPasswordError
+      resetPasswordError,
+      signUpError
     }),
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,7 +89,8 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
         setIsLoading(false)
         setAuthUser({
           name: user.displayName ?? '',
-          email: user.email ?? ''
+          email: user.email ?? '',
+          id: user.uid
         })
       } else {
         setIsAuthenticated(false)

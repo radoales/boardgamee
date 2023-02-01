@@ -8,6 +8,7 @@ import colors from '../../../styles/colors'
 import { Route } from '../../../utils/routes'
 import PatitoInput from '../../../components/PatitoInput'
 import authStyles from './style'
+import { UseGetUserById, UseUpdateUser } from '../../../hooks/users'
 
 type Props = NativeStackScreenProps<
   ProfileRootStackParamList,
@@ -17,12 +18,15 @@ type Props = NativeStackScreenProps<
 const EditUserProfile = ({ navigation }: Props) => {
   const [name, setName] = useState<string>('')
   const { user, updateUserProfile } = useAuth()
+  const { data: userDetails } = UseGetUserById(user.id)
+
+  const { updateUser } = UseUpdateUser()
 
   useEffect(() => {
-    if (user.name) {
-      setName(user.name)
+    if (userDetails?.name) {
+      setName(userDetails.name)
     }
-  }, [user])
+  }, [userDetails])
 
   return (
     <View style={authStyles.container}>
@@ -31,7 +35,7 @@ const EditUserProfile = ({ navigation }: Props) => {
       </View>
       <View style={authStyles.inner}>
         <View style={authStyles.center}>
-          <Text style={authStyles.userEmail}>{user.email}</Text>
+          <Text style={authStyles.userEmail}>{userDetails?.email}</Text>
         </View>
         <PatitoInput
           icon={
@@ -43,7 +47,10 @@ const EditUserProfile = ({ navigation }: Props) => {
           value={name}
         />
         <View style={authStyles.button}>
-          <Button title='Save' onPress={() => updateUserProfile(name)} />
+          <Button
+            title='Save'
+            onPress={() => updateUser(user.id, name, user.email)}
+          />
         </View>
       </View>
     </View>

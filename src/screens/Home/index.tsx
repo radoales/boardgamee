@@ -6,8 +6,6 @@ import {
   Montserrat_700Bold
 } from '@expo-google-fonts/montserrat'
 import useGetBoardgames from '../../hooks/useGetBoardgames'
-import ScrollViewCard from '../../components/cards/ScrollViewCard'
-import globalStyles from '../../styles/global'
 import BoardGameScrollView from '../../components/scrollviews/BoardGamesScrollView'
 
 const Home: React.FC = () => {
