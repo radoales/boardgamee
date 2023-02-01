@@ -17,7 +17,7 @@ type Props = NativeStackScreenProps<
 
 const EditUserProfile = ({ navigation }: Props) => {
   const [name, setName] = useState<string>('')
-  const { user, updateUserProfile } = useAuth()
+  const { user } = useAuth()
   const { data: userDetails } = UseGetUserById(user.id)
 
   const { updateUser } = UseUpdateUser()
