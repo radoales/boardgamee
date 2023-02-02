@@ -12,8 +12,9 @@ export const UseGetUsers = (): { data?: AuthUser[]; isLoading: boolean } => {
     const db = getDatabase(app)
     const starCountRef = ref(db, 'users')
     onValue(starCountRef, (snapshot) => {
-      const data = snapshot.val()
-      setData(data)
+      const data: { [key: string]: { accountDetails: AuthUser } } =
+        snapshot.val()
+      setData(Object.values(data).map((user) => user.accountDetails))
       setIsLoading(false)
     })
   }, [])
@@ -28,7 +29,7 @@ export const UseGetUserById = (id: string): { data?: AuthUser } => {
     const starCountRef = ref(db, `users/${id}`)
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val()
-      setData(data)
+      setData(data.accountDetails)
     })
   }, [])
 
@@ -39,9 +40,9 @@ export const UseCreateUser = () => {
   const [data, setData] = useState<any>()
   const createUser = (id: string, email: string) => {
     const db = getDatabase()
-    set(ref(db, `users/${id}`), {
-      email: email,
-      id
+    set(ref(db, `users/${id}/accountDetails`), {
+      id,
+      email
     })
       .then((data) => {
         setData(data)
@@ -58,7 +59,7 @@ export const UseUpdateUser = () => {
   const [data, setData] = useState<any>()
   const updateUser = (id: string, name: string, email: string) => {
     const db = getDatabase()
-    set(ref(db, `users/${id}`), {
+    set(ref(db, `users/${id}/accountDetails`), {
       name,
       email,
       id

@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react'
 import { app } from '../../App'
 
 export const UseGetFavoritesByUserId = (id: string): { data: string } => {
-  const [data, setData] = useState<string>('')
+  const [data, setData] = useState<string>(' ')
 
   useEffect(() => {
     const db = getDatabase(app)
-    const starCountRef = ref(db, `users/${id}/games`)
+    const starCountRef = ref(db, `users/${id}/games/gameList`)
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val()
-      setData(data)
+      setData(data ?? '')
     })
   }, [id])
 
@@ -26,8 +26,8 @@ export const UseAddGameToFavoritesWithUserId = (
   const addToFavorites = (gameId: string) => {
     if (!gameIds.includes(gameId)) {
       const db = getDatabase(app)
-      set(ref(db, `users/${id}`), {
-        games: gameIds.concat(`,${gameId}`)
+      set(ref(db, `users/${id}/games`), {
+        gameList: gameIds.concat(`,${gameId}`)
       })
         .then((data) => {
           setData(data)
@@ -50,8 +50,8 @@ export const UseRemoveGamefromFavoritesWithUserId = (
   const removeFromFavorites = (gameId: string) => {
     if (gameIds.includes(gameId)) {
       const db = getDatabase(app)
-      set(ref(db, `users/${id}`), {
-        games: gameIds
+      set(ref(db, `users/${id}/games`), {
+        gameList: gameIds
           .split(',')
           .filter((id) => id !== gameId)
           .join(',')

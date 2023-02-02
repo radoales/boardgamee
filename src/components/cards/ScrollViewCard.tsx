@@ -29,7 +29,7 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
   length,
   id
 }) => {
-  const { user } = useAuth()
+  const { user, isAuthenticated } = useAuth()
   const { data: gameIds } = UseGetFavoritesByUserId(user.id)
   const { addToFavorites } = UseAddGameToFavoritesWithUserId(user.id, gameIds)
   const { removeFromFavorites } = UseRemoveGamefromFavoritesWithUserId(
@@ -56,7 +56,7 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
           <Ionicons name='people-outline' size={20} color={colors.orange} />
           <Text
             style={styles.playersResult}
-          >{`${players[0]} - ${players[1]}`}</Text>
+          >{`${players[0]}-${players[1]}`}</Text>
         </View>
         <View style={styles.players}>
           <FontAwesome name='star-o' size={20} color={colors.orange} />
@@ -65,13 +65,18 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
           )}/${5}`}</Text>
         </View>
       </View>
-      <PatitoButton
-        style={{ borderRadius: 5 }}
-        onPress={() =>
-          !gameIds.includes(id) ? addToFavorites(id) : removeFromFavorites(id)
-        }
-        title={!gameIds.includes(id) ? '+ Favorites' : '- Favorites'}
-      />
+      {isAuthenticated && (
+        <PatitoButton
+          type={!gameIds?.includes(id) ? 'primary' : 'secondary'}
+          style={{ borderRadius: 5 }}
+          onPress={() =>
+            !gameIds?.includes(id)
+              ? addToFavorites(id)
+              : removeFromFavorites(id)
+          }
+          title={!gameIds?.includes(id) ? '+ Favorites' : '- Favorites'}
+        />
+      )}
     </View>
   )
 }
@@ -88,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 5,
     height: 250,
-    aspectRatio: 0.6,
+    aspectRatio: 0.7,
     marginHorizontal: 5,
     marginTop: 20,
     overflow: 'hidden'
