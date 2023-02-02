@@ -12,57 +12,6 @@ interface SearchResultProps {
   data: Game
 }
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginVertical: '3%'
-  },
-  imageContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  image: {
-    resizeMode: 'contain',
-    height: undefined,
-    width: 80,
-    paddingRight: 10,
-    aspectRatio: 1 / 1
-  },
-  textContainer: {
-    paddingLeft: 10
-  },
-  header: {
-    fontFamily: 'Montserrat_500Medium',
-    fontSize: 14,
-    lineHeight: 24,
-    color: colors.gray[700],
-    textTransform: 'capitalize'
-  },
-  name: {
-    fontFamily: 'Montserrat_400Regular',
-    fontSize: 20,
-    lineHeight: 24,
-    color: '#000',
-    marginBottom: 2
-  },
-  reviewContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginBottom: 2
-  },
-  rating: {
-    fontFamily: 'Montserrat_500Medium',
-    fontSize: 14,
-    lineHeight: 24,
-    color: colors.gray[700]
-  }
-})
-
 const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular,
@@ -113,5 +62,56 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginVertical: '3%'
+  },
+  imageContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  image: {
+    resizeMode: 'contain',
+    height: undefined,
+    width: 80,
+    paddingRight: 10,
+    aspectRatio: 1 / 1
+  },
+  textContainer: {
+    paddingLeft: 10
+  },
+  header: {
+    fontFamily: 'Montserrat_500Medium',
+    fontSize: 14,
+    lineHeight: 24,
+    color: colors.gray[700],
+    textTransform: 'capitalize'
+  },
+  name: {
+    fontFamily: 'Montserrat_400Regular',
+    fontSize: 20,
+    lineHeight: 24,
+    color: '#000',
+    marginBottom: 2
+  },
+  reviewContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginBottom: 2
+  },
+  rating: {
+    fontFamily: 'Montserrat_500Medium',
+    fontSize: 14,
+    lineHeight: 24,
+    color: colors.gray[700]
+  }
+})
 
 export default SearchResult

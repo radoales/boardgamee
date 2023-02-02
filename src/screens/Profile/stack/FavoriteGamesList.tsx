@@ -43,11 +43,7 @@ const FavoriteGamesList = ({ navigation }: Props) => {
 
   useEffect(() => {
     if (gameIds) {
-      setInputText(
-        Object.values(gameIds)
-          .map((id) => id.id)
-          .join(',')
-      )
+      setInputText(gameIds)
     }
   })
 
@@ -56,7 +52,8 @@ const FavoriteGamesList = ({ navigation }: Props) => {
       display: 'flex',
       justifyContent: 'flex-start',
       flex: 1,
-      padding: '2%'
+      padding: '2%',
+      backgroundColor: colors.white
     },
     text: {
       margin: 'auto',
@@ -73,15 +70,7 @@ const FavoriteGamesList = ({ navigation }: Props) => {
   //   }
 
   return (
-    <View style={[styles.container, globalStyles.container]}>
-      {/* <PatitoInput
-        icon={<Ionicons name='search-sharp' size={24} color='black' />}
-        onChange={(e) => setInputText(e.nativeEvent.text)}
-      /> */}
-
-      {/* {!isLoading && !results && (
-        <Text style={styles.text}>Search using a boardgame name</Text>
-      )} */}
+    <View style={[styles.container]}>
       {isLoading && <ActivityIndicator size='large' />}
       {results && (
         <ScrollView>
