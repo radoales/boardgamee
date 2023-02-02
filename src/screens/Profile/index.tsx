@@ -8,6 +8,7 @@ import { Route } from '../../utils/routes'
 import EditUserProfile from './stack/EditUserProfile'
 import PassswordReset from './stack/PasswordReset'
 import SearchUsers from './stack/SearchUsers'
+import FavoriteGamesList from './stack/FavoriteGamesList'
 
 export type ProfileRootStackParamList = {
   LogIn: undefined
@@ -16,6 +17,7 @@ export type ProfileRootStackParamList = {
   EditUserProfile: undefined
   PasswordReset: undefined
   SearchUsers: undefined
+  FavoriteGamesList: undefined
 }
 const Stack = createStackNavigator<ProfileRootStackParamList>()
 
@@ -60,6 +62,14 @@ const Profile = ({ navigation }: any) => {
       <Stack.Screen
         name={Route.SEARCH_USERS}
         component={SearchUsers}
+        options={{
+          title: '',
+          headerTitleAlign: 'center'
+        }}
+      />
+      <Stack.Screen
+        name={Route.FAVORITE_GAMES_LIST}
+        component={FavoriteGamesList}
         options={{
           title: '',
           headerTitleAlign: 'center'

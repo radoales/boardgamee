@@ -14,7 +14,7 @@ export const UseGetFavoritesByUserId = (
       const data = snapshot.val()
       setData(data)
     })
-  }, [])
+  }, [id])
 
   return { data }
 }

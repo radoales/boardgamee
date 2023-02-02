@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import {
   ActivityIndicator,
   LogBox,
@@ -9,29 +9,46 @@ import {
   View
 } from 'react-native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from '..'
 import PatitoInput from '../../../components/PatitoInput'
 import { Ionicons } from '@expo/vector-icons'
-import { useGetBoardgames } from '../../../hooks/games'
-import { Route } from '../../../utils/routes'
+import { useGetBoardgames, useGetBoardgamesByIds } from '../../../hooks/games'
 import SearchResult from '../../../components/search/SearchResult'
 import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 import globalStyles from '../../../styles/global'
 import colors from '../../../styles/colors'
 import { GameContext } from '../../../hooks/gameContext'
 import { Game } from '../../../types/boardgame'
+import { ProfileRootStackParamList } from '..'
+import { Route } from '../../../utils/routes'
+import { UseGetFavoritesByUserId } from '../../../hooks/favoriteGames'
+import { useAuth } from '../../../auth/AuthUserprovider'
 
-type Props = NativeStackScreenProps<RootStackParamList, Route.HOME_SEARCH>
+type Props = NativeStackScreenProps<
+  ProfileRootStackParamList,
+  Route.FAVORITE_GAMES_LIST
+>
 
-const HomeSearch = ({ navigation }: Props) => {
+const FavoriteGamesList = ({ navigation }: Props) => {
   const [inputText, setInputText] = useState<string>('')
-  const { results, isLoading } = useGetBoardgames(
+  const { user } = useAuth()
+  const { data: gameIds } = UseGetFavoritesByUserId(user.id)
+  const { results, isLoading } = useGetBoardgamesByIds(
     inputText,
     'id,name,type,average_user_rating,num_user_ratings,thumb_url'
   )
-  const { setSelectedGame } = useContext(GameContext)
+  //   const { setSelectedGame } = useContext(GameContext)
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular
+  })
+
+  useEffect(() => {
+    if (gameIds) {
+      setInputText(
+        Object.values(gameIds)
+          .map((id) => id.id)
+          .join(',')
+      )
+    }
   })
 
   const styles = StyleSheet.create({
@@ -50,21 +67,21 @@ const HomeSearch = ({ navigation }: Props) => {
     }
   })
 
-  const handlePress = (item: Game) => {
-    setSelectedGame(item)
-    navigation.navigate(Route.DETAIL)
-  }
+  //   const handlePress = (item: Game) => {
+  //     setSelectedGame(item)
+  //     // navigation.navigate(Route.DETAIL)
+  //   }
 
   return (
     <View style={[styles.container, globalStyles.container]}>
-      <PatitoInput
+      {/* <PatitoInput
         icon={<Ionicons name='search-sharp' size={24} color='black' />}
         onChange={(e) => setInputText(e.nativeEvent.text)}
-      />
+      /> */}
 
-      {!isLoading && !results && (
+      {/* {!isLoading && !results && (
         <Text style={styles.text}>Search using a boardgame name</Text>
-      )}
+      )} */}
       {isLoading && <ActivityIndicator size='large' />}
       {results && (
         <ScrollView>
@@ -73,7 +90,7 @@ const HomeSearch = ({ navigation }: Props) => {
               key={item.id}
               activeOpacity={0.6}
               underlayColor={colors.gray[200]}
-              onPress={() => handlePress(item)}
+              onPress={() => true}
             >
               <SearchResult data={item} />
             </TouchableHighlight>
@@ -84,4 +101,4 @@ const HomeSearch = ({ navigation }: Props) => {
   )
 }
 
-export default HomeSearch
+export default FavoriteGamesList

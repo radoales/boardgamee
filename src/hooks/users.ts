@@ -40,7 +40,8 @@ export const UseCreateUser = () => {
   const createUser = (id: string, email: string) => {
     const db = getDatabase()
     set(ref(db, `users/${id}`), {
-      email: email
+      email: email,
+      id
     })
       .then((data) => {
         setData(data)
@@ -59,7 +60,8 @@ export const UseUpdateUser = () => {
     const db = getDatabase()
     set(ref(db, `users/${id}`), {
       name,
-      email
+      email,
+      id
     })
       .then((data) => {
         setData(data)

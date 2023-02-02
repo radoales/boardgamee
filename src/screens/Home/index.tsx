@@ -5,7 +5,7 @@ import {
   Montserrat_400Regular,
   Montserrat_700Bold
 } from '@expo-google-fonts/montserrat'
-import useGetBoardgames from '../../hooks/useGetBoardgames'
+import { useGetBoardgames } from '../../hooks/games'
 import BoardGameScrollView from '../../components/scrollviews/BoardGamesScrollView'
 
 const Home: React.FC = () => {
