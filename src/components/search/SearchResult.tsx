@@ -6,7 +6,7 @@ import {
 import { Image, StyleSheet, Text, View } from 'react-native'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
-import { FontAwesome } from '@expo/vector-icons'
+import Rating from '../game/Rating'
 
 interface SearchResultProps {
   data: Game
@@ -17,9 +17,6 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
     Montserrat_400Regular,
     Montserrat_500Medium
   })
-  const ratingWhole = Math.floor(data.average_user_rating)
-  const ratingDecimal = data.average_user_rating - ratingWhole
-  const remaining = ratingDecimal > 0.3 ? 5 - ratingWhole - 1 : 5 - ratingWhole
 
   return (
     <View style={styles.container}>
@@ -30,31 +27,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
       <View style={styles.textContainer}>
         <Text style={styles.header}>{data.type}</Text>
         <Text style={styles.name}>{data.name}</Text>
-        <View style={styles.reviewContainer}>
-          {Array.from({ length: ratingWhole }).map((item, index) => (
-            <FontAwesome
-              key={index}
-              name='star'
-              size={24}
-              color={colors.orange}
-            />
-          ))}
-          {ratingDecimal > 0.3 && (
-            <FontAwesome
-              name='star-half-empty'
-              size={24}
-              color={colors.orange}
-            />
-          )}
-          {Array.from({ length: remaining }).map((item, index) => (
-            <FontAwesome
-              key={index}
-              name='star-o'
-              size={24}
-              color={colors.orange}
-            />
-          ))}
-        </View>
+        <Rating rating={data.average_user_rating} />
         <Text style={styles.rating}>
           {Math.round(data.num_user_ratings)} ratings
         </Text>
@@ -105,12 +78,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginBottom: 2
-  },
-  rating: {
-    fontFamily: 'Montserrat_500Medium',
-    fontSize: 14,
-    lineHeight: 24,
-    color: colors.gray[700]
   }
 })
 
