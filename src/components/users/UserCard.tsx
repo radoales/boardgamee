@@ -6,10 +6,10 @@ import {
 import { StyleSheet, Text, View } from 'react-native'
 import colors from '../../styles/colors'
 import { Ionicons } from '@expo/vector-icons'
-import { AuthUser } from '../../auth/AuthUserprovider'
+import { User } from '../../types/user'
 
 interface UserCardProps {
-  data: AuthUser
+  data: User
 }
 
 const UserCard: React.FC<UserCardProps> = ({ data }) => {

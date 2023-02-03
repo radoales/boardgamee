@@ -7,12 +7,7 @@ import {
   useSignIn,
   useSignUp
 } from '../hooks/auth'
-
-export interface AuthUser {
-  id: string
-  name: string
-  email: string
-}
+import { AuthUser } from '../models/user'
 
 interface ContextValue {
   user: AuthUser

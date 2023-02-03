@@ -13,7 +13,7 @@ import colors from '../../../styles/colors'
 import { ProfileRootStackParamList } from '..'
 import { UseGetUserFriendsById } from '../../../hooks/users'
 import { useAuth } from '../../../auth/AuthUserprovider'
-import UserCard from '../../../components/users/UserSearchResult'
+import UserCard from '../../../components/users/UserCard'
 
 type Props = NativeStackScreenProps<ProfileRootStackParamList, Route.FRIENDS>
 

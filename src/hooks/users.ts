@@ -2,18 +2,17 @@ import { useEffect, useState } from 'react'
 import { getDatabase, onValue, push, ref, set } from 'firebase/database'
 
 import { app } from '../../App'
-import { AuthUser } from '../auth/AuthUserprovider'
+import { User } from '../types/user'
 
-export const UseGetUsers = (): { data?: AuthUser[]; isLoading: boolean } => {
-  const [data, setData] = useState<AuthUser[]>()
+export const UseGetUsers = (): { data?: User[]; isLoading: boolean } => {
+  const [data, setData] = useState<User[]>()
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const db = getDatabase(app)
     const dbRef = ref(db, 'users')
     onValue(dbRef, (snapshot) => {
-      const data: { [key: string]: { accountDetails: AuthUser } } =
-        snapshot.val()
+      const data: { [key: string]: { accountDetails: User } } = snapshot.val()
       setData(Object.values(data).map((user) => user.accountDetails))
       setIsLoading(false)
     })
@@ -25,18 +24,17 @@ export const UseGetUsers = (): { data?: AuthUser[]; isLoading: boolean } => {
 export const UseGetUserFriendsById = (
   id: string
 ): {
-  data?: AuthUser[]
+  data?: User[]
   isLoading: boolean
 } => {
-  const [data, setData] = useState<AuthUser[]>()
+  const [data, setData] = useState<User[]>()
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const db = getDatabase(app)
     const dbRef = ref(db, `users/${id}/friends`)
     onValue(dbRef, (snapshot) => {
-      const data: { [key: string]: { accountDetails: AuthUser } } =
-        snapshot.val()
+      const data: { [key: string]: { accountDetails: User } } = snapshot.val()
       setData(Object.values(data).map((user) => user.accountDetails))
       setIsLoading(false)
     })
@@ -45,8 +43,8 @@ export const UseGetUserFriendsById = (
   return { data, isLoading }
 }
 
-export const UseGetUserById = (id: string): { data?: AuthUser } => {
-  const [data, setData] = useState<AuthUser>()
+export const UseGetUserById = (id: string): { data?: User } => {
+  const [data, setData] = useState<User>()
   useEffect(() => {
     const db = getDatabase(app)
     const dbRef = ref(db, `users/${id}`)
@@ -60,40 +58,48 @@ export const UseGetUserById = (id: string): { data?: AuthUser } => {
 }
 
 export const UseCreateUser = () => {
-  const [data, setData] = useState<any>()
+  const [error, setError] = useState<string>()
+  const [isSuccess, setIsSuccess] = useState<boolean>()
+  const [isError, setIsError] = useState<boolean>()
   const createUser = (id: string, email: string) => {
     const db = getDatabase()
     set(ref(db, `users/${id}/accountDetails`), {
       id,
       email
     })
-      .then((data) => {
-        setData(data)
+      .then(() => {
+        setIsSuccess(true)
       })
       .catch((error) => {
-        setData(error)
+        setIsError(true)
+        setError(error)
       })
   }
 
-  return { data, createUser }
+  return { createUser, isSuccess, isError, error }
 }
 
 export const UseUpdateUser = () => {
-  const [data, setData] = useState<any>()
+  const [error, setError] = useState<string>()
+  const [isSuccess, setIsSuccess] = useState<boolean>()
+  const [isError, setIsError] = useState<boolean>()
   const updateUser = (id: string, name: string, email: string) => {
+    setIsSuccess(undefined)
+    setIsError(undefined)
     const db = getDatabase()
     set(ref(db, `users/${id}/accountDetails`), {
       name,
       email,
       id
     })
-      .then((data) => {
-        setData(data)
+      .then(() => {
+        setIsSuccess(true)
       })
       .catch((error) => {
-        setData(error)
+        setIsError(true)
+        setError(error)
       })
   }
 
-  return { data, updateUser }
+  return { updateUser, isSuccess, isError, error }
 }

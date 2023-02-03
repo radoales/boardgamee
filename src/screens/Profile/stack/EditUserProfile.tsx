@@ -9,6 +9,7 @@ import { Route } from '../../../utils/routes'
 import PatitoInput from '../../../components/PatitoInput'
 import authStyles from './style'
 import { UseGetUserById, UseUpdateUser } from '../../../hooks/users'
+import { useFeedback } from '../../../hooks/feedback'
 
 type Props = NativeStackScreenProps<
   ProfileRootStackParamList,
@@ -20,13 +21,17 @@ const EditUserProfile = ({ navigation }: Props) => {
   const { user } = useAuth()
   const { data: userDetails } = UseGetUserById(user.id)
 
-  const { updateUser } = UseUpdateUser()
+  const { updateUser, error, isError, isSuccess } = UseUpdateUser()
 
   useEffect(() => {
     if (userDetails?.name) {
       setName(userDetails.name)
     }
   }, [userDetails])
+
+  console.log('isSuccess', isSuccess)
+
+  useFeedback(isSuccess, isError, error ?? 'success')
 
   return (
     <View style={authStyles.container}>
