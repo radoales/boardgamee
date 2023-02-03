@@ -52,13 +52,19 @@ const UserProfile = ({ navigation }: Props) => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Content</Text>
           <View style={styles.sectionContent}>
-            <View style={styles.sectionItemRow}>
-              <View style={styles.sectionItem}>
-                <Ionicons name='heart-outline' size={25} />
-                <Text style={styles.sectionItetitle}>Favourite Games</Text>
+            <TouchableHighlight
+              onPress={() => navigation.navigate(Route.FAVORITE_GAMES_LIST)}
+              activeOpacity={0.6}
+              underlayColor={colors.gray[200]}
+            >
+              <View style={styles.sectionItemRow}>
+                <View style={styles.sectionItem}>
+                  <Ionicons name='heart-outline' size={25} />
+                  <Text style={styles.sectionItetitle}>Favourite Games</Text>
+                </View>
+                <Ionicons name='chevron-forward' size={25} />
               </View>
-              <Ionicons name='chevron-forward' size={25} />
-            </View>
+            </TouchableHighlight>
             <TouchableHighlight
               onPress={() => navigation.navigate(Route.SEARCH_USERS)}
               activeOpacity={0.6}

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Boardgames } from '../types/boardgame'
 import useDebounce from './useDebounce'
 
-const useGetBoardgames = (search: string, fields?: string) => {
+export const useGetBoardgames = (search: string, fields?: string) => {
   const [results, setResults] = useState<Boardgames>()
   const [error, setError] = useState<string>()
   const [isLoading, setIsLoading] = useState(false)
@@ -44,4 +44,42 @@ const useGetBoardgames = (search: string, fields?: string) => {
   return { results, error, isLoading }
 }
 
-export default useGetBoardgames
+export const useGetBoardgamesByIds = (ids: string, fields?: string) => {
+  const [results, setResults] = useState<Boardgames>()
+  const [error, setError] = useState<string>()
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    if (ids.length) {
+      setIsLoading(true)
+    } else {
+      setIsLoading(false)
+      setResults(undefined)
+    }
+  }, [ids])
+
+  useEffect(() => {
+    if (ids.length) {
+      fetch(
+        `https://api.boardgameatlas.com/api/search?ids=${ids}&client_id=${PUBLIC_BOARDGAME_CLIENT_ID}&fuzzy_match=true&exact=true${
+          fields ? `&fields=${fields}` : ''
+        }`
+      )
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Network response was not OK')
+          }
+          return res.json()
+        })
+        .then((res) => {
+          setResults(res)
+          setIsLoading(false)
+        })
+        .catch((error) => {
+          setError(`fetch error: ${error}`)
+          setIsLoading(false)
+        })
+    }
+  }, [ids])
+  return { results, error, isLoading }
+}

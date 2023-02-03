@@ -31,6 +31,7 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
               rating={item.average_user_rating}
               index={index}
               length={data.length}
+              id={item.id}
             />
           ))}
       </ScrollView>
