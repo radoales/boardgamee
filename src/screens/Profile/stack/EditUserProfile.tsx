@@ -19,9 +19,10 @@ type Props = NativeStackScreenProps<
 const EditUserProfile = ({ navigation }: Props) => {
   const [name, setName] = useState<string>('')
   const { user } = useAuth()
-  const { data: userDetails } = UseGetUserById(user.id)
 
+  const { data: userDetails } = UseGetUserById(user.id)
   const { updateUser, error, isError, isSuccess } = UseUpdateUser()
+  useFeedback(isSuccess, isError, error ?? 'success')
 
   useEffect(() => {
     if (userDetails?.name) {
@@ -29,9 +30,11 @@ const EditUserProfile = ({ navigation }: Props) => {
     }
   }, [userDetails])
 
-  console.log('isSuccess', isSuccess)
-
-  useFeedback(isSuccess, isError, error ?? 'success')
+  useEffect(() => {
+    if (isSuccess) {
+      navigation.navigate(Route.USER_PROFILE)
+    }
+  }, [isSuccess])
 
   return (
     <View style={authStyles.container}>
