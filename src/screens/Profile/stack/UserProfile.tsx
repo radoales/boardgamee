@@ -66,7 +66,7 @@ const UserProfile = ({ navigation }: Props) => {
               </View>
             </TouchableHighlight>
             <TouchableHighlight
-              onPress={() => navigation.navigate(Route.SEARCH_USERS)}
+              onPress={() => navigation.navigate(Route.FRIENDS)}
               activeOpacity={0.6}
               underlayColor={colors.gray[200]}
             >

@@ -37,6 +37,7 @@ const FavoriteGamesList = ({ navigation }: Props) => {
     'id,name,type,average_user_rating,num_user_ratings,thumb_url'
   )
   //   const { setSelectedGame } = useContext(GameContext)
+
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular
   })

@@ -8,11 +8,11 @@ import colors from '../../styles/colors'
 import { Ionicons } from '@expo/vector-icons'
 import { AuthUser } from '../../auth/AuthUserprovider'
 
-interface UserSearchResultProps {
+interface UserCardProps {
   data: AuthUser
 }
 
-const UserSearchResult: React.FC<UserSearchResultProps> = ({ data }) => {
+const UserCard: React.FC<UserCardProps> = ({ data }) => {
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular,
     Montserrat_500Medium
@@ -27,7 +27,7 @@ const UserSearchResult: React.FC<UserSearchResultProps> = ({ data }) => {
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.name}>{data.name}</Text>
-        <Text style={styles.header}>{data.email}</Text>
+        <Text style={styles.header}>{data.username}</Text>
       </View>
     </View>
   )
@@ -74,4 +74,4 @@ const styles = StyleSheet.create({
     height: 50
   }
 })
-export default UserSearchResult
+export default UserCard

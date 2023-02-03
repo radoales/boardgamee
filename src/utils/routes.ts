@@ -9,6 +9,6 @@ export enum Route {
   USER_PROFILE = 'UserProfile',
   EDIT_USER_PROFILE = 'EditUserProfile',
   PASSWORD_RESET = 'PasswordReset',
-  SEARCH_USERS = 'SearchUsers',
+  FRIENDS = 'Friends',
   FAVORITE_GAMES_LIST = 'FavoriteGamesList'
 }

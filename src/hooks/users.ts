@@ -10,8 +10,31 @@ export const UseGetUsers = (): { data?: AuthUser[]; isLoading: boolean } => {
 
   useEffect(() => {
     const db = getDatabase(app)
-    const starCountRef = ref(db, 'users')
-    onValue(starCountRef, (snapshot) => {
+    const dbRef = ref(db, 'users')
+    onValue(dbRef, (snapshot) => {
+      const data: { [key: string]: { accountDetails: AuthUser } } =
+        snapshot.val()
+      setData(Object.values(data).map((user) => user.accountDetails))
+      setIsLoading(false)
+    })
+  }, [])
+
+  return { data, isLoading }
+}
+
+export const UseGetUserFriendsById = (
+  id: string
+): {
+  data?: AuthUser[]
+  isLoading: boolean
+} => {
+  const [data, setData] = useState<AuthUser[]>()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const db = getDatabase(app)
+    const dbRef = ref(db, `users/${id}/friends`)
+    onValue(dbRef, (snapshot) => {
       const data: { [key: string]: { accountDetails: AuthUser } } =
         snapshot.val()
       setData(Object.values(data).map((user) => user.accountDetails))
@@ -26,8 +49,8 @@ export const UseGetUserById = (id: string): { data?: AuthUser } => {
   const [data, setData] = useState<AuthUser>()
   useEffect(() => {
     const db = getDatabase(app)
-    const starCountRef = ref(db, `users/${id}`)
-    onValue(starCountRef, (snapshot) => {
+    const dbRef = ref(db, `users/${id}`)
+    onValue(dbRef, (snapshot) => {
       const data = snapshot.val()
       setData(data.accountDetails)
     })

@@ -3,54 +3,42 @@ import {
   ActivityIndicator,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableHighlight,
   View
 } from 'react-native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
-import PatitoInput from '../../../components/PatitoInput'
-import { Ionicons } from '@expo/vector-icons'
 import { Route } from '../../../utils/routes'
 import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 import colors from '../../../styles/colors'
 import { ProfileRootStackParamList } from '..'
-import { UseGetUsers } from '../../../hooks/users'
-import UserSearchResult from '../../../components/users/UserSearchResult'
+import { UseGetUserFriendsById } from '../../../hooks/users'
+import { useAuth } from '../../../auth/AuthUserprovider'
+import UserCard from '../../../components/users/UserSearchResult'
 
-type Props = NativeStackScreenProps<
-  ProfileRootStackParamList,
-  Route.SEARCH_USERS
->
+type Props = NativeStackScreenProps<ProfileRootStackParamList, Route.FRIENDS>
 
-const SearchUsers = ({ navigation }: Props) => {
-  const [inputText, setInputText] = useState<string>('')
-  const { data: users, isLoading } = UseGetUsers()
+const Friends = ({ navigation }: Props) => {
+  const { user } = useAuth()
+  const { data: users, isLoading } = UseGetUserFriendsById(user.id)
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular
   })
 
+  console.log('users', users)
+
   return (
     <View style={[styles.container]}>
-      <PatitoInput
-        icon={<Ionicons name='search-sharp' size={24} color='black' />}
-        onChange={(e) => setInputText(e.nativeEvent.text)}
-      />
-
-      {!isLoading && !users && (
-        <Text style={styles.text}>Search by name or email</Text>
-      )}
-
       {isLoading && <ActivityIndicator size='large' />}
       {users && (
         <ScrollView>
-          {Object.values(users).map((item, index) => (
+          {users.map((user, index) => (
             <TouchableHighlight
               key={index}
               activeOpacity={0.6}
               underlayColor={colors.gray[200]}
               onPress={() => true}
             >
-              <UserSearchResult data={item} />
+              <UserCard data={user} />
             </TouchableHighlight>
           ))}
         </ScrollView>
@@ -76,4 +64,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default SearchUsers
+export default Friends
