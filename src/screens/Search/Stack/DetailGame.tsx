@@ -1,11 +1,16 @@
 import { useContext } from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { GameContext } from '../../../hooks/gameContext'
-import Rating from '../../../components/game/Rating'
 import globalStyles from '../../../styles/global'
 import colors from '../../../styles/colors'
 import PatitoButton from '../../../components/PatitoButton'
 import { useAuth } from '../../../auth/AuthUserprovider'
+import {
+  UseAddGameToFavoritesWithUserId,
+  UseGetFavoritesByUserId,
+  UseRemoveGamefromFavoritesWithUserId
+} from '../../../hooks/favoriteGames'
+import Rating from '../../../components/game/Rating'
 
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center' },
@@ -44,21 +49,34 @@ const styles = StyleSheet.create({
   }
 })
 
-const DetailGame: React.FC = () => {
+const DetailGame: React.FC = ({ navigation }) => {
   const { selectedGame } = useContext(GameContext)
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
+  const { data: gameIds } = UseGetFavoritesByUserId(user.id)
+  const { addToFavorites } = UseAddGameToFavoritesWithUserId(
+    user?.id,
+    selectedGame.id
+  )
+  const { removeFromFavorites } = UseRemoveGamefromFavoritesWithUserId(
+    user.id,
+    selectedGame.id
+  )
 
   const handleAdd = () => {
     if (isAuthenticated) {
-      console.log('navigate to profile')
+      console.log('here', gameIds)
+      !gameIds?.includes(selectedGame.id)
+        ? addToFavorites(selectedGame.id)
+        : removeFromFavorites(selectedGame.id)
     } else {
       console.log('add')
+      navigation.navigate('Profile')
     }
   }
 
   return (
-    <>
-      <View style={[styles.container, globalStyles.container]}>
+    <View style={[styles.container, globalStyles.container]}>
+      <ScrollView style={{ width: '100%' }}>
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
@@ -74,10 +92,20 @@ const DetailGame: React.FC = () => {
           </View>
           <Text style={styles.type}>{selectedGame.type} </Text>
           <Text style={styles.title}>{selectedGame.name}</Text>
-          <PatitoButton title='Add to Favourites' onPress={handleAdd} />
+          <PatitoButton
+            type={!gameIds?.includes(selectedGame.id) ? 'primary' : 'secondary'}
+            style={{ borderRadius: 5 }}
+            onPress={handleAdd}
+            title={
+              !gameIds?.includes(selectedGame.id)
+                ? '+ Favorites'
+                : '- Favorites'
+            }
+          />
+          {/* <PatitoButton title='Add to Favourites' onPress={handleAdd} /> */}
         </View>
-      </View>
-    </>
+      </ScrollView>
+    </View>
   )
 }
 
