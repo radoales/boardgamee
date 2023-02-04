@@ -1,8 +1,5 @@
-export enum Route {
+export enum StackScreenRoute {
   HOME = 'Home',
-  HOME_TAB = 'HomeTab',
-  PROFILE = 'Profile',
-  SEARCH = 'Search',
   HOME_SEARCH = 'HomeSearch',
   GAME_DETAILS = 'GameDetails',
   LOG_IN = 'LogIn',
@@ -12,4 +9,10 @@ export enum Route {
   PASSWORD_RESET = 'PasswordReset',
   FRIENDS = 'Friends',
   FAVORITE_GAMES_LIST = 'FavoriteGamesList'
+}
+
+export enum TabScreenRoute {
+  HOME_TAB_SCREEN = 'HomeTabScreen',
+  PROFILE_TAB_SCREEN = 'ProfileTabScreen',
+  SEARCH_TAB_SCREEN = 'SearchTabScreen'
 }

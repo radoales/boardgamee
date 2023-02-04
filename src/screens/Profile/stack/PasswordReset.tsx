@@ -14,13 +14,13 @@ import { useAuth } from '../../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '..'
 import colors from '../../../styles/colors'
 import { emailRegex } from '../../../utils/regex'
-import { Route } from '../../../utils/routes'
+import { StackScreenRoute } from '../../../utils/routes'
 import PatitoInput from '../../../components/PatitoInput'
 import authStyles from './style'
 
 type Props = NativeStackScreenProps<
   ProfileRootStackParamList,
-  Route.PASSWORD_RESET
+  StackScreenRoute.PASSWORD_RESET
 >
 
 const PassswordReset = ({ navigation }: Props) => {
@@ -43,7 +43,7 @@ const PassswordReset = ({ navigation }: Props) => {
 
   useEffect(() => {
     if (resetPasswordError.isSuccess) {
-      navigation.navigate(Route.LOG_IN)
+      navigation.navigate(StackScreenRoute.LOG_IN)
     }
   }, [resetPasswordError])
 

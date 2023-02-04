@@ -12,7 +12,7 @@ import { RootStackParamList } from '..'
 import PatitoInput from '../../../components/PatitoInput'
 import { Ionicons } from '@expo/vector-icons'
 import { useGetBoardgames } from '../../../hooks/games'
-import { Route } from '../../../utils/routes'
+import { StackScreenRoute } from '../../../utils/routes'
 import SearchResult from '../../../components/search/SearchResult'
 import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 import globalStyles from '../../../styles/global'
@@ -20,7 +20,10 @@ import colors from '../../../styles/colors'
 import { GameContext } from '../../../hooks/gameContext'
 import { Game } from '../../../types/boardgame'
 
-type Props = NativeStackScreenProps<RootStackParamList, Route.HOME_SEARCH>
+type Props = NativeStackScreenProps<
+  RootStackParamList,
+  StackScreenRoute.HOME_SEARCH
+>
 
 const styles = StyleSheet.create({
   container: {
@@ -56,7 +59,7 @@ const HomeSearch = ({ navigation }: Props) => {
 
   const handlePress = (item: Game) => {
     setSelectedGame(item)
-    navigation.navigate(Route.GAME_DETAILS)
+    navigation.navigate(StackScreenRoute.GAME_DETAILS)
   }
 
   return (

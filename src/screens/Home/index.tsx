@@ -1,30 +1,30 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { useAuth } from '../../auth/AuthUserprovider'
 import { useEffect } from 'react'
-import { Route } from '../../utils/routes'
+import { StackScreenRoute } from '../../utils/routes'
 import HomeScreen from './stacks'
 import GameDetails from '../Search/Stack/DetailGame'
 
 export type HomeRootStackParamList = {
-  [Route.HOME]: undefined
-  [Route.GAME_DETAILS]: undefined
+  [StackScreenRoute.HOME]: undefined
+  [StackScreenRoute.GAME_DETAILS]: undefined
 }
 const Stack = createStackNavigator<HomeRootStackParamList>()
 
-const HomeTab = ({ navigation }: any) => {
+const HomeTabScreen = ({ navigation }: any) => {
   const { isAuthenticated } = useAuth()
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigation.navigate(Route.USER_PROFILE)
+      navigation.navigate(StackScreenRoute.USER_PROFILE)
     } else {
-      navigation.navigate(Route.LOG_IN)
+      navigation.navigate(StackScreenRoute.LOG_IN)
     }
   }, [isAuthenticated])
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={Route.HOME}
+        name={StackScreenRoute.HOME}
         component={HomeScreen}
         options={{
           title: '',
@@ -32,7 +32,7 @@ const HomeTab = ({ navigation }: any) => {
         }}
       />
       <Stack.Screen
-        name={Route.GAME_DETAILS}
+        name={StackScreenRoute.GAME_DETAILS}
         component={GameDetails}
         options={{
           title: '',
@@ -43,4 +43,4 @@ const HomeTab = ({ navigation }: any) => {
   )
 }
 
-export default HomeTab
+export default HomeTabScreen

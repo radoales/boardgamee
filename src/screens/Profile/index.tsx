@@ -3,41 +3,45 @@ import { useAuth } from '../../auth/AuthUserprovider'
 import SignIn from './stack/SignIn'
 import SignUp from './stack/SignUp'
 import { useEffect } from 'react'
-import { Route } from '../../utils/routes'
 import EditUserProfile from './stack/EditUserProfile'
 import PassswordReset from './stack/PasswordReset'
 import FavoriteGamesList from './stack/FavoriteGamesList'
 import UserProfile from './stack/UserProfile'
 import Friends from './stack/Friends'
+import { StackScreenRoute } from '../../utils/routes'
 
 export type ProfileRootStackParamList = {
-  [Route.LOG_IN]: undefined
-  [Route.SIGN_UP]: undefined
-  [Route.USER_PROFILE]: undefined
-  [Route.EDIT_USER_PROFILE]: undefined
-  [Route.PASSWORD_RESET]: undefined
-  [Route.FRIENDS]: undefined
-  [Route.FAVORITE_GAMES_LIST]: undefined
+  [StackScreenRoute.LOG_IN]: undefined
+  [StackScreenRoute.SIGN_UP]: undefined
+  [StackScreenRoute.USER_PROFILE]: undefined
+  [StackScreenRoute.EDIT_USER_PROFILE]: undefined
+  [StackScreenRoute.PASSWORD_RESET]: undefined
+  [StackScreenRoute.FRIENDS]: undefined
+  [StackScreenRoute.FAVORITE_GAMES_LIST]: undefined
 }
 
 const Stack = createStackNavigator<ProfileRootStackParamList>()
 
-const Profile = ({ navigation }: any) => {
+const ProfileTabScreen = ({ navigation }: any) => {
   const { isAuthenticated } = useAuth()
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigation.navigate(Route.USER_PROFILE)
+      navigation.navigate(StackScreenRoute.USER_PROFILE)
     } else {
-      navigation.navigate(Route.LOG_IN)
+      navigation.navigate(StackScreenRoute.LOG_IN)
     }
   }, [isAuthenticated])
   return (
     <Stack.Navigator
-      initialRouteName={isAuthenticated ? Route.USER_PROFILE : Route.LOG_IN}
+      initialRouteName={
+        isAuthenticated
+          ? StackScreenRoute.USER_PROFILE
+          : StackScreenRoute.LOG_IN
+      }
     >
       <Stack.Screen
-        name={Route.LOG_IN}
+        name={StackScreenRoute.LOG_IN}
         component={SignIn}
         options={{
           title: '',
@@ -45,7 +49,7 @@ const Profile = ({ navigation }: any) => {
         }}
       />
       <Stack.Screen
-        name={Route.SIGN_UP}
+        name={StackScreenRoute.SIGN_UP}
         component={SignUp}
         options={{
           title: '',
@@ -53,7 +57,7 @@ const Profile = ({ navigation }: any) => {
         }}
       />
       <Stack.Screen
-        name={Route.USER_PROFILE}
+        name={StackScreenRoute.USER_PROFILE}
         component={UserProfile}
         options={{
           title: '',
@@ -61,7 +65,7 @@ const Profile = ({ navigation }: any) => {
         }}
       />
       <Stack.Screen
-        name={Route.FRIENDS}
+        name={StackScreenRoute.FRIENDS}
         component={Friends}
         options={{
           title: '',
@@ -69,7 +73,7 @@ const Profile = ({ navigation }: any) => {
         }}
       />
       <Stack.Screen
-        name={Route.FAVORITE_GAMES_LIST}
+        name={StackScreenRoute.FAVORITE_GAMES_LIST}
         component={FavoriteGamesList}
         options={{
           title: '',
@@ -77,7 +81,7 @@ const Profile = ({ navigation }: any) => {
         }}
       />
       <Stack.Screen
-        name={Route.EDIT_USER_PROFILE}
+        name={StackScreenRoute.EDIT_USER_PROFILE}
         component={EditUserProfile}
         options={{
           title: '',
@@ -85,7 +89,7 @@ const Profile = ({ navigation }: any) => {
         }}
       />
       <Stack.Screen
-        name={Route.PASSWORD_RESET}
+        name={StackScreenRoute.PASSWORD_RESET}
         component={PassswordReset}
         options={{
           title: '',
@@ -96,4 +100,4 @@ const Profile = ({ navigation }: any) => {
   )
 }
 
-export default Profile
+export default ProfileTabScreen

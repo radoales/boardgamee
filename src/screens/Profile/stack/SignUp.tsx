@@ -8,9 +8,12 @@ import colors from '../../../styles/colors'
 import PatitoInput from '../../../components/PatitoInput'
 import authStyles from './style'
 import { UseCreateUser } from '../../../hooks/users'
-import { Route } from '../../../utils/routes'
+import { StackScreenRoute } from '../../../utils/routes'
 
-type Props = NativeStackScreenProps<ProfileRootStackParamList, Route.SIGN_UP>
+type Props = NativeStackScreenProps<
+  ProfileRootStackParamList,
+  StackScreenRoute.SIGN_UP
+>
 
 const SignUp = ({ navigation }: Props) => {
   const [email, setEmail] = useState<string>()
@@ -92,7 +95,7 @@ const SignUp = ({ navigation }: Props) => {
           </View>
           <Text
             style={authStyles.link}
-            onPress={() => navigation.navigate(Route.LOG_IN)}
+            onPress={() => navigation.navigate(StackScreenRoute.LOG_IN)}
           >
             HAVE AN ACCOUNT?
           </Text>

@@ -10,14 +10,14 @@ import {
 import { useAuth } from '../../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '..'
 import colors from '../../../styles/colors'
-import { Route } from '../../../utils/routes'
+import { StackScreenRoute } from '../../../utils/routes'
 import authStyles from './style'
 import PatitoButton from '../../../components/PatitoButton'
 import { UseGetUserById } from '../../../hooks/users'
 
 type Props = NativeStackScreenProps<
   ProfileRootStackParamList,
-  Route.USER_PROFILE
+  StackScreenRoute.USER_PROFILE
 >
 
 const UserProfile = ({ navigation }: Props) => {
@@ -42,7 +42,9 @@ const UserProfile = ({ navigation }: Props) => {
           <View style={authStyles.button}>
             <PatitoButton
               title='Edit profile'
-              onPress={() => navigation.navigate(Route.EDIT_USER_PROFILE)}
+              onPress={() =>
+                navigation.navigate(StackScreenRoute.EDIT_USER_PROFILE)
+              }
             />
           </View>
           <View style={authStyles.button}>
@@ -53,7 +55,9 @@ const UserProfile = ({ navigation }: Props) => {
           <Text style={styles.sectionTitle}>Content</Text>
           <View style={styles.sectionContent}>
             <TouchableHighlight
-              onPress={() => navigation.navigate(Route.FAVORITE_GAMES_LIST)}
+              onPress={() =>
+                navigation.navigate(StackScreenRoute.FAVORITE_GAMES_LIST)
+              }
               activeOpacity={0.6}
               underlayColor={colors.gray[200]}
             >
@@ -66,7 +70,7 @@ const UserProfile = ({ navigation }: Props) => {
               </View>
             </TouchableHighlight>
             <TouchableHighlight
-              onPress={() => navigation.navigate(Route.FRIENDS)}
+              onPress={() => navigation.navigate(StackScreenRoute.FRIENDS)}
               activeOpacity={0.6}
               underlayColor={colors.gray[200]}
             >

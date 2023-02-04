@@ -14,11 +14,14 @@ import { useAuth } from '../../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '..'
 import colors from '../../../styles/colors'
 import { emailRegex } from '../../../utils/regex'
-import { Route } from '../../../utils/routes'
 import PatitoInput from '../../../components/PatitoInput'
 import authStyles from './style'
+import { StackScreenRoute } from '../../../utils/routes'
 
-type Props = NativeStackScreenProps<ProfileRootStackParamList, Route.LOG_IN>
+type Props = NativeStackScreenProps<
+  ProfileRootStackParamList,
+  StackScreenRoute.LOG_IN
+>
 
 const SignIn = ({ navigation }: Props) => {
   const [email, setEmail] = useState<string>()
@@ -96,7 +99,7 @@ const SignIn = ({ navigation }: Props) => {
         <View style={authStyles.center}>
           <Text
             style={authStyles.link}
-            onPress={() => navigation.navigate(Route.PASSWORD_RESET)}
+            onPress={() => navigation.navigate(StackScreenRoute.PASSWORD_RESET)}
           >
             forgot password?
           </Text>
@@ -105,7 +108,7 @@ const SignIn = ({ navigation }: Props) => {
           <Text>Not a user yet? - </Text>
           <Text
             style={authStyles.link}
-            onPress={() => navigation.navigate(Route.SIGN_UP)}
+            onPress={() => navigation.navigate(StackScreenRoute.SIGN_UP)}
           >
             Create an account
           </Text>

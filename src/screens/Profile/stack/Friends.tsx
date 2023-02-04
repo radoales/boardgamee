@@ -7,7 +7,7 @@ import {
   View
 } from 'react-native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { Route } from '../../../utils/routes'
+import { StackScreenRoute } from '../../../utils/routes'
 import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 import colors from '../../../styles/colors'
 import { ProfileRootStackParamList } from '..'
@@ -15,7 +15,10 @@ import { UseGetUserFriendsById } from '../../../hooks/users'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import UserCard from '../../../components/users/UserCard'
 
-type Props = NativeStackScreenProps<ProfileRootStackParamList, Route.FRIENDS>
+type Props = NativeStackScreenProps<
+  ProfileRootStackParamList,
+  StackScreenRoute.FRIENDS
+>
 
 const Friends = ({ navigation }: Props) => {
   const { user } = useAuth()

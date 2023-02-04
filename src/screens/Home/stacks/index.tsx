@@ -5,17 +5,19 @@ import {
   Montserrat_400Regular,
   Montserrat_700Bold
 } from '@expo-google-fonts/montserrat'
-import { useGetBoardgames } from '../../../hooks/games'
+import { useGetBoardgames, useGetPopularBoardgames } from '../../../hooks/games'
 import BoardGameScrollView from '../../../components/scrollviews/BoardGamesScrollView'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { HomeRootStackParamList } from '..'
-import { Route } from '../../../utils/routes'
+import { StackScreenRoute } from '../../../utils/routes'
 
-type Props = NativeStackScreenProps<HomeRootStackParamList, Route.HOME>
+type Props = NativeStackScreenProps<
+  HomeRootStackParamList,
+  StackScreenRoute.HOME
+>
 
 const HomeScreen = ({ navigation }: Props) => {
-  const { results } = useGetBoardgames(
-    'catan',
+  const { results } = useGetPopularBoardgames(
     'id,name,type,average_user_rating,num_user_ratings,thumb_url,min_players,max_players'
   )
   let [fontsLoaded] = useFonts({

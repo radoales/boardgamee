@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import HomeTab from '../../screens/Home'
-import Profile from '../../screens/Profile'
-import SearchStack from '../../screens/Search'
-import { Route } from '../../utils/routes'
+import { TabScreenRoute } from '../utils/routes'
+import HomeTabScreen from './Home'
+import ProfileTabScreen from './Profile'
+import SearchTabScreen from './Search'
 
 const Tab = createBottomTabNavigator()
 
@@ -13,11 +13,11 @@ const TabMenuStackNaigator: React.FC = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName
-          if (route.name === Route.HOME) {
+          if (route.name === TabScreenRoute.HOME_TAB_SCREEN) {
             iconName = focused ? 'home' : 'home-outline'
-          } else if (route.name === Route.SEARCH) {
+          } else if (route.name === TabScreenRoute.SEARCH_TAB_SCREEN) {
             iconName = focused ? 'search' : 'search-outline'
-          } else if (route.name === Route.PROFILE) {
+          } else if (route.name === TabScreenRoute.PROFILE_TAB_SCREEN) {
             iconName = focused ? 'person' : 'person-outline'
           }
           return <Ionicons name={iconName as any} size={size} color={color} />
@@ -26,18 +26,18 @@ const TabMenuStackNaigator: React.FC = () => {
       })}
     >
       <Tab.Screen
-        name={Route.HOME_TAB}
-        component={HomeTab}
+        name={TabScreenRoute.HOME_TAB_SCREEN}
+        component={HomeTabScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={Route.PROFILE}
-        component={Profile}
+        name={TabScreenRoute.PROFILE_TAB_SCREEN}
+        component={ProfileTabScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={Route.SEARCH}
-        component={SearchStack}
+        name={TabScreenRoute.SEARCH_TAB_SCREEN}
+        component={SearchTabScreen}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>

@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import ResultList from './Stack/ResultList'
 import HomeSearch from './Stack/HomeSearch'
-import { Route } from '../../utils/routes'
+import { StackScreenRoute } from '../../utils/routes'
 import GameDetails from './Stack/DetailGame'
 
 export type RootStackParamList = {
@@ -11,16 +11,16 @@ export type RootStackParamList = {
 
 const Stack = createStackNavigator<RootStackParamList>()
 
-const SearchStack = () => {
+const SearchTabScreen = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={Route.HOME_SEARCH}
+        name={StackScreenRoute.HOME_SEARCH}
         component={HomeSearch}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name={Route.GAME_DETAILS}
+        name={StackScreenRoute.GAME_DETAILS}
         component={GameDetails}
         options={{ headerTitle: '', headerTransparent: true }}
       />
@@ -28,4 +28,4 @@ const SearchStack = () => {
   )
 }
 
-export default SearchStack
+export default SearchTabScreen

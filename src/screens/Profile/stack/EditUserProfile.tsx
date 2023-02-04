@@ -5,7 +5,7 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import { ProfileRootStackParamList } from '..'
 import colors from '../../../styles/colors'
-import { Route } from '../../../utils/routes'
+import { StackScreenRoute } from '../../../utils/routes'
 import PatitoInput from '../../../components/PatitoInput'
 import authStyles from './style'
 import { UseGetUserById, UseUpdateUser } from '../../../hooks/users'
@@ -13,7 +13,7 @@ import { useFeedback } from '../../../hooks/feedback'
 
 type Props = NativeStackScreenProps<
   ProfileRootStackParamList,
-  Route.EDIT_USER_PROFILE
+  StackScreenRoute.EDIT_USER_PROFILE
 >
 
 const EditUserProfile = ({ navigation }: Props) => {
@@ -32,7 +32,7 @@ const EditUserProfile = ({ navigation }: Props) => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigation.navigate(Route.USER_PROFILE)
+      navigation.navigate(StackScreenRoute.USER_PROFILE)
     }
   }, [isSuccess])
 

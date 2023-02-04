@@ -19,13 +19,13 @@ import colors from '../../../styles/colors'
 import { GameContext } from '../../../hooks/gameContext'
 import { Game } from '../../../types/boardgame'
 import { ProfileRootStackParamList } from '..'
-import { Route } from '../../../utils/routes'
+import { StackScreenRoute } from '../../../utils/routes'
 import { UseGetFavoritesByUserId } from '../../../hooks/favoriteGames'
 import { useAuth } from '../../../auth/AuthUserprovider'
 
 type Props = NativeStackScreenProps<
   ProfileRootStackParamList,
-  Route.FAVORITE_GAMES_LIST
+  StackScreenRoute.FAVORITE_GAMES_LIST
 >
 
 const FavoriteGamesList = ({ navigation }: Props) => {
@@ -67,7 +67,7 @@ const FavoriteGamesList = ({ navigation }: Props) => {
 
   //   const handlePress = (item: Game) => {
   //     setSelectedGame(item)
-  //     // navigation.navigate(Route.DETAIL)
+  //     // navigation.navigate(StackScreenRoute.DETAIL)
   //   }
 
   return (

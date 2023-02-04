@@ -16,7 +16,7 @@ import { GameContext } from '../../hooks/gameContext'
 import { HomeRootStackParamList } from '../../screens/Home'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
-import { Route } from '../../utils/routes'
+import { StackScreenRoute } from '../../utils/routes'
 import ScrollViewCard from '../cards/ScrollViewCard'
 
 interface BoardGameScrollViewProps {
@@ -32,7 +32,7 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
   const { setSelectedGame } = useContext(GameContext)
   const handlePress = (item: Game) => {
     setSelectedGame(item)
-    navigate(Route.GAME_DETAILS)
+    navigate(StackScreenRoute.GAME_DETAILS)
   }
 
   return (
