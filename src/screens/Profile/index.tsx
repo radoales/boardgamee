@@ -19,6 +19,7 @@ export type ProfileRootStackParamList = {
   [Route.FRIENDS]: undefined
   [Route.FAVORITE_GAMES_LIST]: undefined
 }
+
 const Stack = createStackNavigator<ProfileRootStackParamList>()
 
 const Profile = ({ navigation }: any) => {

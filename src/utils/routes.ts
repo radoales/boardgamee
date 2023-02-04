@@ -1,5 +1,6 @@
 export enum Route {
   HOME = 'Home',
+  HOME_TAB = 'HomeTab',
   PROFILE = 'Profile',
   SEARCH = 'Search',
   HOME_SEARCH = 'HomeSearch',

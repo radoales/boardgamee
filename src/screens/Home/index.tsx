@@ -11,7 +11,7 @@ export type HomeRootStackParamList = {
 }
 const Stack = createStackNavigator<HomeRootStackParamList>()
 
-const Home = ({ navigation }: any) => {
+const HomeTab = ({ navigation }: any) => {
   const { isAuthenticated } = useAuth()
 
   useEffect(() => {
@@ -43,4 +43,4 @@ const Home = ({ navigation }: any) => {
   )
 }
 
-export default Home
+export default HomeTab

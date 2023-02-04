@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Home from '../../screens/Home'
+import HomeTab from '../../screens/Home'
 import Profile from '../../screens/Profile'
 import SearchStack from '../../screens/Search'
 import { Route } from '../../utils/routes'
@@ -26,8 +26,8 @@ const TabMenuStackNaigator: React.FC = () => {
       })}
     >
       <Tab.Screen
-        name={Route.HOME}
-        component={Home}
+        name={Route.HOME_TAB}
+        component={HomeTab}
         options={{ headerShown: false }}
       />
       <Tab.Screen

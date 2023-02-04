@@ -19,7 +19,8 @@ const HomeScreen = ({ navigation }: Props) => {
     'id,name,type,average_user_rating,num_user_ratings,thumb_url,min_players,max_players'
   )
   let [fontsLoaded] = useFonts({
-    Montserrat_400Regular
+    Montserrat_400Regular,
+    Montserrat_700Bold
   })
 
   if (!fontsLoaded) {
