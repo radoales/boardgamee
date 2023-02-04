@@ -14,14 +14,18 @@ import { Route } from '../../../utils/routes'
 type Props = NativeStackScreenProps<HomeRootStackParamList, Route.HOME>
 
 const HomeScreen = ({ navigation }: Props) => {
+  const { results } = useGetBoardgames(
+    'catan',
+    'id,name,type,average_user_rating,num_user_ratings,thumb_url,min_players,max_players'
+  )
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular
   })
 
-  const { results, isLoading } = useGetBoardgames(
-    'catan',
-    'id,name,type,average_user_rating,num_user_ratings,thumb_url,min_players,max_players'
-  )
+  if (!fontsLoaded) {
+    return null
+  }
+
   return (
     <View style={[styles.container]}>
       {results?.games?.length && (
