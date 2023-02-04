@@ -2,11 +2,11 @@ import { createStackNavigator } from '@react-navigation/stack'
 import ResultList from './Stack/ResultList'
 import HomeSearch from './Stack/HomeSearch'
 import { Route } from '../../utils/routes'
-import DetailGame from './Stack/DetailGame'
+import GameDetails from './Stack/DetailGame'
 
 export type RootStackParamList = {
   HomeSearch: undefined
-  Detail: undefined
+  GameDetails: undefined
 }
 
 const Stack = createStackNavigator<RootStackParamList>()
@@ -20,8 +20,8 @@ const SearchStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name={Route.DETAIL}
-        component={DetailGame}
+        name={Route.GAME_DETAILS}
+        component={GameDetails}
         options={{ headerTitle: '', headerTransparent: true }}
       />
     </Stack.Navigator>

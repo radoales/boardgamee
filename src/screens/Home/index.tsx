@@ -2,12 +2,12 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { useAuth } from '../../auth/AuthUserprovider'
 import { useEffect } from 'react'
 import { Route } from '../../utils/routes'
-import DetailGame from '../Search/Stack/DetailGame'
 import HomeScreen from './stacks'
+import GameDetails from '../Search/Stack/DetailGame'
 
 export type HomeRootStackParamList = {
   [Route.HOME]: undefined
-  [Route.DETAIL]: undefined
+  [Route.GAME_DETAILS]: undefined
 }
 const Stack = createStackNavigator<HomeRootStackParamList>()
 
@@ -32,8 +32,8 @@ const Home = ({ navigation }: any) => {
         }}
       />
       <Stack.Screen
-        name={Route.DETAIL}
-        component={DetailGame}
+        name={Route.GAME_DETAILS}
+        component={GameDetails}
         options={{
           title: '',
           headerTitleAlign: 'center'

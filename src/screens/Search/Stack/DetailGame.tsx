@@ -11,9 +11,11 @@ import {
   UseRemoveGamefromFavoritesWithUserId
 } from '../../../hooks/favoriteGames'
 import Rating from '../../../components/game/Rating'
+import { RootStackParamList } from '..'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center' },
+  container: { flex: 1, alignItems: 'center', backgroundColor: colors.white },
   imageContainer: {
     height: 370,
     width: '100%',
@@ -49,28 +51,24 @@ const styles = StyleSheet.create({
   }
 })
 
-const DetailGame: React.FC = ({ navigation }) => {
+type Props = NavigationProp<RootStackParamList>
+
+const GameDetails: React.FC = () => {
+  const navigation = useNavigation<Props>()
   const { selectedGame } = useContext(GameContext)
   const { isAuthenticated, user } = useAuth()
   const { data: gameIds } = UseGetFavoritesByUserId(user.id)
-  const { addToFavorites } = UseAddGameToFavoritesWithUserId(
-    user?.id,
-    selectedGame.id
-  )
+  const { addToFavorites } = UseAddGameToFavoritesWithUserId(user.id, gameIds)
   const { removeFromFavorites } = UseRemoveGamefromFavoritesWithUserId(
     user.id,
-    selectedGame.id
+    gameIds
   )
 
   const handleAdd = () => {
     if (isAuthenticated) {
-      console.log('here', gameIds)
       !gameIds?.includes(selectedGame.id)
         ? addToFavorites(selectedGame.id)
         : removeFromFavorites(selectedGame.id)
-    } else {
-      console.log('add')
-      navigation.navigate('Profile')
     }
   }
 
@@ -102,11 +100,10 @@ const DetailGame: React.FC = ({ navigation }) => {
                 : '- Favorites'
             }
           />
-          {/* <PatitoButton title='Add to Favourites' onPress={handleAdd} /> */}
         </View>
       </ScrollView>
     </View>
   )
 }
 
-export default DetailGame
+export default GameDetails

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import {
   ActivityIndicator,
   ScrollView,
@@ -56,7 +56,7 @@ const HomeSearch = ({ navigation }: Props) => {
 
   const handlePress = (item: Game) => {
     setSelectedGame(item)
-    navigation.navigate(Route.DETAIL)
+    navigation.navigate(Route.GAME_DETAILS)
   }
 
   return (

@@ -3,7 +3,7 @@ export enum Route {
   PROFILE = 'Profile',
   SEARCH = 'Search',
   HOME_SEARCH = 'HomeSearch',
-  DETAIL = 'Detail',
+  GAME_DETAILS = 'GameDetails',
   LOG_IN = 'LogIn',
   SIGN_UP = 'SignUp',
   USER_PROFILE = 'UserProfile',
