@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import {
   ActivityIndicator,
   ScrollView,
@@ -45,9 +45,14 @@ const HomeSearch = ({ navigation }: Props) => {
     'id,name,type,average_user_rating,num_user_ratings,thumb_url'
   )
   const { setSelectedGame } = useContext(GameContext)
+
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular
   })
+
+  if (!fontsLoaded) {
+    return null
+  }
 
   const handlePress = (item: Game) => {
     setSelectedGame(item)
@@ -55,35 +60,31 @@ const HomeSearch = ({ navigation }: Props) => {
   }
 
   return (
-    <>
-      {fontsLoaded && (
-        <View style={[styles.container, globalStyles.container]}>
-          <PatitoInput
-            icon={<Ionicons name='search-sharp' size={24} color='black' />}
-            onChange={(e) => setInputText(e.nativeEvent.text)}
-          />
+    <View style={[styles.container, globalStyles.container]}>
+      <PatitoInput
+        icon={<Ionicons name='search-sharp' size={24} color='black' />}
+        onChange={(e) => setInputText(e.nativeEvent.text)}
+      />
 
-          {!isLoading && !results && (
-            <Text style={styles.text}>Search using a boardgame name</Text>
-          )}
-          {isLoading && <ActivityIndicator size='large' />}
-          {results && (
-            <ScrollView>
-              {results.games.map((item) => (
-                <TouchableHighlight
-                  key={item.id}
-                  activeOpacity={0.6}
-                  underlayColor={colors.gray[200]}
-                  onPress={() => handlePress(item)}
-                >
-                  <SearchResult data={item} />
-                </TouchableHighlight>
-              ))}
-            </ScrollView>
-          )}
-        </View>
+      {!isLoading && !results && (
+        <Text style={styles.text}>Search using a boardgame name</Text>
       )}
-    </>
+      {isLoading && <ActivityIndicator size='large' />}
+      {results && (
+        <ScrollView>
+          {results.games.map((item) => (
+            <TouchableHighlight
+              key={item.id}
+              activeOpacity={0.6}
+              underlayColor={colors.gray[200]}
+              onPress={() => handlePress(item)}
+            >
+              <SearchResult data={item} />
+            </TouchableHighlight>
+          ))}
+        </ScrollView>
+      )}
+    </View>
   )
 }
 

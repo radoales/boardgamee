@@ -17,7 +17,9 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
     Montserrat_400Regular,
     Montserrat_500Medium
   })
-
+  if (!fontsLoaded) {
+    return null
+  }
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -73,11 +75,11 @@ const styles = StyleSheet.create({
     color: '#000',
     marginBottom: 2
   },
-  reviewContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginBottom: 2
+  rating: {
+    fontFamily: 'Montserrat_500Medium',
+    fontSize: 14,
+    lineHeight: 24,
+    color: colors.gray[700]
   }
 })
 
