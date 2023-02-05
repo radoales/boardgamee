@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { TabScreenRoute } from '../utils/routes'
 import HomeTabScreen from './home'
@@ -19,17 +19,23 @@ const TabMenuStackNaigator: React.FC = () => {
           if (route.name === TabScreenRoute.HOME_TAB_SCREEN) {
             iconName = focused ? 'home' : 'home-outline'
           } else if (route.name === TabScreenRoute.MY_GAMES_TAB_SCREEN) {
-            iconName = focused ? 'game-controller' : 'game-controller-outline'
+            iconName = focused ? 'dice-multiple' : 'dice-multiple-outline'
           } else if (route.name === TabScreenRoute.SEARCH_TAB_SCREEN) {
             iconName = focused ? 'search' : 'search-outline'
           } else if (route.name === TabScreenRoute.PROFILE_TAB_SCREEN) {
             iconName = focused ? 'person' : 'person-outline'
           }
-          return (
+          return route.name === TabScreenRoute.MY_GAMES_TAB_SCREEN ? (
+            <MaterialCommunityIcons
+              name={iconName as any}
+              size={size}
+              color={colors.blue[600]}
+            />
+          ) : (
             <Ionicons
               name={iconName as any}
               size={size}
-              color={colors.blue[500]}
+              color={colors.blue[600]}
             />
           )
         },
