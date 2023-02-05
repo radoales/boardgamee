@@ -1,10 +1,10 @@
 import { Ionicons } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { TabScreenRoute } from '../utils/routes'
-import HomeTabScreen from './_home'
-import ProfileTabScreen from './_profile'
+import HomeTabScreen from './home'
+import ProfileTabScreen from './profile'
 import MyGames from './myGames/stack/MyGames'
-import SearchTabScreen from './_search'
+import SearchTabScreen from './search'
 import MyGamesTabScreen from './myGames'
 
 const Tab = createBottomTabNavigator()
