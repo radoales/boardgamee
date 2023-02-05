@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
-import HomeSearch from './Stack/HomeSearch'
 import { StackScreenRoute } from '../../utils/routes'
 import GameDetails from './Stack/DetailGame'
+import SearchList from './Stack/SearchList'
 
 export type SearchRootStackParamList = {
   [StackScreenRoute.SEARCH_LIST]: undefined
@@ -15,7 +15,7 @@ const SearchTabScreen = () => {
     <Stack.Navigator>
       <Stack.Screen
         name={StackScreenRoute.SEARCH_LIST}
-        component={HomeSearch}
+        component={SearchList}
         options={{ headerShown: false }}
       />
       <Stack.Screen

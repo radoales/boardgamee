@@ -6,6 +6,7 @@ import ProfileTabScreen from './profile'
 import MyGames from './myGames/stack/MyGames'
 import SearchTabScreen from './search'
 import MyGamesTabScreen from './myGames'
+import colors from '../styles/colors'
 
 const Tab = createBottomTabNavigator()
 
@@ -24,7 +25,13 @@ const TabMenuStackNaigator: React.FC = () => {
           } else if (route.name === TabScreenRoute.PROFILE_TAB_SCREEN) {
             iconName = focused ? 'person' : 'person-outline'
           }
-          return <Ionicons name={iconName as any} size={size} color={color} />
+          return (
+            <Ionicons
+              name={iconName as any}
+              size={size}
+              color={colors.blue[500]}
+            />
+          )
         },
         tabBarStyle: { padding: 5 }
       })}

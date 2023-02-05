@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'flex-start',
     flex: 1,
-    padding: '2%'
+    paddingTop: '8%',
+    backgroundColor: colors.white
   },
   text: {
     margin: 'auto',
@@ -34,6 +35,14 @@ const styles = StyleSheet.create({
     marginVertical: 'auto',
     flex: 1,
     fontFamily: 'Montserrat_400Regular'
+  },
+  touchable: {
+    width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.gray[400]
+  },
+  searchResultContainer: {
+    paddingHorizontal: '3%'
   }
 })
 
@@ -59,10 +68,11 @@ const SearchList: React.FC<SearchListScreenRouteProp> = ({ navigation }) => {
   }
 
   return (
-    <View style={[styles.container, globalStyles.container]}>
+    <View style={[styles.container]}>
       <PatitoInput
         icon={<Ionicons name='search-sharp' size={24} color='black' />}
         onChange={(e) => setInputText(e.nativeEvent.text)}
+        style={{ paddingHorizontal: '3%' }}
       />
 
       {!isLoading && !results && (
@@ -77,8 +87,11 @@ const SearchList: React.FC<SearchListScreenRouteProp> = ({ navigation }) => {
               activeOpacity={0.6}
               underlayColor={colors.gray[200]}
               onPress={() => handlePress(item)}
+              style={styles.touchable}
             >
-              <SearchResult data={item} />
+              <View style={styles.searchResultContainer}>
+                <SearchResult data={item} />
+              </View>
             </TouchableHighlight>
           ))}
         </ScrollView>

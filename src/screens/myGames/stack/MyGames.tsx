@@ -53,8 +53,11 @@ const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
               activeOpacity={0.6}
               underlayColor={colors.gray[200]}
               onPress={() => handlePress(item)}
+              style={styles.touchable}
             >
-              <SearchResult data={item} />
+              <View style={styles.searchResultContainer}>
+                <SearchResult data={item} />
+              </View>
             </TouchableHighlight>
           ))}
         </ScrollView>
@@ -68,7 +71,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     paddingTop: '8%',
-    paddingHorizontal: '3%',
     width: '100%'
   },
   text: {
@@ -77,6 +79,14 @@ const styles = StyleSheet.create({
     marginVertical: 'auto',
     flex: 1,
     fontFamily: 'Montserrat_400Regular'
+  },
+  touchable: {
+    width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.gray[400]
+  },
+  searchResultContainer: {
+    paddingHorizontal: '3%'
   }
 })
 

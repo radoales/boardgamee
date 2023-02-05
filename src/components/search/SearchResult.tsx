@@ -50,7 +50,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
           </Text>
         </View>
       </View>
-      <View>
+      <View style={styles.heartIcon}>
         <FontAwesome
           onPress={() =>
             !gameIds?.includes(data.id)
@@ -115,6 +115,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 24,
     color: colors.gray[700]
+  },
+  heartIcon: {
+    paddingRight: 10
   }
 })
 
