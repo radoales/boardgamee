@@ -8,7 +8,7 @@ import PassswordReset from './stack/PasswordReset'
 import Friends from './stack/Friends'
 import { StackScreenRoute } from '../../utils/routes'
 import UserProfile from './stack/UserProfile'
-import GameDetails from '../Search/Stack/DetailGame'
+import GameDetails from '../_search/Stack/DetailGame'
 
 export type ProfileRootStackParamList = {
   [StackScreenRoute.LOG_IN]: undefined

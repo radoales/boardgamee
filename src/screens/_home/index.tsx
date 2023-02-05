@@ -3,7 +3,7 @@ import { useAuth } from '../../auth/AuthUserprovider'
 import { useEffect } from 'react'
 import { StackScreenRoute } from '../../utils/routes'
 import HomeScreen from './stacks'
-import GameDetails from '../Search/Stack/DetailGame'
+import GameDetails from '../_search/Stack/DetailGame'
 
 export type HomeRootStackParamList = {
   [StackScreenRoute.HOME]: undefined

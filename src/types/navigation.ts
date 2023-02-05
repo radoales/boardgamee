@@ -1,8 +1,8 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { HomeRootStackParamList } from '../screens/Home'
+import { HomeRootStackParamList } from '../screens/_home'
 import { MyGamesRootStackParamList } from '../screens/myGames'
-import { ProfileRootStackParamList } from '../screens/Profile'
-import { SearchRootStackParamList } from '../screens/Search'
+import { ProfileRootStackParamList } from '../screens/_profile'
+import { SearchRootStackParamList } from '../screens/_search'
 import { StackScreenRoute } from '../utils/routes'
 
 export type SignInScreenRouteProp = NativeStackScreenProps<

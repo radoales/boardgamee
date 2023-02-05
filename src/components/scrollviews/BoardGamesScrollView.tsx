@@ -13,7 +13,7 @@ import {
   View
 } from 'react-native'
 import { GameContext } from '../../hooks/gameContext'
-import { HomeRootStackParamList } from '../../screens/Home'
+import { HomeRootStackParamList } from '../../screens/_home'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
 import { StackScreenRoute } from '../../utils/routes'
