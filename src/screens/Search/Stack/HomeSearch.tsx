@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { SearchRootStackParamList } from '..'
-import PatitoInput from '../../../components/PatitoInput'
+import PatitoInput from '../../../components/common/PatitoInput'
 import { Ionicons } from '@expo/vector-icons'
 import { useGetBoardgames } from '../../../hooks/games'
 import { StackScreenRoute } from '../../../utils/routes'

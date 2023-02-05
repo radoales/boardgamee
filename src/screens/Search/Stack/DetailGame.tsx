@@ -3,7 +3,7 @@ import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { GameContext } from '../../../hooks/gameContext'
 import globalStyles from '../../../styles/global'
 import colors from '../../../styles/colors'
-import PatitoButton from '../../../components/PatitoButton'
+import PatitoButton from '../../../components/common/PatitoButton'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import {
   UseAddGameToFavoritesWithUserId,

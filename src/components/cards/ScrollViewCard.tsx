@@ -8,7 +8,7 @@ import {
   UseRemoveGamefromFavoritesWithUserId
 } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
-import PatitoButton from '../PatitoButton'
+import PatitoButton from '../common/PatitoButton'
 
 interface ScrollViewCardProps {
   imageUrl: string

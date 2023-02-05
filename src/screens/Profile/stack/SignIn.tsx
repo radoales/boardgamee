@@ -12,7 +12,7 @@ import {
 import { useAuth } from '../../../auth/AuthUserprovider'
 import colors from '../../../styles/colors'
 import { emailRegex } from '../../../utils/regex'
-import PatitoInput from '../../../components/PatitoInput'
+import PatitoInput from '../../../components/common/PatitoInput'
 import authStyles from './style'
 import { StackScreenRoute } from '../../../utils/routes'
 import { SignInScreenRouteProp } from '../../../types/navigation'

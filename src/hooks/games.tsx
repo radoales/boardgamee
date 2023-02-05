@@ -86,7 +86,7 @@ export const useGetBoardgamesByIds = (ids: string, fields?: string) => {
 }
 
 export const useGetPopularBoardgames = (search: string, fields?: string) => {
-  const [results, setResults] = useState<Boardgames>()
+  const [data, setData] = useState<Boardgames>()
   const [error, setError] = useState<string>()
   const [isLoading, setIsLoading] = useState(false)
   const value = useDebounce(search)
@@ -96,7 +96,7 @@ export const useGetPopularBoardgames = (search: string, fields?: string) => {
       setIsLoading(true)
     } else {
       setIsLoading(false)
-      setResults(undefined)
+      setData(undefined)
     }
   }, [search])
 
@@ -114,7 +114,7 @@ export const useGetPopularBoardgames = (search: string, fields?: string) => {
           return res.json()
         })
         .then((res) => {
-          setResults(res)
+          setData(res)
           setIsLoading(false)
         })
         .catch((error) => {
@@ -123,5 +123,5 @@ export const useGetPopularBoardgames = (search: string, fields?: string) => {
         })
     }
   }, [value])
-  return { results, error, isLoading }
+  return { data, error, isLoading }
 }

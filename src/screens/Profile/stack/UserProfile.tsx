@@ -4,7 +4,7 @@ import { useAuth } from '../../../auth/AuthUserprovider'
 import colors from '../../../styles/colors'
 import { StackScreenRoute } from '../../../utils/routes'
 import authStyles from './style'
-import PatitoButton from '../../../components/PatitoButton'
+import PatitoButton from '../../../components/common/PatitoButton'
 import { UseGetUserById } from '../../../hooks/users'
 import { UserProfileScreenRouteProp } from '../../../types/navigation'
 

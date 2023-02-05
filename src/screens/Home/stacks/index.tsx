@@ -11,7 +11,7 @@ import { HomeStackScreenRouteProp } from '../../../types/navigation'
 import FadeInView from '../../../components/common/FadeIn'
 
 const HomeScreen: React.FC<HomeStackScreenRouteProp> = ({ navigation }) => {
-  const { results } = useGetPopularBoardgames(
+  const { data } = useGetPopularBoardgames(
     'id,name,type,average_user_rating,num_user_ratings,thumb_url,min_players,max_players'
   )
   let [fontsLoaded] = useFonts({
@@ -25,21 +25,18 @@ const HomeScreen: React.FC<HomeStackScreenRouteProp> = ({ navigation }) => {
 
   return (
     <View style={[styles.container]}>
-      {results?.games?.length ? (
+      {data?.games?.length ? (
         <ScrollView>
           <View style={styles.inner}>
             <BoardGameScrollView
               title='Featured Games'
-              data={results?.games.slice(4) ?? []}
+              data={data?.games.slice(4) ?? []}
             />
             <BoardGameScrollView
               title='New Games'
-              data={results?.games.slice(6) ?? []}
+              data={data?.games.slice(6) ?? []}
             />
-            <BoardGameScrollView
-              title='More Games'
-              data={results?.games ?? []}
-            />
+            <BoardGameScrollView title='More Games' data={data?.games ?? []} />
           </View>
         </ScrollView>
       ) : (
@@ -66,7 +63,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    paddingTop: '10%',
+    paddingTop: '8%',
     width: '100%'
   },
   imageContainer: {

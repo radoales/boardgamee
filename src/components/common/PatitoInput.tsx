@@ -8,7 +8,7 @@ import {
   TextInputChangeEventData,
   View
 } from 'react-native'
-import colors from '../styles/colors'
+import colors from '../../styles/colors'
 
 interface PatitoInput {
   icon?: JSX.Element
