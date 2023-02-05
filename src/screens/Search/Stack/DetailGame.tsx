@@ -11,8 +11,6 @@ import {
   UseRemoveGamefromFavoritesWithUserId
 } from '../../../hooks/favoriteGames'
 import Rating from '../../../components/game/Rating'
-import { RootStackParamList } from '..'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
 
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', backgroundColor: colors.white },
@@ -51,10 +49,7 @@ const styles = StyleSheet.create({
   }
 })
 
-type Props = NavigationProp<RootStackParamList>
-
 const GameDetails: React.FC = () => {
-  // const navigation = useNavigation<Props>()
   const { selectedGame } = useContext(GameContext)
   const { isAuthenticated, user } = useAuth()
   const { data: gameIds } = UseGetFavoritesByUserId(user.id)
@@ -71,8 +66,6 @@ const GameDetails: React.FC = () => {
         : removeFromFavorites(selectedGame.id)
     }
   }
-
-  console.log('ssf')
 
   return (
     <View style={[styles.container, globalStyles.container]}>

@@ -74,7 +74,6 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
       signUpError
     }),
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [authUser, resetPasswordError]
   )
   useEffect(() => {
