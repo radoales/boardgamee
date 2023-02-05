@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 type Props = NavigationProp<RootStackParamList>
 
 const GameDetails: React.FC = () => {
-  const navigation = useNavigation<Props>()
+  // const navigation = useNavigation<Props>()
   const { selectedGame } = useContext(GameContext)
   const { isAuthenticated, user } = useAuth()
   const { data: gameIds } = UseGetFavoritesByUserId(user.id)
@@ -71,6 +71,8 @@ const GameDetails: React.FC = () => {
         : removeFromFavorites(selectedGame.id)
     }
   }
+
+  console.log('ssf')
 
   return (
     <View style={[styles.container, globalStyles.container]}>

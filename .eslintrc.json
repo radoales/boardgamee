@@ -1,0 +1,17 @@
+{
+  "plugins": ["@typescript-eslint", "prettier"],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "no-console": "warn",
+    "prettier/prettier": [
+      "error",
+      // fixes lint complaining about CRLF line endings on windows
+      {
+        "endOfLine": "auto"
+      }
+    ]
+  }
+}

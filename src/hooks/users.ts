@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react'
-import { getDatabase, onValue, push, ref, set } from 'firebase/database'
-
-import { app } from '../../App'
+import { getDatabase, onValue, ref, set } from 'firebase/database'
 import { User } from '../types/user'
+import { firebaseApp } from '../../firebaseConfig'
 
 export const UseGetUsers = (): { data?: User[]; isLoading: boolean } => {
   const [data, setData] = useState<User[]>()
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const db = getDatabase(app)
+    const db = getDatabase(firebaseApp)
     const dbRef = ref(db, 'users')
     onValue(dbRef, (snapshot) => {
       const data: { [key: string]: { accountDetails: User } } = snapshot.val()
@@ -31,7 +30,7 @@ export const UseGetUserFriendsById = (
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const db = getDatabase(app)
+    const db = getDatabase(firebaseApp)
     const dbRef = ref(db, `users/${id}/friends`)
     onValue(dbRef, (snapshot) => {
       const data: { [key: string]: { accountDetails: User } } = snapshot.val()
@@ -46,7 +45,7 @@ export const UseGetUserFriendsById = (
 export const UseGetUserById = (id: string): { data?: User } => {
   const [data, setData] = useState<User>()
   useEffect(() => {
-    const db = getDatabase(app)
+    const db = getDatabase(firebaseApp)
     const dbRef = ref(db, `users/${id}`)
     onValue(dbRef, (snapshot) => {
       const data = snapshot.val()

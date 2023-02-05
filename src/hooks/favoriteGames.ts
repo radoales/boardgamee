@@ -1,12 +1,12 @@
 import { getDatabase, onValue, ref, set } from 'firebase/database'
 import { useEffect, useState } from 'react'
-import { app } from '../../App'
+import { firebaseApp } from '../../firebaseConfig'
 
 export const UseGetFavoritesByUserId = (id: string): { data: string } => {
   const [data, setData] = useState<string>(' ')
 
   useEffect(() => {
-    const db = getDatabase(app)
+    const db = getDatabase(firebaseApp)
     const starCountRef = ref(db, `users/${id}/games/gameList`)
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val()
@@ -25,7 +25,7 @@ export const UseAddGameToFavoritesWithUserId = (
 
   const addToFavorites = (gameId: string) => {
     if (!gameIds.includes(gameId)) {
-      const db = getDatabase(app)
+      const db = getDatabase(firebaseApp)
       set(ref(db, `users/${id}/games`), {
         gameList: gameIds.concat(`,${gameId}`)
       })
@@ -49,7 +49,7 @@ export const UseRemoveGamefromFavoritesWithUserId = (
 
   const removeFromFavorites = (gameId: string) => {
     if (gameIds.includes(gameId)) {
-      const db = getDatabase(app)
+      const db = getDatabase(firebaseApp)
       set(ref(db, `users/${id}/games`), {
         gameList: gameIds
           .split(',')
