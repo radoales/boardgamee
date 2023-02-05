@@ -45,10 +45,28 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
         index === length - 1 && styles.LastChild
       ]}
     >
+      {isAuthenticated && (
+        <FontAwesome
+          onPress={() =>
+            !gameIds?.includes(id)
+              ? addToFavorites(id)
+              : removeFromFavorites(id)
+          }
+          name={!gameIds?.includes(id) ? 'heart-o' : 'heart'}
+          size={30}
+          color={colors.orange}
+          style={{
+            position: 'absolute',
+            right: 10,
+            bottom: 80,
+            zIndex: 2
+          }}
+        />
+      )}
       <View style={styles.imageContainer}>
         <Image source={{ uri: imageUrl }} style={styles.image} />
         <Text ellipsizeMode='tail' style={styles.title}>
-          {name}
+          {name.slice(0, 50)}
         </Text>
       </View>
       <View style={styles.inner}>
@@ -65,18 +83,6 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
           )}/${5}`}</Text>
         </View>
       </View>
-      {isAuthenticated && (
-        <PatitoButton
-          type={!gameIds?.includes(id) ? 'primary' : 'secondary'}
-          style={{ borderRadius: 5 }}
-          onPress={() =>
-            !gameIds?.includes(id)
-              ? addToFavorites(id)
-              : removeFromFavorites(id)
-          }
-          title={!gameIds?.includes(id) ? '+ Favorites' : '- Favorites'}
-        />
-      )}
     </View>
   )
 }
@@ -92,8 +98,8 @@ const styles = StyleSheet.create({
     borderColor: colors.gray[700],
     backgroundColor: colors.white,
     borderRadius: 5,
-    height: 250,
-    aspectRatio: 0.7,
+    height: 200,
+    aspectRatio: 0.8,
     marginHorizontal: 5,
     marginTop: 20,
     overflow: 'hidden'
@@ -105,7 +111,7 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   imageContainer: {
-    height: 140,
+    height: 150,
     overflow: 'hidden',
     marginBottom: 16
   },
@@ -122,7 +128,8 @@ const styles = StyleSheet.create({
     paddingBottom: 8
   },
   title: {
-    fontSize: 20
+    fontSize: 20,
+    paddingTop: 10
   },
   players: {
     display: 'flex',
