@@ -6,9 +6,10 @@ import { useEffect } from 'react'
 import EditUserProfile from './stack/EditUserProfile'
 import PassswordReset from './stack/PasswordReset'
 import FavoriteGamesList from './stack/FavoriteGamesList'
-import UserProfile from './stack/UserProfile'
 import Friends from './stack/Friends'
 import { StackScreenRoute } from '../../utils/routes'
+import UserProfile from './stack/UserProfile'
+import GameDetails from '../Search/Stack/DetailGame'
 
 export type ProfileRootStackParamList = {
   [StackScreenRoute.LOG_IN]: undefined
@@ -18,6 +19,7 @@ export type ProfileRootStackParamList = {
   [StackScreenRoute.PASSWORD_RESET]: undefined
   [StackScreenRoute.FRIENDS]: undefined
   [StackScreenRoute.FAVORITE_GAMES_LIST]: undefined
+  [StackScreenRoute.GAME_DETAILS]: undefined
 }
 
 const Stack = createStackNavigator<ProfileRootStackParamList>()
@@ -91,6 +93,14 @@ const ProfileTabScreen = ({ navigation }: any) => {
       <Stack.Screen
         name={StackScreenRoute.PASSWORD_RESET}
         component={PassswordReset}
+        options={{
+          title: '',
+          headerTitleAlign: 'center'
+        }}
+      />
+      <Stack.Screen
+        name={StackScreenRoute.GAME_DETAILS}
+        component={GameDetails}
         options={{
           title: '',
           headerTitleAlign: 'center'

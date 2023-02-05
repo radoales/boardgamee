@@ -1,34 +1,25 @@
 import { useContext, useEffect, useState } from 'react'
 import {
   ActivityIndicator,
-  LogBox,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableHighlight,
   View
 } from 'react-native'
-import type { NativeStackScreenProps } from '@react-navigation/native-stack'
-import PatitoInput from '../../../components/PatitoInput'
-import { Ionicons } from '@expo/vector-icons'
-import { useGetBoardgames, useGetBoardgamesByIds } from '../../../hooks/games'
+import { useGetBoardgamesByIds } from '../../../hooks/games'
 import SearchResult from '../../../components/search/SearchResult'
 import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
-import globalStyles from '../../../styles/global'
 import colors from '../../../styles/colors'
-import { GameContext } from '../../../hooks/gameContext'
-import { Game } from '../../../types/boardgame'
-import { ProfileRootStackParamList } from '..'
-import { StackScreenRoute } from '../../../utils/routes'
 import { UseGetFavoritesByUserId } from '../../../hooks/favoriteGames'
 import { useAuth } from '../../../auth/AuthUserprovider'
+import { FavoriteGameListScreenRouteProp } from '../../../types/navigation'
+import { GameContext } from '../../../hooks/gameContext'
+import { StackScreenRoute } from '../../../utils/routes'
+import { Game } from '../../../types/boardgame'
 
-type Props = NativeStackScreenProps<
-  ProfileRootStackParamList,
-  StackScreenRoute.FAVORITE_GAMES_LIST
->
-
-const FavoriteGamesList = ({ navigation }: Props) => {
+const FavoriteGamesList: React.FC<FavoriteGameListScreenRouteProp> = ({
+  navigation
+}) => {
   const [inputText, setInputText] = useState<string>('')
   const { user } = useAuth()
   const { data: gameIds } = UseGetFavoritesByUserId(user.id)
@@ -36,11 +27,15 @@ const FavoriteGamesList = ({ navigation }: Props) => {
     inputText,
     'id,name,type,average_user_rating,num_user_ratings,thumb_url'
   )
-  //   const { setSelectedGame } = useContext(GameContext)
+  const { setSelectedGame } = useContext(GameContext)
 
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular
   })
+
+  if (!fontsLoaded) {
+    return null
+  }
 
   useEffect(() => {
     if (gameIds) {
@@ -65,10 +60,10 @@ const FavoriteGamesList = ({ navigation }: Props) => {
     }
   })
 
-  //   const handlePress = (item: Game) => {
-  //     setSelectedGame(item)
-  //     // navigation.navigate(StackScreenRoute.DETAIL)
-  //   }
+  const handlePress = (item: Game) => {
+    setSelectedGame(item)
+    navigation.navigate(StackScreenRoute.GAME_DETAILS)
+  }
 
   return (
     <View style={[styles.container]}>
@@ -80,7 +75,7 @@ const FavoriteGamesList = ({ navigation }: Props) => {
               key={item.id}
               activeOpacity={0.6}
               underlayColor={colors.gray[200]}
-              onPress={() => true}
+              onPress={() => handlePress(item)}
             >
               <SearchResult data={item} />
             </TouchableHighlight>

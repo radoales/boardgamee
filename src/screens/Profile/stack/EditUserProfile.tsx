@@ -1,22 +1,18 @@
 import { Ionicons } from '@expo/vector-icons'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useEffect, useState } from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, Text, View } from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
-import { ProfileRootStackParamList } from '..'
 import colors from '../../../styles/colors'
 import { StackScreenRoute } from '../../../utils/routes'
 import PatitoInput from '../../../components/PatitoInput'
 import authStyles from './style'
 import { UseGetUserById, UseUpdateUser } from '../../../hooks/users'
 import { useFeedback } from '../../../hooks/feedback'
+import { EditUserProfileScreenRouteProp } from '../../../types/navigation'
 
-type Props = NativeStackScreenProps<
-  ProfileRootStackParamList,
-  StackScreenRoute.EDIT_USER_PROFILE
->
-
-const EditUserProfile = ({ navigation }: Props) => {
+const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
+  navigation
+}) => {
   const [name, setName] = useState<string>('')
   const { user } = useAuth()
 

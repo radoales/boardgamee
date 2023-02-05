@@ -26,17 +26,17 @@ const TabMenuStackNaigator: React.FC = () => {
       })}
     >
       <Tab.Screen
-        name={TabScreenRoute.HOME_TAB_SCREEN}
+        name={'Home'}
         component={HomeTabScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={TabScreenRoute.PROFILE_TAB_SCREEN}
+        name={'Profile'}
         component={ProfileTabScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name={TabScreenRoute.SEARCH_TAB_SCREEN}
+        name={'Search'}
         component={SearchTabScreen}
         options={{ headerShown: false }}
       />

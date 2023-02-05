@@ -1,29 +1,17 @@
 import { Ionicons } from '@expo/vector-icons'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useEffect, useState } from 'react'
-import {
-  Button,
-  Image,
-  Platform,
-  StyleSheet,
-  Text,
-  ToastAndroid,
-  View
-} from 'react-native'
+import { Button, Image, Platform, Text, ToastAndroid, View } from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
-import { ProfileRootStackParamList } from '..'
 import colors from '../../../styles/colors'
 import { emailRegex } from '../../../utils/regex'
 import { StackScreenRoute } from '../../../utils/routes'
 import PatitoInput from '../../../components/PatitoInput'
 import authStyles from './style'
+import { PasswordResetScreenRouteProp } from '../../../types/navigation'
 
-type Props = NativeStackScreenProps<
-  ProfileRootStackParamList,
-  StackScreenRoute.PASSWORD_RESET
->
-
-const PassswordReset = ({ navigation }: Props) => {
+const PassswordReset: React.FC<PasswordResetScreenRouteProp> = ({
+  navigation
+}) => {
   const [email, setEmail] = useState<string>()
   const { resetPassword, error, resetPasswordError } = useAuth()
 

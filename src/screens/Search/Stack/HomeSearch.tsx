@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from '..'
+import { SearchRootStackParamList } from '..'
 import PatitoInput from '../../../components/PatitoInput'
 import { Ionicons } from '@expo/vector-icons'
 import { useGetBoardgames } from '../../../hooks/games'
@@ -19,11 +19,7 @@ import globalStyles from '../../../styles/global'
 import colors from '../../../styles/colors'
 import { GameContext } from '../../../hooks/gameContext'
 import { Game } from '../../../types/boardgame'
-
-type Props = NativeStackScreenProps<
-  RootStackParamList,
-  StackScreenRoute.HOME_SEARCH
->
+import { SearchListScreenRouteProp } from '../../../types/navigation'
 
 const styles = StyleSheet.create({
   container: {
@@ -41,7 +37,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const HomeSearch = ({ navigation }: Props) => {
+const SearchList: React.FC<SearchListScreenRouteProp> = ({ navigation }) => {
   const [inputText, setInputText] = useState<string>('')
   const { results, isLoading } = useGetBoardgames(
     inputText,
@@ -91,4 +87,4 @@ const HomeSearch = ({ navigation }: Props) => {
   )
 }
 
-export default HomeSearch
+export default SearchList

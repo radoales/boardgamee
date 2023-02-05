@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
   ActivityIndicator,
   ScrollView,
@@ -6,28 +5,23 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
-import type { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { StackScreenRoute } from '../../../utils/routes'
 import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 import colors from '../../../styles/colors'
-import { ProfileRootStackParamList } from '..'
 import { UseGetUserFriendsById } from '../../../hooks/users'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import UserCard from '../../../components/users/UserCard'
+import { FriendsScreenRouteProp } from '../../../types/navigation'
 
-type Props = NativeStackScreenProps<
-  ProfileRootStackParamList,
-  StackScreenRoute.FRIENDS
->
-
-const Friends = ({ navigation }: Props) => {
+const Friends: React.FC<FriendsScreenRouteProp> = ({ navigation }) => {
   const { user } = useAuth()
   const { data: users, isLoading } = UseGetUserFriendsById(user.id)
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular
   })
 
-  console.log('users', users)
+  if (!fontsLoaded) {
+    return null
+  }
 
   return (
     <View style={[styles.container]}>

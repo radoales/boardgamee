@@ -1,6 +1,6 @@
 export enum StackScreenRoute {
-  HOME = 'Home',
-  HOME_SEARCH = 'HomeSearch',
+  HOME = 'HomeStackScreen',
+  SEARCH_LIST = 'SearchList',
   GAME_DETAILS = 'GameDetails',
   LOG_IN = 'LogIn',
   SIGN_UP = 'SignUp',

@@ -1,5 +1,4 @@
 import { Ionicons } from '@expo/vector-icons'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { useEffect, useState } from 'react'
 import {
   Button,
@@ -11,19 +10,14 @@ import {
   View
 } from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
-import { ProfileRootStackParamList } from '..'
 import colors from '../../../styles/colors'
 import { emailRegex } from '../../../utils/regex'
 import PatitoInput from '../../../components/PatitoInput'
 import authStyles from './style'
 import { StackScreenRoute } from '../../../utils/routes'
+import { SignInScreenRouteProp } from '../../../types/navigation'
 
-type Props = NativeStackScreenProps<
-  ProfileRootStackParamList,
-  StackScreenRoute.LOG_IN
->
-
-const SignIn = ({ navigation }: Props) => {
+const SignIn: React.FC<SignInScreenRouteProp> = ({ navigation }) => {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
   const { signIn, error } = useAuth()

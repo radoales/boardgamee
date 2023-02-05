@@ -1,21 +1,20 @@
 import { createStackNavigator } from '@react-navigation/stack'
-import ResultList from './Stack/ResultList'
 import HomeSearch from './Stack/HomeSearch'
 import { StackScreenRoute } from '../../utils/routes'
 import GameDetails from './Stack/DetailGame'
 
-export type RootStackParamList = {
-  HomeSearch: undefined
-  GameDetails: undefined
+export type SearchRootStackParamList = {
+  [StackScreenRoute.SEARCH_LIST]: undefined
+  [StackScreenRoute.GAME_DETAILS]: undefined
 }
 
-const Stack = createStackNavigator<RootStackParamList>()
+const Stack = createStackNavigator<SearchRootStackParamList>()
 
 const SearchTabScreen = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={StackScreenRoute.HOME_SEARCH}
+        name={StackScreenRoute.SEARCH_LIST}
         component={HomeSearch}
         options={{ headerShown: false }}
       />
