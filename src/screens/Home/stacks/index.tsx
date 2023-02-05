@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, Text, ScrollView } from 'react-native'
+import { StyleSheet, View, Image, ScrollView } from 'react-native'
 import colors from '../../../styles/colors'
 import {
   useFonts,
@@ -8,6 +8,7 @@ import {
 import { useGetPopularBoardgames } from '../../../hooks/games'
 import BoardGameScrollView from '../../../components/scrollviews/BoardGamesScrollView'
 import { HomeStackScreenRouteProp } from '../../../types/navigation'
+import FadeInView from '../../../components/common/FadeIn'
 
 const HomeScreen: React.FC<HomeStackScreenRouteProp> = ({ navigation }) => {
   const { results } = useGetPopularBoardgames(
@@ -24,16 +25,9 @@ const HomeScreen: React.FC<HomeStackScreenRouteProp> = ({ navigation }) => {
 
   return (
     <View style={[styles.container]}>
-      {results?.games?.length && (
+      {results?.games?.length ? (
         <ScrollView>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={require('../../../../assets/main_logo.png')}
-            />
-          </View>
           <View style={styles.inner}>
-            <Text style={styles.title}>Discovery</Text>
             <BoardGameScrollView
               title='Featured Games'
               data={results?.games.slice(4) ?? []}
@@ -48,6 +42,21 @@ const HomeScreen: React.FC<HomeStackScreenRouteProp> = ({ navigation }) => {
             />
           </View>
         </ScrollView>
+      ) : (
+        <FadeInView
+          style={{
+            width: '100%',
+            height: '100%'
+          }}
+          duration={2000}
+        >
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              source={require('../../../../assets/main_logo.png')}
+            />
+          </View>
+        </FadeInView>
       )}
     </View>
   )
@@ -57,17 +66,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    paddingTop: '10%'
-  },
-  imageContainer: {
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
+    paddingTop: '10%',
     width: '100%'
   },
+  imageContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    flex: 1
+  },
   image: {
-    height: 50,
+    height: 250,
     aspectRatio: 1.5,
     resizeMode: 'contain',
     marginRight: '3%'

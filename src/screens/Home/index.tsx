@@ -28,7 +28,8 @@ const HomeTabScreen = ({ navigation }: any) => {
         component={HomeScreen}
         options={{
           title: '',
-          headerTitleAlign: 'center'
+          headerTitleAlign: 'center',
+          headerShown: false
         }}
       />
       <Stack.Screen
