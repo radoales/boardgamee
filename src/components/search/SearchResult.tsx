@@ -3,7 +3,14 @@ import {
   Montserrat_400Regular,
   Montserrat_500Medium
 } from '@expo-google-fonts/montserrat'
+import { FontAwesome } from '@expo/vector-icons'
 import { Image, StyleSheet, Text, View } from 'react-native'
+import { useAuth } from '../../auth/AuthUserprovider'
+import {
+  UseAddGameToFavoritesWithUserId,
+  UseGetFavoritesByUserId,
+  UseRemoveGamefromFavoritesWithUserId
+} from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
 import Rating from '../game/Rating'
@@ -13,6 +20,14 @@ interface SearchResultProps {
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
+  const { user } = useAuth()
+  const { data: gameIds } = UseGetFavoritesByUserId(user.id)
+  const { addToFavorites } = UseAddGameToFavoritesWithUserId(user.id, gameIds)
+  const { removeFromFavorites } = UseRemoveGamefromFavoritesWithUserId(
+    user.id,
+    gameIds
+  )
+
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular,
     Montserrat_500Medium
@@ -22,17 +37,30 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
   }
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: data.thumb_url }} style={styles.image} />
+      <View style={styles.gameInfo}>
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: data.thumb_url }} style={styles.image} />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.header}>{data.type}</Text>
+          <Text style={styles.name}>{data.name}</Text>
+          <Rating rating={data.average_user_rating} />
+          <Text style={styles.rating}>
+            {Math.round(data.num_user_ratings)} ratings
+          </Text>
+        </View>
       </View>
-
-      <View style={styles.textContainer}>
-        <Text style={styles.header}>{data.type}</Text>
-        <Text style={styles.name}>{data.name}</Text>
-        <Rating rating={data.average_user_rating} />
-        <Text style={styles.rating}>
-          {Math.round(data.num_user_ratings)} ratings
-        </Text>
+      <View>
+        <FontAwesome
+          onPress={() =>
+            !gameIds?.includes(data.id)
+              ? addToFavorites(data.id)
+              : removeFromFavorites(data.id)
+          }
+          name={!gameIds?.includes(data.id) ? 'heart-o' : 'heart'}
+          size={40}
+          color={colors.orange}
+        />
       </View>
     </View>
   )
@@ -42,8 +70,14 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginVertical: '3%'
+  },
+  gameInfo: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
   imageContainer: {
     display: 'flex',
@@ -73,7 +107,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 24,
     color: '#000',
-    marginBottom: 2
+    marginBottom: 2,
+    width: 200
   },
   rating: {
     fontFamily: 'Montserrat_500Medium',

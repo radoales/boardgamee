@@ -65,12 +65,11 @@ const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    justifyContent: 'flex-start',
     flex: 1,
-    paddingTop: '12%',
-    paddingHorizontal: 10,
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
+    paddingTop: '8%',
+    paddingHorizontal: '3%',
+    width: '100%'
   },
   text: {
     margin: 'auto',
