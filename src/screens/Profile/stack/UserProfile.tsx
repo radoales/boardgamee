@@ -42,9 +42,9 @@ const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Content</Text>
           <View style={styles.sectionContent}>
-            <TouchableHighlight
+            {/* <TouchableHighlight
               onPress={() =>
-                navigation.navigate(StackScreenRoute.FAVORITE_GAMES_LIST)
+                navigation.navigate(StackScreenRoute.MY_GAMES)
               }
               activeOpacity={0.6}
               underlayColor={colors.gray[200]}
@@ -56,7 +56,7 @@ const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
                 </View>
                 <Ionicons name='chevron-forward' size={25} />
               </View>
-            </TouchableHighlight>
+            </TouchableHighlight> */}
             <TouchableHighlight
               onPress={() => navigation.navigate(StackScreenRoute.FRIENDS)}
               activeOpacity={0.6}

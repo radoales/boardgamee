@@ -12,14 +12,12 @@ import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 import colors from '../../../styles/colors'
 import { UseGetFavoritesByUserId } from '../../../hooks/favoriteGames'
 import { useAuth } from '../../../auth/AuthUserprovider'
-import { FavoriteGameListScreenRouteProp } from '../../../types/navigation'
+import { MygamesScreenRouteProp } from '../../../types/navigation'
 import { GameContext } from '../../../hooks/gameContext'
 import { StackScreenRoute } from '../../../utils/routes'
 import { Game } from '../../../types/boardgame'
 
-const FavoriteGamesList: React.FC<FavoriteGameListScreenRouteProp> = ({
-  navigation
-}) => {
+const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
   const [inputText, setInputText] = useState<string>('')
   const { user } = useAuth()
   const { data: gameIds } = UseGetFavoritesByUserId(user.id)
@@ -33,32 +31,11 @@ const FavoriteGamesList: React.FC<FavoriteGameListScreenRouteProp> = ({
     Montserrat_400Regular
   })
 
-  if (!fontsLoaded) {
-    return null
-  }
-
   useEffect(() => {
     if (gameIds) {
       setInputText(gameIds)
     }
-  })
-
-  const styles = StyleSheet.create({
-    container: {
-      display: 'flex',
-      justifyContent: 'flex-start',
-      flex: 1,
-      padding: '2%',
-      backgroundColor: colors.white
-    },
-    text: {
-      margin: 'auto',
-      alignSelf: 'center',
-      marginVertical: 'auto',
-      flex: 1,
-      fontFamily: 'Montserrat_400Regular'
-    }
-  })
+  }, [gameIds])
 
   const handlePress = (item: Game) => {
     setSelectedGame(item)
@@ -86,4 +63,22 @@ const FavoriteGamesList: React.FC<FavoriteGameListScreenRouteProp> = ({
   )
 }
 
-export default FavoriteGamesList
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    flex: 1,
+    paddingTop: '12%',
+    paddingHorizontal: 10,
+    backgroundColor: colors.white
+  },
+  text: {
+    margin: 'auto',
+    alignSelf: 'center',
+    marginVertical: 'auto',
+    flex: 1,
+    fontFamily: 'Montserrat_400Regular'
+  }
+})
+
+export default MyGames

@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { HomeRootStackParamList } from '../screens/Home'
+import { MyGamesRootStackParamList } from '../screens/myGames'
 import { ProfileRootStackParamList } from '../screens/Profile'
 import { SearchRootStackParamList } from '../screens/Search'
 import { StackScreenRoute } from '../utils/routes'
@@ -19,9 +20,9 @@ export type UserProfileScreenRouteProp = NativeStackScreenProps<
   StackScreenRoute.USER_PROFILE
 >
 
-export type FavoriteGameListScreenRouteProp = NativeStackScreenProps<
-  ProfileRootStackParamList,
-  StackScreenRoute.FAVORITE_GAMES_LIST
+export type MygamesScreenRouteProp = NativeStackScreenProps<
+  MyGamesRootStackParamList,
+  StackScreenRoute.MY_GAMES
 >
 
 export type FriendsScreenRouteProp = NativeStackScreenProps<

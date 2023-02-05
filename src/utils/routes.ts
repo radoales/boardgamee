@@ -8,11 +8,12 @@ export enum StackScreenRoute {
   EDIT_USER_PROFILE = 'EditUserProfile',
   PASSWORD_RESET = 'PasswordReset',
   FRIENDS = 'Friends',
-  FAVORITE_GAMES_LIST = 'FavoriteGamesList'
+  MY_GAMES = 'MyGames'
 }
 
 export enum TabScreenRoute {
   HOME_TAB_SCREEN = 'HomeTabScreen',
+  MY_GAMES_TAB_SCREEN = 'MyGamesTabScreen',
   PROFILE_TAB_SCREEN = 'ProfileTabScreen',
   SEARCH_TAB_SCREEN = 'SearchTabScreen'
 }

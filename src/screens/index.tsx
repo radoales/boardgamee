@@ -3,7 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { TabScreenRoute } from '../utils/routes'
 import HomeTabScreen from './Home'
 import ProfileTabScreen from './Profile'
+import MyGames from './myGames/stack/MyGames'
 import SearchTabScreen from './Search'
+import MyGamesTabScreen from './myGames'
 
 const Tab = createBottomTabNavigator()
 
@@ -15,6 +17,8 @@ const TabMenuStackNaigator: React.FC = () => {
           let iconName
           if (route.name === TabScreenRoute.HOME_TAB_SCREEN) {
             iconName = focused ? 'home' : 'home-outline'
+          } else if (route.name === TabScreenRoute.MY_GAMES_TAB_SCREEN) {
+            iconName = focused ? 'game-controller' : 'game-controller-outline'
           } else if (route.name === TabScreenRoute.SEARCH_TAB_SCREEN) {
             iconName = focused ? 'search' : 'search-outline'
           } else if (route.name === TabScreenRoute.PROFILE_TAB_SCREEN) {
@@ -29,6 +33,11 @@ const TabMenuStackNaigator: React.FC = () => {
         name={TabScreenRoute.HOME_TAB_SCREEN}
         component={HomeTabScreen}
         options={{ headerShown: false, title: 'Home' }}
+      />
+      <Tab.Screen
+        name={TabScreenRoute.MY_GAMES_TAB_SCREEN}
+        component={MyGamesTabScreen}
+        options={{ headerShown: false, title: 'My Games' }}
       />
       <Tab.Screen
         name={TabScreenRoute.PROFILE_TAB_SCREEN}

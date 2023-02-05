@@ -1,9 +1,8 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useEffect, useState } from 'react'
-import { Button, Text, View } from 'react-native'
+import { Button, Keyboard, Text, View } from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import colors from '../../../styles/colors'
-import { StackScreenRoute } from '../../../utils/routes'
 import PatitoInput from '../../../components/common/PatitoInput'
 import authStyles from './style'
 import { UseGetUserById, UseUpdateUser } from '../../../hooks/users'
@@ -28,7 +27,7 @@ const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
 
   useEffect(() => {
     if (isSuccess) {
-      navigation.navigate(StackScreenRoute.USER_PROFILE)
+      Keyboard.dismiss()
     }
   }, [isSuccess])
 
