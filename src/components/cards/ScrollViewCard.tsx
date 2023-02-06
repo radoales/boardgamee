@@ -1,5 +1,4 @@
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { useAuth } from '../../auth/AuthUserprovider'
 import {
@@ -8,7 +7,7 @@ import {
   UseRemoveGamefromMyGamesWithUserId
 } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
-import PatitoButton from '../common/PatitoButton'
+import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 
 interface ScrollViewCardProps {
   imageUrl: string
@@ -33,6 +32,14 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
   const { data: gameIds } = UseGetFavoritesByUserId(user.id)
   const { addToFavorites } = UseAddGameToMyGamesWithUserId(user.id)
   const { removeFromFavorites } = UseRemoveGamefromMyGamesWithUserId(user.id)
+
+  let [fontsLoaded] = useFonts({
+    Montserrat_400Regular
+  })
+
+  if (!fontsLoaded) {
+    return null
+  }
 
   return (
     <View
@@ -91,7 +98,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
-    // borderWidth: 1,
     borderColor: colors.gray[700],
     backgroundColor: colors.white,
     borderRadius: 5,
@@ -125,8 +131,9 @@ const styles = StyleSheet.create({
     paddingBottom: 8
   },
   title: {
-    fontSize: 20,
-    paddingTop: 10
+    fontSize: 18,
+    paddingTop: 10,
+    fontFamily: 'Montserrat_400Regular'
   },
   players: {
     display: 'flex',
