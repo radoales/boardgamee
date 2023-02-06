@@ -30,69 +30,71 @@ const SignUp: React.FC<SignUpScreenRouteProp> = ({ navigation }) => {
 
   return (
     <View style={authStyles.container}>
-      <ScrollView style={{ width: '100%' }}>
-        <View style={authStyles.logoContainer}>
-          <Image
-            style={authStyles.logo}
-            source={require('../../../../assets/main_logo.png')}
-          />
-        </View>
-        <View style={authStyles.inner}>
-          <View style={authStyles.center}>
-            <Text style={authStyles.title}>Create an account</Text>
+      <ScrollView>
+        <View style={authStyles.scrollViewContainer}>
+          <View style={authStyles.logoContainer}>
+            <Image
+              style={authStyles.logo}
+              source={require('../../../../assets/main_logo.png')}
+            />
           </View>
-          <PatitoInput
-            icon={
-              <Ionicons
-                name='mail-outline'
-                size={20}
-                color={colors.gray[700]}
-              />
-            }
-            onChange={(e) => setEmail(e.nativeEvent.text)}
-            placeholder='Email'
-            style={authStyles.input}
-          />
-          <PatitoInput
-            icon={
-              <Ionicons
-                name='lock-closed-outline'
-                size={20}
-                color={colors.gray[700]}
-              />
-            }
-            onChange={(e) => setPassword(e.nativeEvent.text)}
-            placeholder='Password'
-            style={authStyles.input}
-            isPassword
-          />
-          <PatitoInput
-            icon={
-              <Ionicons
-                name='lock-closed-outline'
-                size={20}
-                color={colors.gray[700]}
-              />
-            }
-            onChange={(e) => setRepeatPassword(e.nativeEvent.text)}
-            placeholder='Repeat password'
-            style={authStyles.input}
-            error={
-              repeatPassword && password !== repeatPassword
-                ? "Passwords don't match"
-                : null
-            }
-            isPassword
-          />
-          <View style={authStyles.button}>
-            <Button title='Sign up' onPress={handleSubmit} />
+          <View style={authStyles.inner}>
+            <View style={authStyles.center}>
+              <Text style={authStyles.title}>Create an account</Text>
+            </View>
+            <PatitoInput
+              icon={
+                <Ionicons
+                  name='mail-outline'
+                  size={20}
+                  color={colors.gray[700]}
+                />
+              }
+              onChange={(e) => setEmail(e.nativeEvent.text)}
+              placeholder='Email'
+              style={authStyles.input}
+            />
+            <PatitoInput
+              icon={
+                <Ionicons
+                  name='lock-closed-outline'
+                  size={20}
+                  color={colors.gray[700]}
+                />
+              }
+              onChange={(e) => setPassword(e.nativeEvent.text)}
+              placeholder='Password'
+              style={authStyles.input}
+              isPassword
+            />
+            <PatitoInput
+              icon={
+                <Ionicons
+                  name='lock-closed-outline'
+                  size={20}
+                  color={colors.gray[700]}
+                />
+              }
+              onChange={(e) => setRepeatPassword(e.nativeEvent.text)}
+              placeholder='Repeat password'
+              style={authStyles.input}
+              error={
+                repeatPassword && password !== repeatPassword
+                  ? "Passwords don't match"
+                  : null
+              }
+              isPassword
+            />
+            <View style={authStyles.button}>
+              <Button title='Sign up' onPress={handleSubmit} />
+            </View>
+            <Text
+              style={authStyles.link}
+              onPress={() => navigation.navigate(StackScreenRoute.LOG_IN)}
+            >
+              HAVE AN ACCOUNT?
+            </Text>
           </View>
-          <Text
-            style={authStyles.link}
-            onPress={() => navigation.navigate(StackScreenRoute.LOG_IN)}
-          >
-            HAVE AN ACCOUNT?
-          </Text>
         </View>
       </ScrollView>
     </View>

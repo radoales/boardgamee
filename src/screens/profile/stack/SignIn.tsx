@@ -4,6 +4,7 @@ import {
   Button,
   Image,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
   ToastAndroid,
@@ -52,62 +53,74 @@ const SignIn: React.FC<SignInScreenRouteProp> = ({ navigation }) => {
   }, [error])
 
   return (
-    <View style={authStyles.container}>
-      <View style={authStyles.logoContainer}>
-        <Image
-          style={authStyles.logo}
-          source={require('../../../../assets/main_logo.png')}
-        />
-      </View>
-      <View style={authStyles.inner}>
-        <View style={authStyles.center}>
-          <Text style={authStyles.title}>Log in</Text>
-        </View>
-        <PatitoInput
-          icon={
-            <Ionicons name='mail-outline' size={20} color={colors.blue[700]} />
-          }
-          onChange={(e) => setEmail(e.nativeEvent.text)}
-          placeholder='Email'
-          error={email && !emailRegex.test(email) ? 'Wrong email format' : null}
-          style={authStyles.input}
-          type='email-address'
-        />
-        <PatitoInput
-          icon={
-            <Ionicons
-              name='lock-closed-outline'
-              size={20}
-              color={colors.blue[700]}
+    <View style={authStyles.scrollViewContainer}>
+      <ScrollView>
+        <View style={authStyles.container}>
+          <View style={authStyles.logoContainer}>
+            <Image
+              style={authStyles.logo}
+              source={require('../../../../assets/main_logo.png')}
             />
-          }
-          onChange={(e) => setPassword(e.nativeEvent.text)}
-          placeholder='Password'
-          style={authStyles.input}
-          error={passwordError ? 'Please fill in password' : null}
-          isPassword
-        />
-        <View style={authStyles.button}>
-          <Button title='Sign in' onPress={handleSubmit} />
+          </View>
+          <View style={authStyles.inner}>
+            <View style={authStyles.center}>
+              <Text style={authStyles.title}>Log in</Text>
+            </View>
+            <PatitoInput
+              icon={
+                <Ionicons
+                  name='mail-outline'
+                  size={20}
+                  color={colors.blue[700]}
+                />
+              }
+              onChange={(e) => setEmail(e.nativeEvent.text)}
+              placeholder='Email'
+              error={
+                email && !emailRegex.test(email) ? 'Wrong email format' : null
+              }
+              style={authStyles.input}
+              type='email-address'
+            />
+            <PatitoInput
+              icon={
+                <Ionicons
+                  name='lock-closed-outline'
+                  size={20}
+                  color={colors.blue[700]}
+                />
+              }
+              onChange={(e) => setPassword(e.nativeEvent.text)}
+              placeholder='Password'
+              style={authStyles.input}
+              error={passwordError ? 'Please fill in password' : null}
+              isPassword
+            />
+            <View style={authStyles.button}>
+              <Button title='Sign in' onPress={handleSubmit} />
+            </View>
+            <View style={authStyles.center}>
+              <Text
+                style={authStyles.link}
+                onPress={() =>
+                  navigation.navigate(StackScreenRoute.PASSWORD_RESET)
+                }
+              >
+                forgot password?
+              </Text>
+            </View>
+            <View style={signInStyles.create}>
+              <Text>Not a user yet? - </Text>
+              <Text
+                style={authStyles.link}
+                onPress={() => navigation.navigate(StackScreenRoute.SIGN_UP)}
+              >
+                Create an account
+              </Text>
+            </View>
+          </View>
         </View>
-        <View style={authStyles.center}>
-          <Text
-            style={authStyles.link}
-            onPress={() => navigation.navigate(StackScreenRoute.PASSWORD_RESET)}
-          >
-            forgot password?
-          </Text>
-        </View>
-        <View style={signInStyles.create}>
-          <Text>Not a user yet? - </Text>
-          <Text
-            style={authStyles.link}
-            onPress={() => navigation.navigate(StackScreenRoute.SIGN_UP)}
-          >
-            Create an account
-          </Text>
-        </View>
-      </View>
+      </ScrollView>
     </View>
   )
 }

@@ -2,19 +2,21 @@ import { StyleSheet } from 'react-native'
 import colors from '../../../styles/colors'
 
 const authStyles = StyleSheet.create({
+  scrollViewContainer: {
+    height: '100%',
+    backgroundColor: colors.white
+  },
   container: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: '100%',
-    backgroundColor: colors.white
+    height: '100%'
   },
   inner: {
     padding: 32,
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: colors.white
+    flexDirection: 'column'
   },
   header: {
     fontSize: 20,

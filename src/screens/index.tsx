@@ -27,7 +27,7 @@ const TabMenuStackNaigator: React.FC = () => {
           return route.name === TabScreenRoute.MY_GAMES_TAB_SCREEN ? (
             <MaterialCommunityIcons
               name={iconName as any}
-              size={size}
+              size={35}
               color={colors.blue[600]}
             />
           ) : (

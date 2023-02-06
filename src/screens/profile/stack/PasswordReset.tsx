@@ -1,6 +1,14 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useEffect, useState } from 'react'
-import { Button, Image, Platform, Text, ToastAndroid, View } from 'react-native'
+import {
+  Button,
+  Image,
+  Platform,
+  ScrollView,
+  Text,
+  ToastAndroid,
+  View
+} from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import colors from '../../../styles/colors'
 import { emailRegex } from '../../../utils/regex'
@@ -48,31 +56,41 @@ const PassswordReset: React.FC<PasswordResetScreenRouteProp> = ({
   }, [error])
 
   return (
-    <View style={authStyles.container}>
-      <View style={authStyles.logoContainer}>
-        <Image
-          style={authStyles.logo}
-          source={require(`../../../../assets/main_logo.png`)}
-        />
-      </View>
-      <View style={authStyles.inner}>
-        <View style={authStyles.center}>
-          <Text style={authStyles.title}>Reset password</Text>
+    <View style={authStyles.scrollViewContainer}>
+      <ScrollView>
+        <View style={authStyles.container}>
+          <View style={authStyles.logoContainer}>
+            <Image
+              style={authStyles.logo}
+              source={require(`../../../../assets/main_logo.png`)}
+            />
+          </View>
+          <View style={authStyles.inner}>
+            <View style={authStyles.center}>
+              <Text style={authStyles.title}>Reset password</Text>
+            </View>
+            <PatitoInput
+              icon={
+                <Ionicons
+                  name='mail-outline'
+                  size={20}
+                  color={colors.blue[700]}
+                />
+              }
+              onChange={(e) => setEmail(e.nativeEvent.text)}
+              placeholder='Email'
+              error={
+                email && !emailRegex.test(email) ? 'Wrong email format' : null
+              }
+              style={authStyles.input}
+              type='email-address'
+            />
+            <View style={authStyles.button}>
+              <Button title='Reset' onPress={handleSubmit} />
+            </View>
+          </View>
         </View>
-        <PatitoInput
-          icon={
-            <Ionicons name='mail-outline' size={20} color={colors.blue[700]} />
-          }
-          onChange={(e) => setEmail(e.nativeEvent.text)}
-          placeholder='Email'
-          error={email && !emailRegex.test(email) ? 'Wrong email format' : null}
-          style={authStyles.input}
-          type='email-address'
-        />
-        <View style={authStyles.button}>
-          <Button title='Reset' onPress={handleSubmit} />
-        </View>
-      </View>
+      </ScrollView>
     </View>
   )
 }

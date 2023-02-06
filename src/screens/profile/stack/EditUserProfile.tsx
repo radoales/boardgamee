@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useEffect, useState } from 'react'
-import { Button, Keyboard, Text, View } from 'react-native'
+import { Button, Keyboard, ScrollView, Text, View } from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import colors from '../../../styles/colors'
 import PatitoInput from '../../../components/common/PatitoInput'
@@ -32,30 +32,38 @@ const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
   }, [isSuccess])
 
   return (
-    <View style={authStyles.container}>
-      <View style={authStyles.userIcon}>
-        <Ionicons name='person' size={100} color={colors.blue[50]} />
-      </View>
-      <View style={authStyles.inner}>
-        <View style={authStyles.center}>
-          <Text style={authStyles.userEmail}>{userDetails?.email}</Text>
+    <View style={authStyles.scrollViewContainer}>
+      <ScrollView>
+        <View style={authStyles.container}>
+          <View style={authStyles.userIcon}>
+            <Ionicons name='person' size={100} color={colors.blue[50]} />
+          </View>
+          <View style={authStyles.inner}>
+            <View style={authStyles.center}>
+              <Text style={authStyles.userEmail}>{userDetails?.email}</Text>
+            </View>
+            <PatitoInput
+              icon={
+                <Ionicons
+                  name='mail-outline'
+                  size={20}
+                  color={colors.gray[700]}
+                />
+              }
+              onChange={(e) => setName(e.nativeEvent.text)}
+              placeholder='Name'
+              style={authStyles.input}
+              value={name}
+            />
+            <View style={authStyles.button}>
+              <Button
+                title='Save'
+                onPress={() => updateUser(user.id, name, user.email)}
+              />
+            </View>
+          </View>
         </View>
-        <PatitoInput
-          icon={
-            <Ionicons name='mail-outline' size={20} color={colors.gray[700]} />
-          }
-          onChange={(e) => setName(e.nativeEvent.text)}
-          placeholder='Name'
-          style={authStyles.input}
-          value={name}
-        />
-        <View style={authStyles.button}>
-          <Button
-            title='Save'
-            onPress={() => updateUser(user.id, name, user.email)}
-          />
-        </View>
-      </View>
+      </ScrollView>
     </View>
   )
 }
