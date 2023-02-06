@@ -6,9 +6,9 @@ import colors from '../../../styles/colors'
 import PatitoButton from '../../../components/common/PatitoButton'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import {
-  UseAddGameToFavoritesWithUserId,
+  UseAddGameToMyGamesWithUserId,
   UseGetFavoritesByUserId,
-  UseRemoveGamefromFavoritesWithUserId
+  UseRemoveGamefromMyGamesWithUserId
 } from '../../../hooks/favoriteGames'
 import Rating from '../../../components/game/Rating'
 
@@ -53,11 +53,8 @@ const GameDetails: React.FC = () => {
   const { selectedGame } = useContext(GameContext)
   const { isAuthenticated, user } = useAuth()
   const { data: gameIds } = UseGetFavoritesByUserId(user.id)
-  const { addToFavorites } = UseAddGameToFavoritesWithUserId(user.id, gameIds)
-  const { removeFromFavorites } = UseRemoveGamefromFavoritesWithUserId(
-    user.id,
-    gameIds
-  )
+  const { addToFavorites } = UseAddGameToMyGamesWithUserId(user.id)
+  const { removeFromFavorites } = UseRemoveGamefromMyGamesWithUserId(user.id)
 
   const handleAdd = () => {
     if (isAuthenticated) {

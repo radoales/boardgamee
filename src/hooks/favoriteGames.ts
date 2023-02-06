@@ -17,17 +17,16 @@ export const UseGetFavoritesByUserId = (id: string): { data: string } => {
   return { data }
 }
 
-export const UseAddGameToFavoritesWithUserId = (
-  id: string,
-  gameIds: string
-) => {
+export const UseAddGameToMyGamesWithUserId = (id: string) => {
   const [data, setData] = useState<any>()
 
+  const gameIds = UseGetFavoritesByUserId(id)
+
   const addToFavorites = (gameId: string) => {
-    if (!gameIds.includes(gameId)) {
+    if (!gameIds.data.includes(gameId)) {
       const db = getDatabase(firebaseApp)
       set(ref(db, `users/${id}/games`), {
-        gameList: gameIds.concat(`,${gameId}`)
+        gameList: gameIds.data.concat(`,${gameId}`)
       })
         .then((data) => {
           setData(data)
@@ -41,17 +40,16 @@ export const UseAddGameToFavoritesWithUserId = (
   return { data, addToFavorites }
 }
 
-export const UseRemoveGamefromFavoritesWithUserId = (
-  id: string,
-  gameIds: string
-) => {
+export const UseRemoveGamefromMyGamesWithUserId = (id: string) => {
   const [data, setData] = useState<any>()
 
+  const gameIds = UseGetFavoritesByUserId(id)
+
   const removeFromFavorites = (gameId: string) => {
-    if (gameIds.includes(gameId)) {
+    if (gameIds.data.includes(gameId)) {
       const db = getDatabase(firebaseApp)
       set(ref(db, `users/${id}/games`), {
-        gameList: gameIds
+        gameList: gameIds.data
           .split(',')
           .filter((id) => id !== gameId)
           .join(',')

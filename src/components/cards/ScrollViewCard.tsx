@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { useAuth } from '../../auth/AuthUserprovider'
 import {
-  UseAddGameToFavoritesWithUserId,
+  UseAddGameToMyGamesWithUserId,
   UseGetFavoritesByUserId,
-  UseRemoveGamefromFavoritesWithUserId
+  UseRemoveGamefromMyGamesWithUserId
 } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
 import PatitoButton from '../common/PatitoButton'
@@ -31,11 +31,8 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
 }) => {
   const { user, isAuthenticated } = useAuth()
   const { data: gameIds } = UseGetFavoritesByUserId(user.id)
-  const { addToFavorites } = UseAddGameToFavoritesWithUserId(user.id, gameIds)
-  const { removeFromFavorites } = UseRemoveGamefromFavoritesWithUserId(
-    user.id,
-    gameIds
-  )
+  const { addToFavorites } = UseAddGameToMyGamesWithUserId(user.id)
+  const { removeFromFavorites } = UseRemoveGamefromMyGamesWithUserId(user.id)
 
   return (
     <View

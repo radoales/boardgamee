@@ -7,9 +7,9 @@ import { FontAwesome } from '@expo/vector-icons'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { useAuth } from '../../auth/AuthUserprovider'
 import {
-  UseAddGameToFavoritesWithUserId,
+  UseAddGameToMyGamesWithUserId,
   UseGetFavoritesByUserId,
-  UseRemoveGamefromFavoritesWithUserId
+  UseRemoveGamefromMyGamesWithUserId
 } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
@@ -22,11 +22,8 @@ interface SearchResultProps {
 const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
   const { user } = useAuth()
   const { data: gameIds } = UseGetFavoritesByUserId(user.id)
-  const { addToFavorites } = UseAddGameToFavoritesWithUserId(user.id, gameIds)
-  const { removeFromFavorites } = UseRemoveGamefromFavoritesWithUserId(
-    user.id,
-    gameIds
-  )
+  const { addToFavorites } = UseAddGameToMyGamesWithUserId(user.id)
+  const { removeFromFavorites } = UseRemoveGamefromMyGamesWithUserId(user.id)
 
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular,
