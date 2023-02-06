@@ -15,7 +15,7 @@ import { FriendsScreenRouteProp } from '../../../types/navigation'
 const Friends: React.FC<FriendsScreenRouteProp> = ({ navigation }) => {
   const { user } = useAuth()
   const { data: users, isLoading } = UseGetUserFriendsById(user.id)
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Montserrat_400Regular
   })
 

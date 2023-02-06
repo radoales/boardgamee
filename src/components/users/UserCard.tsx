@@ -13,7 +13,7 @@ interface UserCardProps {
 }
 
 const UserCard: React.FC<UserCardProps> = ({ data }) => {
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
     Montserrat_500Medium
   })

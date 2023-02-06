@@ -41,7 +41,7 @@ export const useGetBoardgames = (search: string, fields?: string) => {
           setIsLoading(false)
         })
     }
-  }, [value])
+  }, [fields, value])
   return { results, error, isLoading }
 }
 
@@ -81,7 +81,7 @@ export const useGetBoardgamesByIds = (ids: string, fields?: string) => {
           setIsLoading(false)
         })
     }
-  }, [ids])
+  }, [fields, ids])
   return { results, error, isLoading }
 }
 
@@ -122,6 +122,6 @@ export const useGetPopularBoardgames = (search: string, fields?: string) => {
           setIsLoading(false)
         })
     }
-  }, [value])
+  }, [fields, value])
   return { data, error, isLoading }
 }

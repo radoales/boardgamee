@@ -37,7 +37,7 @@ export const UseGetUserFriendsById = (
       setData(Object.values(data).map((user) => user.accountDetails))
       setIsLoading(false)
     })
-  }, [])
+  }, [id])
 
   return { data, isLoading }
 }
@@ -51,7 +51,7 @@ export const UseGetUserById = (id: string): { data?: User } => {
       const data = snapshot.val()
       setData(data.accountDetails)
     })
-  }, [])
+  }, [id])
 
   return { data }
 }

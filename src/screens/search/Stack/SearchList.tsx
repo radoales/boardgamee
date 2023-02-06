@@ -54,7 +54,7 @@ const SearchList: React.FC<SearchListScreenRouteProp> = ({ navigation }) => {
   )
   const { setSelectedGame } = useContext(GameContext)
 
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Montserrat_400Regular
   })
 

@@ -25,7 +25,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
   const { addToFavorites } = UseAddGameToMyGamesWithUserId(user.id)
   const { removeFromFavorites } = UseRemoveGamefromMyGamesWithUserId(user.id)
 
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
     Montserrat_500Medium
   })

@@ -41,7 +41,7 @@ const PassswordReset: React.FC<PasswordResetScreenRouteProp> = ({
     if (resetPasswordError.isSuccess) {
       navigation.navigate(StackScreenRoute.SIGN_IN)
     }
-  }, [resetPasswordError])
+  }, [navigation, resetPasswordError])
 
   useEffect(() => {
     if (error) {

@@ -26,7 +26,7 @@ const SignUp: React.FC<SignUpScreenRouteProp> = ({ navigation }) => {
     if (signUpError?.isSuccess && signUpError.id && email) {
       createUser(signUpError.id, email)
     }
-  }, [signUpError, email])
+  }, [signUpError, email, createUser])
 
   return (
     <View style={authStyles.container}>

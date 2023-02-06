@@ -31,7 +31,7 @@ const ProfileTabScreen = ({ navigation }: any) => {
     } else {
       navigation.navigate(StackScreenRoute.SIGN_IN)
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, navigation])
   return (
     <Stack.Navigator
       initialRouteName={

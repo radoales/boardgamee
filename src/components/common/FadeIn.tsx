@@ -20,7 +20,7 @@ const FadeInView: React.FC<FadeInViewProps> = ({
       duration: duration,
       useNativeDriver: true
     }).start()
-  }, [fadeAnim])
+  }, [duration, fadeAnim])
 
   return (
     <Animated.View

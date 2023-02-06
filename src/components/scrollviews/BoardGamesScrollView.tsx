@@ -1,8 +1,3 @@
-import {
-  useFonts,
-  Montserrat_400Regular,
-  Montserrat_700Bold
-} from '@expo-google-fonts/montserrat'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { useContext } from 'react'
 import {
@@ -12,6 +7,8 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
+import { useAuth } from '../../auth/AuthUserprovider'
+import { UseGetFavoritesByUserId } from '../../hooks/favoriteGames'
 import { GameContext } from '../../hooks/gameContext'
 import { HomeRootStackParamList } from '../../screens/home'
 import colors from '../../styles/colors'
@@ -29,6 +26,8 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
   title
 }) => {
   const { navigate } = useNavigation<NavigationProp<HomeRootStackParamList>>()
+  const { user } = useAuth()
+  const { data: gameIds } = UseGetFavoritesByUserId(user.id)
   const { setSelectedGame } = useContext(GameContext)
   const handlePress = (item: Game) => {
     setSelectedGame(item)
@@ -56,6 +55,7 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
                 index={index}
                 length={data.length}
                 id={item.id}
+                gameIds={gameIds}
               />
             </TouchableHighlight>
           ))}

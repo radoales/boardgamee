@@ -14,5 +14,5 @@ export const useFeedback = (
         ToastAndroid.TOP
       )
     }
-  }, [isSuccess])
+  }, [isError, isSuccess, message])
 }

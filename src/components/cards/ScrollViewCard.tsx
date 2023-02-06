@@ -17,6 +17,7 @@ interface ScrollViewCardProps {
   index: number
   length: number
   id: string
+  gameIds: string
 }
 
 const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
@@ -26,14 +27,14 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
   rating,
   index,
   length,
-  id
+  id,
+  gameIds
 }) => {
   const { user, isAuthenticated } = useAuth()
-  const { data: gameIds } = UseGetFavoritesByUserId(user.id)
   const { addToFavorites } = UseAddGameToMyGamesWithUserId(user.id)
   const { removeFromFavorites } = UseRemoveGamefromMyGamesWithUserId(user.id)
 
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Montserrat_400Regular
   })
 
