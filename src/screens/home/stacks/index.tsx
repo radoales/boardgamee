@@ -10,11 +10,11 @@ import BoardGameScrollView from '../../../components/scrollviews/BoardGamesScrol
 import { HomeStackScreenRouteProp } from '../../../types/navigation'
 import FadeInView from '../../../components/common/FadeIn'
 
-const HomeScreen: React.FC<HomeStackScreenRouteProp> = ({ navigation }) => {
+const HomeScreen: React.FC<HomeStackScreenRouteProp> = () => {
   const { data } = useGetPopularBoardgames(
     'id,name,type,average_user_rating,num_user_ratings,thumb_url,min_players,max_players'
   )
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
     Montserrat_700Bold
   })
