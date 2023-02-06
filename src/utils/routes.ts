@@ -2,7 +2,7 @@ export enum StackScreenRoute {
   HOME = 'HomeStackScreen',
   SEARCH_LIST = 'SearchList',
   GAME_DETAILS = 'GameDetails',
-  LOG_IN = 'LogIn',
+  SIGN_IN = 'SignIn',
   SIGN_UP = 'SignUp',
   USER_PROFILE = 'UserProfile',
   EDIT_USER_PROFILE = 'EditUserProfile',

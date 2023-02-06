@@ -11,7 +11,7 @@ import UserProfile from './stack/UserProfile'
 import GameDetails from '../search/Stack/DetailGame'
 
 export type ProfileRootStackParamList = {
-  [StackScreenRoute.LOG_IN]: undefined
+  [StackScreenRoute.SIGN_IN]: undefined
   [StackScreenRoute.SIGN_UP]: undefined
   [StackScreenRoute.USER_PROFILE]: undefined
   [StackScreenRoute.EDIT_USER_PROFILE]: undefined
@@ -29,7 +29,7 @@ const ProfileTabScreen = ({ navigation }: any) => {
     if (isAuthenticated) {
       navigation.navigate(StackScreenRoute.USER_PROFILE)
     } else {
-      navigation.navigate(StackScreenRoute.LOG_IN)
+      navigation.navigate(StackScreenRoute.SIGN_IN)
     }
   }, [isAuthenticated])
   return (
@@ -37,11 +37,11 @@ const ProfileTabScreen = ({ navigation }: any) => {
       initialRouteName={
         isAuthenticated
           ? StackScreenRoute.USER_PROFILE
-          : StackScreenRoute.LOG_IN
+          : StackScreenRoute.SIGN_IN
       }
     >
       <Stack.Screen
-        name={StackScreenRoute.LOG_IN}
+        name={StackScreenRoute.SIGN_IN}
         component={SignIn}
         options={{
           title: '',

@@ -90,7 +90,7 @@ const SignUp: React.FC<SignUpScreenRouteProp> = ({ navigation }) => {
             </View>
             <Text
               style={authStyles.link}
-              onPress={() => navigation.navigate(StackScreenRoute.LOG_IN)}
+              onPress={() => navigation.navigate(StackScreenRoute.SIGN_IN)}
             >
               HAVE AN ACCOUNT?
             </Text>

@@ -1,6 +1,4 @@
 import { createStackNavigator } from '@react-navigation/stack'
-import { useAuth } from '../../auth/AuthUserprovider'
-import { useEffect } from 'react'
 import { StackScreenRoute } from '../../utils/routes'
 import HomeScreen from './stacks'
 import GameDetails from '../search/Stack/DetailGame'
@@ -11,16 +9,7 @@ export type HomeRootStackParamList = {
 }
 const Stack = createStackNavigator<HomeRootStackParamList>()
 
-const HomeTabScreen = ({ navigation }: any) => {
-  const { isAuthenticated } = useAuth()
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigation.navigate(StackScreenRoute.USER_PROFILE)
-    } else {
-      navigation.navigate(StackScreenRoute.LOG_IN)
-    }
-  }, [isAuthenticated])
+const HomeTabScreen = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen

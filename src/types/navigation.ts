@@ -7,7 +7,7 @@ import { StackScreenRoute } from '../utils/routes'
 
 export type SignInScreenRouteProp = NativeStackScreenProps<
   ProfileRootStackParamList,
-  StackScreenRoute.LOG_IN
+  StackScreenRoute.SIGN_IN
 >
 
 export type SignUpScreenRouteProp = NativeStackScreenProps<
