@@ -102,3 +102,37 @@ export const UseUpdateUser = () => {
 
   return { updateUser, isSuccess, isError, error }
 }
+
+export const UseGetUserInvitesById = (
+  id: string
+): {
+  data?: { id: string; name: string; username: string; status: string }[]
+  isLoading: boolean
+} => {
+  const [data, setData] =
+    useState<{ id: string; name: string; username: string; status: string }[]>()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const db = getDatabase(firebaseApp)
+    const dbRef = ref(db, `users/${id}/invites`)
+    onValue(dbRef, (snapshot) => {
+      const data: {
+        [key: string]: {
+          id: string
+          name: string
+          username: string
+          status: string
+        }
+      } = snapshot.val()
+      setData(
+        Object.values(data)
+          .filter((invite) => invite.status === 'received')
+          .map((invite) => invite)
+      )
+      setIsLoading(false)
+    })
+  }, [id])
+
+  return { data, isLoading }
+}
