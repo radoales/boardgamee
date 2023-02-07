@@ -9,6 +9,10 @@ import { useGetPopularBoardgames } from '../../../hooks/games'
 import BoardGameScrollView from '../../../components/scrollviews/BoardGamesScrollView'
 import { HomeStackScreenRouteProp } from '../../../types/navigation'
 import FadeInView from '../../../components/common/FadeIn'
+import * as SplashScreen from 'expo-splash-screen'
+import { useCallback } from 'react'
+
+SplashScreen.preventAutoHideAsync()
 
 const HomeScreen: React.FC<HomeStackScreenRouteProp> = () => {
   const { data } = useGetPopularBoardgames(
@@ -19,12 +23,18 @@ const HomeScreen: React.FC<HomeStackScreenRouteProp> = () => {
     Montserrat_700Bold
   })
 
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync()
+    }
+  }, [fontsLoaded])
+
   if (!fontsLoaded) {
     return null
   }
 
   return (
-    <View style={[styles.container]}>
+    <View style={[styles.container]} onLayout={onLayoutRootView}>
       {data?.games?.length ? (
         <ScrollView>
           <View style={styles.inner}>

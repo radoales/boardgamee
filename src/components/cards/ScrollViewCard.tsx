@@ -3,7 +3,6 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import { useAuth } from '../../auth/AuthUserprovider'
 import {
   UseAddGameToMyGamesWithUserId,
-  UseGetFavoritesByUserId,
   UseRemoveGamefromMyGamesWithUserId
 } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'

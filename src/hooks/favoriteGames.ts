@@ -26,7 +26,7 @@ export const UseAddGameToMyGamesWithUserId = (id: string) => {
     if (!gameIds.data.includes(gameId)) {
       const db = getDatabase(firebaseApp)
       set(ref(db, `users/${id}/games`), {
-        gameList: gameIds.data.concat(`${gameId}`)
+        gameList: gameIds.data.concat(`${gameId},`)
       })
         .then((data) => {
           setData(data)
