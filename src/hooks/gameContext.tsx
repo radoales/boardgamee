@@ -14,9 +14,7 @@ export const GameContext = createContext({} as GameContextProp)
 
 export const GameProvider: React.FC<Props> = ({ children }) => {
   const [selectedGame, setSelectedGame] = useState({} as Game)
-  const changeGame = (value: Game) => {
-    setSelectedGame(value)
-  }
+
   return (
     <GameContext.Provider value={{ selectedGame, setSelectedGame }}>
       {children}

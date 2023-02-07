@@ -23,4 +23,5 @@ export type Game = {
   type: string
   average_user_rating: number
   num_user_ratings: number
+  min_age: number
 }
