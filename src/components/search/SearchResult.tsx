@@ -8,7 +8,7 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import { useAuth } from '../../auth/AuthUserprovider'
 import {
   UseAddGameToMyGamesWithUserId,
-  UseGetFavoritesByUserId,
+  UseGetMyGamesByUserId,
   UseRemoveGamefromMyGamesWithUserId
 } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
@@ -21,9 +21,9 @@ interface SearchResultProps {
 
 const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
   const { user } = useAuth()
-  const { data: gameIds } = UseGetFavoritesByUserId(user.id)
-  const { addToFavorites } = UseAddGameToMyGamesWithUserId(user.id)
-  const { removeFromFavorites } = UseRemoveGamefromMyGamesWithUserId(user.id)
+  const { data: gameIds } = UseGetMyGamesByUserId(user.id)
+  const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
+  const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
 
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
@@ -51,8 +51,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
         <FontAwesome
           onPress={() =>
             !gameIds?.includes(data.id)
-              ? addToFavorites(data.id)
-              : removeFromFavorites(data.id)
+              ? addToMyGames(data.id)
+              : removeFromMyGames(data.id)
           }
           name={!gameIds?.includes(data.id) ? 'heart-o' : 'heart'}
           size={40}

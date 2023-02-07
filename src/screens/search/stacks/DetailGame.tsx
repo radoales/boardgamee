@@ -15,7 +15,7 @@ import colors from '../../../styles/colors'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import {
   UseAddGameToMyGamesWithUserId,
-  UseGetFavoritesByUserId,
+  UseGetMyGamesByUserId,
   UseRemoveGamefromMyGamesWithUserId
 } from '../../../hooks/favoriteGames'
 import Rating from '../../../components/game/Rating'
@@ -90,23 +90,23 @@ const styles = StyleSheet.create({
 const GameDetails: React.FC = () => {
   const { selectedGame } = useContext(GameContext)
   const { isAuthenticated, user } = useAuth()
-  const { data: gameIds } = UseGetFavoritesByUserId(user.id)
-  const { addToFavorites } = UseAddGameToMyGamesWithUserId(user.id)
-  const { removeFromFavorites } = UseRemoveGamefromMyGamesWithUserId(user.id)
-  const { results, isLoading } = useGetBoardgamesByIds(selectedGame.id)
+  const { data: gameIds } = UseGetMyGamesByUserId(user.id)
+  const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
+  const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
+  const { data, isLoading } = useGetBoardgamesByIds(selectedGame.id)
   const [game, setGame] = useState<Game>()
 
   useEffect(() => {
-    if (results) {
-      setGame(results.games[0])
+    if (data) {
+      setGame(data.games[0])
     }
-  }, [results])
+  }, [data])
 
   const handleAdd = () => {
     if (isAuthenticated) {
       !gameIds?.includes(selectedGame.id)
-        ? addToFavorites(selectedGame.id)
-        : removeFromFavorites(selectedGame.id)
+        ? addToMyGames(selectedGame.id)
+        : removeFromMyGames(selectedGame.id)
     } else {
       if (Platform.OS === 'android') {
         ToastAndroid.showWithGravity(

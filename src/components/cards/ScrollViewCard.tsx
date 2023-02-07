@@ -29,8 +29,8 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
   gameIds
 }) => {
   const { user, isAuthenticated } = useAuth()
-  const { addToFavorites } = UseAddGameToMyGamesWithUserId(user.id)
-  const { removeFromFavorites } = UseRemoveGamefromMyGamesWithUserId(user.id)
+  const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
+  const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
 
   return (
     <View
@@ -43,9 +43,7 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
       {isAuthenticated && (
         <FontAwesome
           onPress={() =>
-            !gameIds?.includes(id)
-              ? addToFavorites(id)
-              : removeFromFavorites(id)
+            !gameIds?.includes(id) ? addToMyGames(id) : removeFromMyGames(id)
           }
           name={!gameIds?.includes(id) ? 'heart-o' : 'heart'}
           size={30}

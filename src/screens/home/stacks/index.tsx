@@ -5,11 +5,14 @@ import { useGetPopularBoardgames } from '../../../hooks/games'
 import BoardGameScrollView from '../../../components/scrollviews/BoardGamesScrollView'
 import { HomeStackScreenRouteProp } from '../../../types/navigation'
 import FadeInView from '../../../components/common/FadeIn'
+import { useFeedback } from '../../../hooks/feedback'
 
 const HomeScreen: React.FC<HomeStackScreenRouteProp> = () => {
-  const { data } = useGetPopularBoardgames(
+  const { data, error, isError, isSuccess } = useGetPopularBoardgames(
     'id,name,type,average_user_rating,num_user_ratings,thumb_url,min_players,max_players'
   )
+
+  useFeedback(isSuccess, isError, error ?? undefined)
 
   return (
     <View style={[styles.container]}>

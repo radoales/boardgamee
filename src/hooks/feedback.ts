@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Platform, ToastAndroid } from 'react-native'
 
 export const useFeedback = (
@@ -7,12 +7,21 @@ export const useFeedback = (
   message?: string
 ) => {
   useEffect(() => {
-    if ((isSuccess || isError) && Platform.OS === 'android') {
-      ToastAndroid.showWithGravity(
-        message ?? '',
-        ToastAndroid.SHORT,
-        ToastAndroid.TOP
-      )
+    if (Platform.OS === 'android') {
+      if (isSuccess && message) {
+        ToastAndroid.showWithGravity(
+          message,
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP
+        )
+      }
+      if (isError) {
+        ToastAndroid.showWithGravity(
+          message ?? '',
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP
+        )
+      }
     }
   }, [isError, isSuccess, message])
 }

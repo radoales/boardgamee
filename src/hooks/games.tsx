@@ -5,8 +5,10 @@ import { BG_API } from '../utils/constants'
 import useDebounce from './useDebounce'
 
 export const useGetBoardgames = (search: string, fields?: string) => {
-  const [results, setResults] = useState<Boardgames>()
+  const [data, setData] = useState<Boardgames>()
   const [error, setError] = useState<string>()
+  const [isSuccess, setIsSuccess] = useState<boolean>()
+  const [isError, setIsError] = useState<boolean>()
   const [isLoading, setIsLoading] = useState(false)
   const value = useDebounce(search)
 
@@ -15,7 +17,7 @@ export const useGetBoardgames = (search: string, fields?: string) => {
       setIsLoading(true)
     } else {
       setIsLoading(false)
-      setResults(undefined)
+      setData(undefined)
     }
   }, [search])
 
@@ -33,21 +35,25 @@ export const useGetBoardgames = (search: string, fields?: string) => {
           return res.json()
         })
         .then((res) => {
-          setResults(res)
+          setData(res)
           setIsLoading(false)
+          setIsSuccess(true)
         })
         .catch((error) => {
           setError(`fetch error: ${error}`)
           setIsLoading(false)
+          setIsError(true)
         })
     }
   }, [fields, value])
-  return { results, error, isLoading }
+  return { data, error, isLoading, isError, isSuccess }
 }
 
 export const useGetBoardgamesByIds = (ids: string, fields?: string) => {
-  const [results, setResults] = useState<Boardgames>()
+  const [data, setData] = useState<Boardgames>()
   const [error, setError] = useState<string>()
+  const [isSuccess, setIsSuccess] = useState<boolean>()
+  const [isError, setIsError] = useState<boolean>()
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -55,7 +61,7 @@ export const useGetBoardgamesByIds = (ids: string, fields?: string) => {
       setIsLoading(true)
     } else {
       setIsLoading(false)
-      setResults(undefined)
+      setData(undefined)
     }
   }, [ids])
 
@@ -73,21 +79,25 @@ export const useGetBoardgamesByIds = (ids: string, fields?: string) => {
           return res.json()
         })
         .then((res) => {
-          setResults(res)
+          setData(res)
           setIsLoading(false)
+          setIsSuccess(true)
         })
         .catch((error) => {
           setError(`fetch error: ${error}`)
+          setIsError(true)
           setIsLoading(false)
         })
     }
   }, [fields, ids])
-  return { results, error, isLoading }
+  return { data, error, isLoading, isSuccess, isError }
 }
 
 export const useGetPopularBoardgames = (search: string, fields?: string) => {
   const [data, setData] = useState<Boardgames>()
   const [error, setError] = useState<string>()
+  const [isSuccess, setIsSuccess] = useState<boolean>()
+  const [isError, setIsError] = useState<boolean>()
   const [isLoading, setIsLoading] = useState(false)
   const value = useDebounce(search)
 
@@ -116,12 +126,14 @@ export const useGetPopularBoardgames = (search: string, fields?: string) => {
         .then((res) => {
           setData(res)
           setIsLoading(false)
+          setIsSuccess(true)
         })
         .catch((error) => {
           setError(`fetch error: ${error}`)
           setIsLoading(false)
+          setIsError(true)
         })
     }
   }, [fields, value])
-  return { data, error, isLoading }
+  return { data, error, isLoading, isError, isSuccess }
 }
