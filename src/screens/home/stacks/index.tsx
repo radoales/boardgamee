@@ -1,40 +1,18 @@
 import { StyleSheet, View, Image, ScrollView } from 'react-native'
 import colors from '../../../styles/colors'
-import {
-  useFonts,
-  Montserrat_400Regular,
-  Montserrat_700Bold
-} from '@expo-google-fonts/montserrat'
+
 import { useGetPopularBoardgames } from '../../../hooks/games'
 import BoardGameScrollView from '../../../components/scrollviews/BoardGamesScrollView'
 import { HomeStackScreenRouteProp } from '../../../types/navigation'
 import FadeInView from '../../../components/common/FadeIn'
-import * as SplashScreen from 'expo-splash-screen'
-import { useCallback } from 'react'
-
-SplashScreen.preventAutoHideAsync()
 
 const HomeScreen: React.FC<HomeStackScreenRouteProp> = () => {
   const { data } = useGetPopularBoardgames(
     'id,name,type,average_user_rating,num_user_ratings,thumb_url,min_players,max_players'
   )
-  const [fontsLoaded] = useFonts({
-    Montserrat_400Regular,
-    Montserrat_700Bold
-  })
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync()
-    }
-  }, [fontsLoaded])
-
-  if (!fontsLoaded) {
-    return null
-  }
 
   return (
-    <View style={[styles.container]} onLayout={onLayoutRootView}>
+    <View style={[styles.container]}>
       {data?.games?.length ? (
         <ScrollView>
           <View style={styles.inner}>

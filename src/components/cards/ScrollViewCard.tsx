@@ -6,7 +6,6 @@ import {
   UseRemoveGamefromMyGamesWithUserId
 } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
-import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 
 interface ScrollViewCardProps {
   imageUrl: string
@@ -32,14 +31,6 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
   const { user, isAuthenticated } = useAuth()
   const { addToFavorites } = UseAddGameToMyGamesWithUserId(user.id)
   const { removeFromFavorites } = UseRemoveGamefromMyGamesWithUserId(user.id)
-
-  const [fontsLoaded] = useFonts({
-    Montserrat_400Regular
-  })
-
-  if (!fontsLoaded) {
-    return null
-  }
 
   return (
     <View
