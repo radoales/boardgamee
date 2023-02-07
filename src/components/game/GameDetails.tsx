@@ -9,19 +9,19 @@ import {
   ToastAndroid,
   View
 } from 'react-native'
-import { GameContext } from '../../../hooks/gameContext'
-import globalStyles from '../../../styles/global'
-import colors from '../../../styles/colors'
-import { useAuth } from '../../../auth/AuthUserprovider'
+import { GameContext } from '../../hooks/gameContext'
+import globalStyles from '../../styles/global'
+import colors from '../../styles/colors'
+import { useAuth } from '../../auth/AuthUserprovider'
 import {
   UseAddGameToMyGamesWithUserId,
   UseGetMyGamesByUserId,
   UseRemoveGamefromMyGamesWithUserId
-} from '../../../hooks/favoriteGames'
-import Rating from '../../../components/game/Rating'
+} from '../../hooks/favoriteGames'
+import Rating from './Rating'
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons'
-import { useGetBoardgamesByIds } from '../../../hooks/games'
-import { Game } from '../../../types/boardgame'
+import { useGetBoardgamesByIds } from '../../hooks/games'
+import { Game } from '../../types/boardgame'
 
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', backgroundColor: colors.white },
@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: '5%'
+    paddingVertical: '5%',
+    paddingHorizontal: '3%'
   },
   type: {
     fontSize: 14,
@@ -63,10 +64,11 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingHorizontal: '3%'
   },
   section: {
-    backgroundColor: colors.blue[100],
+    backgroundColor: colors.blue[50],
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
