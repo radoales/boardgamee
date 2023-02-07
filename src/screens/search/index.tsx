@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { StackScreenRoute } from '../../utils/routes'
-import GameDetails from './Stack/DetailGame'
-import SearchList from './Stack/SearchList'
+import GameDetails from './stacks/DetailGame'
+import SearchList from './stacks/SearchList'
 
 export type SearchRootStackParamList = {
   [StackScreenRoute.SEARCH_LIST]: undefined
