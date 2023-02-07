@@ -2,13 +2,13 @@ import { getDatabase, onValue, ref, set } from 'firebase/database'
 import { useEffect, useState } from 'react'
 import { firebaseApp } from '../../firebaseConfig'
 
-export const UseGetFavoritesByUserId = (id: string): { data: string } => {
+export const UseGetMyGamesByUserId = (id: string): { data: string } => {
   const [data, setData] = useState<string>(' ')
 
   useEffect(() => {
     const db = getDatabase(firebaseApp)
-    const starCountRef = ref(db, `users/${id}/games/gameList`)
-    onValue(starCountRef, (snapshot) => {
+    const dbRef = ref(db, `users/${id}/games/gameList`)
+    onValue(dbRef, (snapshot) => {
       const data = snapshot.val()
       setData(data ?? '')
     })
@@ -18,34 +18,39 @@ export const UseGetFavoritesByUserId = (id: string): { data: string } => {
 }
 
 export const UseAddGameToMyGamesWithUserId = (id: string) => {
-  const [data, setData] = useState<any>()
+  const [error, setError] = useState<string>()
+  const [isSuccess, setIsSuccess] = useState<boolean>()
+  const [isError, setIsError] = useState<boolean>()
 
-  const gameIds = UseGetFavoritesByUserId(id)
+  const gameIds = UseGetMyGamesByUserId(id)
 
-  const addToFavorites = (gameId: string) => {
+  const addToMyGames = (gameId: string) => {
     if (!gameIds.data.includes(gameId)) {
       const db = getDatabase(firebaseApp)
       set(ref(db, `users/${id}/games`), {
         gameList: gameIds.data.concat(`${gameId},`)
       })
-        .then((data) => {
-          setData(data)
+        .then(() => {
+          setIsSuccess(true)
         })
         .catch((error) => {
-          setData(error)
+          setIsError(true)
+          setError(error)
         })
     }
   }
 
-  return { data, addToFavorites }
+  return { addToMyGames, isSuccess, isError, error }
 }
 
 export const UseRemoveGamefromMyGamesWithUserId = (id: string) => {
-  const [data, setData] = useState<any>()
+  const [error, setError] = useState<string>()
+  const [isSuccess, setIsSuccess] = useState<boolean>()
+  const [isError, setIsError] = useState<boolean>()
 
-  const gameIds = UseGetFavoritesByUserId(id)
+  const gameIds = UseGetMyGamesByUserId(id)
 
-  const removeFromFavorites = (gameId: string) => {
+  const removeFromMyGames = (gameId: string) => {
     if (gameIds.data.includes(gameId)) {
       const db = getDatabase(firebaseApp)
       set(ref(db, `users/${id}/games`), {
@@ -54,14 +59,15 @@ export const UseRemoveGamefromMyGamesWithUserId = (id: string) => {
           .filter((id) => id !== gameId)
           .join(',')
       })
-        .then((data) => {
-          setData(data)
+        .then(() => {
+          setIsSuccess(true)
         })
         .catch((error) => {
-          setData(error)
+          setIsError(true)
+          setError(error)
         })
     }
   }
 
-  return { data, removeFromFavorites }
+  return { removeFromMyGames, isSuccess, isError, error }
 }

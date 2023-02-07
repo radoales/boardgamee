@@ -7,19 +7,17 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
-import type { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { SearchRootStackParamList } from '..'
 import PatitoInput from '../../../components/common/PatitoInput'
 import { Ionicons } from '@expo/vector-icons'
 import { useGetBoardgames } from '../../../hooks/games'
 import { StackScreenRoute } from '../../../utils/routes'
 import SearchResult from '../../../components/search/SearchResult'
 import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
-import globalStyles from '../../../styles/global'
 import colors from '../../../styles/colors'
 import { GameContext } from '../../../hooks/gameContext'
 import { Game } from '../../../types/boardgame'
 import { SearchListScreenRouteProp } from '../../../types/navigation'
+import { useFeedback } from '../../../hooks/feedback'
 
 const styles = StyleSheet.create({
   container: {
@@ -48,10 +46,13 @@ const styles = StyleSheet.create({
 
 const SearchList: React.FC<SearchListScreenRouteProp> = ({ navigation }) => {
   const [inputText, setInputText] = useState<string>('')
-  const { results, isLoading } = useGetBoardgames(
+  const { data, isLoading, isError, isSuccess, error } = useGetBoardgames(
     inputText,
     'id,name,type,average_user_rating,num_user_ratings,thumb_url'
   )
+
+  useFeedback(isSuccess, isError, error ?? undefined)
+
   const { setSelectedGame } = useContext(GameContext)
 
   const [fontsLoaded] = useFonts({
@@ -75,13 +76,13 @@ const SearchList: React.FC<SearchListScreenRouteProp> = ({ navigation }) => {
         style={{ paddingHorizontal: '3%' }}
       />
 
-      {!isLoading && !results && (
+      {!isLoading && !data && (
         <Text style={styles.text}>Search using a boardgame name</Text>
       )}
       {isLoading && <ActivityIndicator size='large' />}
-      {results && (
+      {data && (
         <ScrollView>
-          {results.games.map((item) => (
+          {data.games.map((item) => (
             <TouchableHighlight
               key={item.id}
               activeOpacity={0.6}

@@ -8,28 +8,26 @@ import {
 } from 'react-native'
 import { useGetBoardgamesByIds } from '../../../hooks/games'
 import SearchResult from '../../../components/search/SearchResult'
-import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 import colors from '../../../styles/colors'
-import { UseGetFavoritesByUserId } from '../../../hooks/favoriteGames'
+import { UseGetMyGamesByUserId } from '../../../hooks/favoriteGames'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import { MygamesScreenRouteProp } from '../../../types/navigation'
 import { GameContext } from '../../../hooks/gameContext'
 import { StackScreenRoute } from '../../../utils/routes'
 import { Game } from '../../../types/boardgame'
+import { useFeedback } from '../../../hooks/feedback'
 
 const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
   const [inputText, setInputText] = useState<string>('')
   const { user } = useAuth()
-  const { data: gameIds } = UseGetFavoritesByUserId(user.id)
-  const { results, isLoading } = useGetBoardgamesByIds(
+  const { data: gameIds } = UseGetMyGamesByUserId(user.id)
+  const { data, isLoading, isSuccess, isError, error } = useGetBoardgamesByIds(
     inputText,
     'id,name,type,average_user_rating,num_user_ratings,thumb_url'
   )
   const { setSelectedGame } = useContext(GameContext)
 
-  const [fontsLoaded] = useFonts({
-    Montserrat_400Regular
-  })
+  useFeedback(isSuccess, isError, error ?? undefined)
 
   useEffect(() => {
     if (gameIds) {
@@ -45,9 +43,9 @@ const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
   return (
     <View style={[styles.container]}>
       {isLoading && <ActivityIndicator size='large' />}
-      {results && (
+      {data && (
         <ScrollView>
-          {results.games.map((item) => (
+          {data.games.map((item) => (
             <TouchableHighlight
               key={item.id}
               activeOpacity={0.6}
