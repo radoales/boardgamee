@@ -69,11 +69,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue[100],
     width: '100%',
     display: 'flex',
+    padding: 10,
+    marginVertical: 15
+  },
+  detailSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 10,
-    alignItems: 'flex-start',
-    marginVertical: 15
+    alignItems: 'flex-start'
   },
   detailContainer: {
     display: 'flex',
@@ -144,7 +146,7 @@ const GameDetails: React.FC = () => {
                 color={colors.orange}
               />
             </View>
-            <View style={styles.section}>
+            <View style={[styles.section, styles.detailSection]}>
               <View>
                 <View style={styles.detailContainer}>
                   <Ionicons name='people-outline' size={24} color='black' />
@@ -163,6 +165,10 @@ const GameDetails: React.FC = () => {
                   {game.min_playtime} - {game.max_playtime} minutes{' '}
                 </Text>
               </View>
+            </View>
+            <View style={styles.section}>
+              <Text>Description</Text>
+              <Text>{game.description}</Text>
             </View>
           </View>
         </ScrollView>
