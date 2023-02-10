@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { StackScreenRoute } from '../../utils/routes'
-import GameDetails from '../search/stacks/DetailGame'
+import GameDetails from '../../components/game/GameDetails'
 import MyGames from './stack/MyGames'
 
 export type MyGamesRootStackParamList = {
@@ -26,7 +26,8 @@ const MyGamesTabScreen = () => {
         component={GameDetails}
         options={{
           title: '',
-          headerTitleAlign: 'center'
+          headerTitleAlign: 'center',
+          headerShown: false
         }}
       />
     </Stack.Navigator>

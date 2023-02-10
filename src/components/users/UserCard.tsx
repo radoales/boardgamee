@@ -7,13 +7,14 @@ import { StyleSheet, Text, View } from 'react-native'
 import colors from '../../styles/colors'
 import { Ionicons } from '@expo/vector-icons'
 import { User } from '../../types/user'
+import { Invite } from '../../types/invite'
 
 interface UserCardProps {
-  data: User
+  data: User | Invite
 }
 
 const UserCard: React.FC<UserCardProps> = ({ data }) => {
-  const [fontsLoaded] = useFonts({
+  const [] = useFonts({
     Montserrat_400Regular,
     Montserrat_500Medium
   })

@@ -6,6 +6,7 @@ import { GameProvider } from './src/hooks/gameContext'
 import {
   useFonts,
   Montserrat_400Regular,
+  Montserrat_500Medium,
   Montserrat_700Bold
 } from '@expo-google-fonts/montserrat'
 
@@ -16,7 +17,8 @@ LogBox.ignoreLogs([
 const App = () => {
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
-    Montserrat_700Bold
+    Montserrat_700Bold,
+    Montserrat_500Medium
   })
 
   if (!fontsLoaded) {

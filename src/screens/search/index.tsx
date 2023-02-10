@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { StackScreenRoute } from '../../utils/routes'
-import GameDetails from './stacks/DetailGame'
+import GameDetails from '../../components/game/GameDetails'
 import SearchList from './stacks/SearchList'
 
 export type SearchRootStackParamList = {
