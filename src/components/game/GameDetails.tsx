@@ -1,4 +1,9 @@
-import { useContext, useState, useEffect } from 'react'
+import {
+  useFonts,
+  Montserrat_400Regular,
+  Montserrat_500Medium
+} from '@expo-google-fonts/montserrat'
+import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons'
 import {
   ActivityIndicator,
   Image,
@@ -9,88 +14,19 @@ import {
   ToastAndroid,
   View
 } from 'react-native'
-import { GameContext } from '../../hooks/gameContext'
-import globalStyles from '../../styles/global'
-import colors from '../../styles/colors'
 import { useAuth } from '../../auth/AuthUserprovider'
 import {
   UseAddGameToMyGamesWithUserId,
   UseGetMyGamesByUserId,
   UseRemoveGamefromMyGamesWithUserId
 } from '../../hooks/favoriteGames'
-import Rating from './Rating'
-import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons'
-import { useGetBoardgamesByIds } from '../../hooks/games'
+import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
-import { useNavigation } from '@react-navigation/native'
-
-const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', backgroundColor: colors.white },
-  imageContainer: {
-    height: 370,
-    width: '100%',
-    justifyContent: 'flex-end'
-  },
-  image: {
-    resizeMode: 'contain',
-    width: '100%',
-    height: undefined,
-    aspectRatio: 1 / 1
-  },
-  contentContainer: {
-    width: '100%',
-    flex: 1
-  },
-  subHeader: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: '5%',
-    paddingHorizontal: '3%'
-  },
-  type: {
-    fontSize: 14,
-    lineHeight: 24,
-    color: colors.gray[700],
-    textTransform: 'capitalize'
-  },
-  title: {
-    fontSize: 24,
-    lineHeight: 24,
-    paddingTop: '1.5%',
-    paddingBottom: '5%'
-  },
-  titleContainer: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: '3%'
-  },
-  section: {
-    backgroundColor: colors.blue[50],
-    width: '100%',
-    display: 'flex',
-    padding: 10,
-    marginVertical: 15
-  },
-  detailSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start'
-  },
-  detailContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingBottom: 10
-  },
-  detailText: {
-    paddingLeft: 10,
-    fontSize: 16
-  }
-})
+import Rating from '../game/Rating'
+import { useContext, useState, useEffect } from 'react'
+import { GameContext } from '../../hooks/gameContext'
+import { useGetBoardgamesByIds } from '../../hooks/games'
+import WebView from 'react-native-webview'
 
 const GameDetails: React.FC = () => {
   const { selectedGame } = useContext(GameContext)
@@ -98,16 +34,22 @@ const GameDetails: React.FC = () => {
   const { data: gameIds } = UseGetMyGamesByUserId(user.id)
   const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
   const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
-  const { data, isLoading } = useGetBoardgamesByIds(selectedGame.id)
+  const { data: games, isLoading } = useGetBoardgamesByIds(selectedGame.id)
   const [game, setGame] = useState<Game>()
 
-  const { goBack } = useNavigation()
-
   useEffect(() => {
-    if (data) {
-      setGame(data.games[0])
+    if (games) {
+      setGame(games.games[0])
     }
-  }, [data])
+  }, [games])
+
+  const [fontsLoaded] = useFonts({
+    Montserrat_400Regular,
+    Montserrat_500Medium
+  })
+  if (!fontsLoaded) {
+    return null
+  }
 
   const handleAdd = () => {
     if (isAuthenticated) {
@@ -124,22 +66,13 @@ const GameDetails: React.FC = () => {
       }
     }
   }
-
   return (
-    <View style={[styles.container, globalStyles.container]}>
+    <View style={[styles.container]}>
       {isLoading ? (
         <ActivityIndicator size='large' />
       ) : game ? (
         <ScrollView style={{ width: '100%' }}>
           <View style={styles.imageContainer}>
-            <Ionicons
-              name='arrow-back'
-              size={24}
-              color='black'
-              style={{ position: 'absolute', zIndex: 100, top: 0 }}
-              onPress={() => goBack()}
-            />
-
             <Image style={styles.image} source={{ uri: game.thumb_url }} />
           </View>
           <View style={styles.contentContainer}>
@@ -181,7 +114,10 @@ const GameDetails: React.FC = () => {
             </View>
             <View style={styles.section}>
               <Text>Description</Text>
-              <Text>{game.description}</Text>
+              <WebView
+                originWhitelist={['*']}
+                source={{ html: game.description }}
+              />
             </View>
           </View>
         </ScrollView>
@@ -191,5 +127,71 @@ const GameDetails: React.FC = () => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, alignItems: 'center', backgroundColor: colors.white },
+  imageContainer: {
+    height: 370,
+    width: '100%',
+    justifyContent: 'flex-end'
+  },
+  image: {
+    resizeMode: 'contain',
+    width: '100%',
+    height: undefined,
+    aspectRatio: 1 / 1
+  },
+  contentContainer: {
+    width: '100%',
+    flex: 1
+  },
+  subHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: '5%'
+  },
+  type: {
+    fontSize: 14,
+    lineHeight: 24,
+    color: colors.gray[700],
+    textTransform: 'capitalize'
+  },
+  title: {
+    fontSize: 24,
+    lineHeight: 24,
+    paddingTop: '1.5%',
+    paddingBottom: '5%'
+  },
+  titleContainer: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  section: {
+    backgroundColor: colors.blue[100],
+    width: '100%',
+    display: 'flex',
+    padding: 10,
+    marginVertical: 15
+  },
+  detailSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start'
+  },
+  detailContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 10
+  },
+  detailText: {
+    paddingLeft: 10,
+    fontSize: 16
+  }
+})
 
 export default GameDetails
