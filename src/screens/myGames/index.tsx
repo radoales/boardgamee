@@ -26,7 +26,8 @@ const MyGamesTabScreen = () => {
         component={GameDetails}
         options={{
           title: '',
-          headerTitleAlign: 'center'
+          headerTitleAlign: 'center',
+          headerShown: false
         }}
       />
     </Stack.Navigator>

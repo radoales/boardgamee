@@ -22,6 +22,7 @@ import Rating from './Rating'
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons'
 import { useGetBoardgamesByIds } from '../../hooks/games'
 import { Game } from '../../types/boardgame'
+import { useNavigation } from '@react-navigation/native'
 
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', backgroundColor: colors.white },
@@ -98,6 +99,8 @@ const GameDetails: React.FC = () => {
   const { data, isLoading } = useGetBoardgamesByIds(selectedGame.id)
   const [game, setGame] = useState<Game>()
 
+  const { goBack } = useNavigation()
+
   useEffect(() => {
     if (data) {
       setGame(data.games[0])
@@ -127,6 +130,14 @@ const GameDetails: React.FC = () => {
       ) : game ? (
         <ScrollView style={{ width: '100%' }}>
           <View style={styles.imageContainer}>
+            <Ionicons
+              name='arrow-back'
+              size={24}
+              color='black'
+              style={{ position: 'absolute', zIndex: 100, top: 0 }}
+              onPress={() => goBack()}
+            />
+
             <Image style={styles.image} source={{ uri: game.thumb_url }} />
           </View>
           <View style={styles.contentContainer}>
