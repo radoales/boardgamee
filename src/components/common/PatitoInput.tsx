@@ -2,19 +2,22 @@ import { useState } from 'react'
 import {
   KeyboardTypeOptions,
   NativeSyntheticEvent,
+  StyleProp,
   StyleSheet,
   Text,
   TextInput,
   TextInputChangeEventData,
+  TextStyle,
   View
 } from 'react-native'
 import colors from '../../styles/colors'
 
 interface PatitoInput {
   icon?: JSX.Element
+  // eslint-disable-next-line no-unused-vars
   onChange: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void
   placeholder?: string
-  style?: {}
+  style?: StyleProp<TextStyle>
   value?: string
   error?: string | null
   type?: KeyboardTypeOptions | undefined

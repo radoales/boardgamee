@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { StackScreenRoute } from '../../utils/routes'
 import HomeScreen from './stacks'
-import GameDetails from '../search/stacks/DetailGame'
+import GameDetails from '../../components/game/GameDetails'
 
 export type HomeRootStackParamList = {
   [StackScreenRoute.HOME]: undefined

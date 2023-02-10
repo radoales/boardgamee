@@ -1,9 +1,16 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle
+} from 'react-native'
 import colors from '../../styles/colors'
 
 interface PatitoButton {
   icon?: JSX.Element
-  style?: {}
+  style?: StyleProp<ViewStyle>
   title: string
   onPress: () => void
   type?: 'primary' | 'secondary'
