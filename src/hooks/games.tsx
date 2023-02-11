@@ -113,7 +113,7 @@ export const useGetPopularBoardgames = (search: string, fields?: string) => {
   useEffect(() => {
     if (value.length) {
       fetch(
-        `${BG_API}search?client_id=${'dn0OBelp4m'}${
+        `${BG_API}search?client_id=${PUBLIC_BOARDGAME_CLIENT_ID}${
           fields ? `&fields=${fields}` : ''
         }`
       )
