@@ -23,7 +23,7 @@ const SearchTabScreen = () => {
         component={GameDetails}
         options={({ route }) => ({
           title: '',
-          headerTitleAlign: 'center',
+          headerTitleAlign: 'left',
           headerShown: true,
           headerTitle: route.params.title
         })}

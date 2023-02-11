@@ -5,7 +5,7 @@ import GameDetails from '../../components/game/GameDetails'
 
 export type HomeRootStackParamList = {
   [StackScreenRoute.HOME]: undefined
-  [StackScreenRoute.GAME_DETAILS]: undefined
+  [StackScreenRoute.GAME_DETAILS]: { title: string }
 }
 const Stack = createStackNavigator<HomeRootStackParamList>()
 
@@ -24,10 +24,12 @@ const HomeTabScreen = () => {
       <Stack.Screen
         name={StackScreenRoute.GAME_DETAILS}
         component={GameDetails}
-        options={{
+        options={({ route }) => ({
           title: '',
-          headerTitleAlign: 'center'
-        }}
+          headerTitleAlign: 'center',
+          headerShown: true,
+          headerTitle: route.params.title
+        })}
       />
     </Stack.Navigator>
   )

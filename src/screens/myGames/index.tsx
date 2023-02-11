@@ -24,9 +24,10 @@ const MyGamesTabScreen = () => {
       <Stack.Screen
         name={StackScreenRoute.GAME_DETAILS}
         component={GameDetails}
+        initialParams={{ title: '' }}
         options={({ route }) => ({
           title: '',
-          headerTitleAlign: 'center',
+          headerTitleAlign: 'left',
           headerShown: true,
           headerTitle: route.params.title
         })}
