@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export enum StackScreenRoute {
   HOME = 'HomeStackScreen',
   SEARCH_LIST = 'SearchList',

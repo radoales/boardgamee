@@ -65,7 +65,7 @@ const SearchList: React.FC<SearchListScreenRouteProp> = ({ navigation }) => {
 
   const handlePress = (item: Game) => {
     setSelectedGame(item)
-    navigation.navigate(StackScreenRoute.GAME_DETAILS)
+    navigation.navigate(StackScreenRoute.GAME_DETAILS, { title: item.name })
   }
 
   return (

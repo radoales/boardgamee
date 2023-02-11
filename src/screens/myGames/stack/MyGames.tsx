@@ -19,7 +19,7 @@ import { useFeedback } from '../../../hooks/feedback'
 
 const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
   const [inputText, setInputText] = useState<string>('')
-  const { user } = useAuth()
+  const { user, isAuthenticated } = useAuth()
   const { data: gameIds } = UseGetMyGamesByUserId(user.id)
   const { data, isLoading, isSuccess, isError, error } = useGetBoardgamesByIds(
     inputText,
@@ -37,13 +37,13 @@ const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
 
   const handlePress = (item: Game) => {
     setSelectedGame(item)
-    navigation.navigate(StackScreenRoute.GAME_DETAILS)
+    navigation.navigate(StackScreenRoute.GAME_DETAILS, { title: item.name })
   }
 
   return (
     <View style={[styles.container]}>
-      {isLoading && <ActivityIndicator size='large' />}
-      {data && (
+      {isAuthenticated && isLoading && <ActivityIndicator size='large' />}
+      {isAuthenticated && data && (
         <ScrollView>
           {data.games.map((item) => (
             <TouchableHighlight
