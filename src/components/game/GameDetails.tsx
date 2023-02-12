@@ -12,6 +12,7 @@ import {
   StyleSheet,
   Text,
   ToastAndroid,
+  useWindowDimensions,
   View
 } from 'react-native'
 import { useAuth } from '../../auth/AuthUserprovider'
@@ -26,9 +27,10 @@ import Rating from '../game/Rating'
 import { useContext, useState, useEffect } from 'react'
 import { GameContext } from '../../hooks/gameContext'
 import { useGetBoardgamesByIds } from '../../hooks/games'
-import WebView from 'react-native-webview'
+import RenderHTML from 'react-native-render-html'
 
 const GameDetails: React.FC = () => {
+  const { width } = useWindowDimensions()
   const { selectedGame } = useContext(GameContext)
   const { isAuthenticated, user } = useAuth()
   const { data: gameIds } = UseGetMyGamesByUserId(user.id)
@@ -114,8 +116,9 @@ const GameDetails: React.FC = () => {
             </View>
             <View style={styles.section}>
               <Text>Description</Text>
-              <WebView
-                originWhitelist={['*']}
+              <RenderHTML
+                baseStyle={{ fontSize: 18 }}
+                contentWidth={width}
                 source={{ html: game.description }}
               />
             </View>
