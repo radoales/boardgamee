@@ -19,7 +19,7 @@ export type Game = {
   official_url: string
   min_playtime: number
   max_playtime: number
-  rules: string
+  rules_url: string
   type: string
   average_user_rating: number
   num_user_ratings: number
