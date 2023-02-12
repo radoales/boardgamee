@@ -6,6 +6,7 @@ import ProfileTabScreen from './profile'
 import SearchTabScreen from './search'
 import MyGamesTabScreen from './myGames'
 import colors from '../styles/colors'
+import { ComponentProps } from 'react'
 
 const Tab = createBottomTabNavigator()
 
@@ -13,7 +14,7 @@ const TabMenuStackNaigator: React.FC = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ focused, size }) => {
           let iconName
           if (route.name === TabScreenRoute.HOME_TAB_SCREEN) {
             iconName = focused ? 'home' : 'home-outline'
@@ -26,13 +27,17 @@ const TabMenuStackNaigator: React.FC = () => {
           }
           return route.name === TabScreenRoute.MY_GAMES_TAB_SCREEN ? (
             <MaterialCommunityIcons
-              name={iconName as any}
+              name={
+                iconName as ComponentProps<
+                  typeof MaterialCommunityIcons
+                >['name']
+              }
               size={35}
               color={colors.blue[600]}
             />
           ) : (
             <Ionicons
-              name={iconName as any}
+              name={iconName as ComponentProps<typeof Ionicons>['name']}
               size={size}
               color={colors.blue[600]}
             />

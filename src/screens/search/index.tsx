@@ -5,7 +5,7 @@ import SearchList from './stacks/SearchList'
 
 export type SearchRootStackParamList = {
   [StackScreenRoute.SEARCH_LIST]: undefined
-  [StackScreenRoute.GAME_DETAILS]: undefined
+  [StackScreenRoute.GAME_DETAILS]: { title: string }
 }
 
 const Stack = createStackNavigator<SearchRootStackParamList>()
@@ -21,7 +21,12 @@ const SearchTabScreen = () => {
       <Stack.Screen
         name={StackScreenRoute.GAME_DETAILS}
         component={GameDetails}
-        options={{ headerTitle: '', headerTransparent: true }}
+        options={({ route }) => ({
+          title: '',
+          headerTitleAlign: 'left',
+          headerShown: true,
+          headerTitle: route.params.title
+        })}
       />
     </Stack.Navigator>
   )

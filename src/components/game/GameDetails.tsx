@@ -12,6 +12,7 @@ import {
   StyleSheet,
   Text,
   ToastAndroid,
+  useWindowDimensions,
   View
 } from 'react-native'
 import { useAuth } from '../../auth/AuthUserprovider'
@@ -26,9 +27,10 @@ import Rating from '../game/Rating'
 import { useContext, useState, useEffect } from 'react'
 import { GameContext } from '../../hooks/gameContext'
 import { useGetBoardgamesByIds } from '../../hooks/games'
-import WebView from 'react-native-webview'
+import RenderHTML from 'react-native-render-html'
 
 const GameDetails: React.FC = () => {
+  const { width } = useWindowDimensions()
   const { selectedGame } = useContext(GameContext)
   const { isAuthenticated, user } = useAuth()
   const { data: gameIds } = UseGetMyGamesByUserId(user.id)
@@ -114,18 +116,11 @@ const GameDetails: React.FC = () => {
             </View>
             <View style={styles.section}>
               <Text>Description</Text>
-              <Text>
-                <WebView
-                  originWhitelist={['*']}
-                  source={{ html: '<p>hello</p>' }}
-                  style={{
-                    marginBottom: 100,
-                    height: '100%',
-                    width: '100%',
-                    flex: 1
-                  }}
-                />
-              </Text>
+              <RenderHTML
+                baseStyle={{ fontSize: 18 }}
+                contentWidth={width}
+                source={{ html: game.description }}
+              />
             </View>
           </View>
         </ScrollView>
@@ -139,9 +134,7 @@ const GameDetails: React.FC = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', backgroundColor: colors.white },
   imageContainer: {
-    height: 370,
-    width: '100%',
-    justifyContent: 'flex-end'
+    height: 400
   },
   image: {
     resizeMode: 'contain',
@@ -157,7 +150,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: '5%'
+    paddingVertical: '5%',
+    paddingHorizontal: '3%'
   },
   type: {
     fontSize: 14,
@@ -176,10 +170,11 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingHorizontal: '3%'
   },
   section: {
-    backgroundColor: colors.blue[100],
+    backgroundColor: colors.blue[50],
     width: '100%',
     display: 'flex',
     padding: 10,
@@ -197,7 +192,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
   detailText: {
-    paddingLeft: 10,
+    paddingHorizontal: '3%',
     fontSize: 16
   }
 })

@@ -31,7 +31,7 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
   const { setSelectedGame } = useContext(GameContext)
   const handlePress = (item: Game) => {
     setSelectedGame(item)
-    navigate(StackScreenRoute.GAME_DETAILS)
+    navigate(StackScreenRoute.GAME_DETAILS, { title: item ? item.name : '' })
   }
 
   return (

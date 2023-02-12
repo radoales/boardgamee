@@ -57,16 +57,8 @@ export const useGetBoardgamesByIds = (ids: string, fields?: string) => {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    if (ids.length) {
+    if (ids) {
       setIsLoading(true)
-    } else {
-      setIsLoading(false)
-      setData(undefined)
-    }
-  }, [ids])
-
-  useEffect(() => {
-    if (ids.length) {
       fetch(
         `${BG_API}/search?ids=${ids}&client_id=${PUBLIC_BOARDGAME_CLIENT_ID}&fuzzy_match=true&exact=true${
           fields ? `&fields=${fields}` : ''
@@ -88,6 +80,8 @@ export const useGetBoardgamesByIds = (ids: string, fields?: string) => {
           setIsError(true)
           setIsLoading(false)
         })
+    } else {
+      setIsLoading(false)
     }
   }, [fields, ids])
   return { data, error, isLoading, isSuccess, isError }
@@ -113,7 +107,7 @@ export const useGetPopularBoardgames = (search: string, fields?: string) => {
   useEffect(() => {
     if (value.length) {
       fetch(
-        `${BG_API}search?client_id=${'dn0OBelp4m'}${
+        `${BG_API}search?client_id=${PUBLIC_BOARDGAME_CLIENT_ID}${
           fields ? `&fields=${fields}` : ''
         }`
       )
