@@ -114,10 +114,18 @@ const GameDetails: React.FC = () => {
             </View>
             <View style={styles.section}>
               <Text>Description</Text>
-              <WebView
-                originWhitelist={['*']}
-                source={{ html: game.description }}
-              />
+              <Text>
+                <WebView
+                  originWhitelist={['*']}
+                  source={{ html: '<p>hello</p>' }}
+                  style={{
+                    marginBottom: 100,
+                    height: '100%',
+                    width: '100%',
+                    flex: 1
+                  }}
+                />
+              </Text>
             </View>
           </View>
         </ScrollView>
