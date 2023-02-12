@@ -24,13 +24,13 @@ import {
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
 import Rating from '../game/Rating'
-import { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { GameContext } from '../../hooks/gameContext'
 import { useGetBoardgamesByIds } from '../../hooks/games'
-import RenderHTML from 'react-native-render-html'
+import RenderHTML, { defaultSystemFonts } from 'react-native-render-html'
+import { Link } from '@react-navigation/native'
 
 const GameDetails: React.FC = () => {
-  const { width } = useWindowDimensions()
   const { selectedGame } = useContext(GameContext)
   const { isAuthenticated, user } = useAuth()
   const { data: gameIds } = UseGetMyGamesByUserId(user.id)
@@ -44,6 +44,22 @@ const GameDetails: React.FC = () => {
       setGame(games.games[0])
     }
   }, [games])
+
+  const Description = React.memo(function Description() {
+    const { width } = useWindowDimensions()
+    return (
+      <>
+        {game && (
+          <RenderHTML
+            baseStyle={styles.detailText}
+            systemFonts={[...defaultSystemFonts, 'Montserrat_400Regular']}
+            contentWidth={width}
+            source={{ html: game.description }}
+          />
+        )}
+      </>
+    )
+  })
 
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
@@ -98,29 +114,36 @@ const GameDetails: React.FC = () => {
               <View>
                 <View style={styles.detailContainer}>
                   <Ionicons name='people-outline' size={24} color='black' />
-                  <Text style={styles.detailText}>
+                  <Text style={[styles.detailText, styles.spacing]}>
                     {game.min_players} - {game.max_players} players
                   </Text>
                 </View>
                 <View style={styles.detailContainer}>
                   <AntDesign name='smileo' size={24} color='black' />
-                  <Text style={styles.detailText}>{game.min_age}+ years</Text>
+                  <Text style={[styles.detailText, styles.spacing]}>
+                    {game.min_age}+ years
+                  </Text>
                 </View>
               </View>
               <View style={styles.detailContainer}>
                 <Ionicons name='timer-outline' size={24} color='black' />
-                <Text style={styles.detailText}>
-                  {game.min_playtime} - {game.max_playtime} minutes{' '}
+                <Text style={[styles.detailText, styles.spacing]}>
+                  {game.min_playtime} - {game.max_playtime} min.
                 </Text>
               </View>
             </View>
             <View style={styles.section}>
-              <Text>Description</Text>
-              <RenderHTML
-                baseStyle={{ fontSize: 18 }}
-                contentWidth={width}
-                source={{ html: game.description }}
-              />
+              <Text style={[styles.title, styles.sectionTitle]}>
+                Description
+              </Text>
+              <Description />
+            </View>
+          </View>
+          <View style={styles.section}>
+            <Text style={[styles.title, styles.sectionTitle]}>Details</Text>
+            <View>
+              <Text style={styles.detailTitle}>Rules</Text>
+              <Link to={game.rules_url}>{game.rules_url}</Link>
             </View>
           </View>
         </ScrollView>
@@ -157,13 +180,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 24,
     color: colors.gray[700],
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
+    fontFamily: 'Montserrat_400Regular'
   },
   title: {
     fontSize: 24,
     lineHeight: 24,
     paddingTop: '1.5%',
-    paddingBottom: '5%'
+    paddingBottom: '5%',
+    fontFamily: 'Montserrat_500Medium'
   },
   titleContainer: {
     display: 'flex',
@@ -180,6 +205,9 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 15
   },
+  sectionTitle: {
+    fontFamily: 'Montserrat_400Regular'
+  },
   detailSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -191,9 +219,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 10
   },
+  spacing: {
+    paddingLeft: '3%'
+  },
   detailText: {
-    paddingHorizontal: '3%',
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: 'Montserrat_400Regular'
+  },
+  detailTitle: {
+    fontWeight: '600',
+    fontSize: 18,
+    lineHeight: 24,
+    fontFamily: 'Montserrat_500Medium',
+    marginBottom: '3%'
   }
 })
 
