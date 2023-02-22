@@ -39,7 +39,9 @@ jobs:
         run: expo publish
 
       - name: Send GitHub Action trigger data to Slack workflow
-        id: slack
-        uses: slackapi/slack-github-action@v1.23.0
+        - name: Send Slack notification
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        uses: 8398a7/action-slack@v3.1.0
+        with:
+          args: '{"text": "Workflow run ${{ github.event.workflow_run.status }} for ${{ github.repository }}"}'
