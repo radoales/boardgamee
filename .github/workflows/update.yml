@@ -38,7 +38,6 @@ jobs:
       - name: Publish Expo app
         run: expo publish
 
-      - name: Send GitHub Action trigger data to Slack workflow
         - name: Send Slack notification
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
