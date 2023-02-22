@@ -1,4 +1,3 @@
-name: update
 on: push
 
 jobs:
@@ -35,3 +34,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install --immutable
+
+      - name: Publish Expo app
+        run: npx expo export:web
