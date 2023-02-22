@@ -36,4 +36,4 @@ jobs:
         run: npm install --immutable
 
       - name: Publish Expo app
-        run: npx expo export:web
+        run: eas update --auto
