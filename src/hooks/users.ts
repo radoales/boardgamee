@@ -4,6 +4,7 @@ import { User } from '../types/user'
 import { firebaseApp } from '../../firebaseConfig'
 import { useAuth } from '../auth/AuthUserprovider'
 import { Invite } from '../types/invite'
+import { restApiRequest } from '../utils/api'
 
 export const UseGetUsers = (): { data?: User[]; isLoading: boolean } => {
   const [data, setData] = useState<User[]>()
@@ -54,6 +55,22 @@ export const UseGetUserById = (id: string): { data?: User } => {
       setData(data.accountDetails)
     })
   }, [id])
+
+  return { data }
+}
+
+export const UseGetUsersFromRest = () => {
+  const [data, setData] = useState<User[]>([])
+  const getData = async () => {
+    try {
+      const users = await restApiRequest<User[]>({ url: 'users' })
+      setData(users)
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   return { data }
 }

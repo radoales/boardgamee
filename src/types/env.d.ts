@@ -7,4 +7,5 @@ declare module '@env' {
   export const APP_ID: string
   export const MEASURAMENT_ID: string
   export const PUBLIC_BOARDGAME_CLIENT_ID: string
+  export const REST_API_URL: string
 }
