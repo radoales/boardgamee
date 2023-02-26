@@ -39,30 +39,34 @@ const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
           <View style={authStyles.userIcon}>
             <Ionicons name='person' size={100} color={colors.blue[50]} />
           </View>
-          <View style={authStyles.inner}>
-            <View style={authStyles.center}>
-              <Text style={authStyles.userEmail}>{userDetails?.email}</Text>
-            </View>
-            <PatitoInput
-              icon={
-                <Ionicons
-                  name='mail-outline'
-                  size={20}
-                  color={colors.gray[700]}
-                />
-              }
-              onChange={(e) => setName(e.nativeEvent.text)}
-              placeholder='Name'
-              style={authStyles.input}
-              value={name}
-            />
-            <View style={authStyles.button}>
-              <Button
-                title='Save'
-                onPress={() => updateUser(user.id, name, user.email)}
+          {userDetails && (
+            <View style={authStyles.inner}>
+              <View style={authStyles.center}>
+                <Text style={authStyles.userEmail}>{userDetails?.email}</Text>
+              </View>
+              <PatitoInput
+                icon={
+                  <Ionicons
+                    name='mail-outline'
+                    size={20}
+                    color={colors.gray[700]}
+                  />
+                }
+                onChange={(e) => setName(e.nativeEvent.text)}
+                placeholder='Name'
+                style={authStyles.input}
+                value={name}
               />
+              <View style={authStyles.button}>
+                <Button
+                  title='Save'
+                  onPress={() =>
+                    updateUser(userDetails.id, name, userDetails.email)
+                  }
+                />
+              </View>
             </View>
-          </View>
+          )}
         </View>
       </ScrollView>
     </View>

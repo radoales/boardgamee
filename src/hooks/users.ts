@@ -79,28 +79,6 @@ export const UseGetUsersFromRest = () => {
   return { data }
 }
 
-export const UseCreateUser = () => {
-  const [error, setError] = useState<string>()
-  const [isSuccess, setIsSuccess] = useState<boolean>()
-  const [isError, setIsError] = useState<boolean>()
-  const createUser = (id: string, email: string) => {
-    const db = getDatabase()
-    set(ref(db, `users/${id}/accountDetails`), {
-      id,
-      email
-    })
-      .then(() => {
-        setIsSuccess(true)
-      })
-      .catch((error) => {
-        setIsError(true)
-        setError(error)
-      })
-  }
-
-  return { createUser, isSuccess, isError, error }
-}
-
 export const UseUpdateUser = () => {
   const [error, setError] = useState<string>()
   const [isSuccess, setIsSuccess] = useState<boolean>()
@@ -108,11 +86,10 @@ export const UseUpdateUser = () => {
   const updateUser = (id: string, name: string, email: string) => {
     setIsSuccess(undefined)
     setIsError(undefined)
-    const db = getDatabase()
-    set(ref(db, `users/${id}/accountDetails`), {
-      name,
-      email,
-      id
+    restApiRequest<Partial<User>>({
+      url: 'users',
+      method: 'PUT',
+      data: { id, name, email, username: name }
     })
       .then(() => {
         setIsSuccess(true)

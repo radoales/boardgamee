@@ -1,11 +1,10 @@
 import { Ionicons } from '@expo/vector-icons'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button, Image, ScrollView, Text, View } from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import colors from '../../../styles/colors'
 import PatitoInput from '../../../components/common/PatitoInput'
 import authStyles from './style'
-import { UseCreateUser } from '../../../hooks/users'
 import { StackScreenRoute } from '../../../utils/routes'
 import { SignUpScreenRouteProp } from '../../../types/navigation'
 
@@ -13,20 +12,13 @@ const SignUp: React.FC<SignUpScreenRouteProp> = ({ navigation }) => {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
   const [repeatPassword, setRepeatPassword] = useState<string>()
-  const { signUp, signUpError } = useAuth()
-  const { createUser } = UseCreateUser()
+  const { signUp } = useAuth()
 
   const handleSubmit = () => {
     if (email && password && password === repeatPassword) {
       signUp(email, password)
     }
   }
-
-  useEffect(() => {
-    if (signUpError?.isSuccess && signUpError.id && email) {
-      createUser(signUpError.id, email)
-    }
-  }, [signUpError, email, createUser])
 
   return (
     <View style={authStyles.container}>
