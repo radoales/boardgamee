@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { createContext, useContext, useState, useEffect, useMemo } from 'react'
 import {
@@ -74,6 +75,7 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
       signUpError
     }),
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [authUser, resetPasswordError]
   )
   useEffect(() => {

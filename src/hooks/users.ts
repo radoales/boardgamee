@@ -63,22 +63,6 @@ export const UseGetUserById = (id: string): { data?: User } => {
   return { data }
 }
 
-export const UseGetUsersFromRest = () => {
-  const [data, setData] = useState<User[]>([])
-  const getData = async () => {
-    try {
-      const users = await restApiRequest<User[]>({ url: 'users' })
-      setData(users)
-    } catch (error) {}
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
-
-  return { data }
-}
-
 export const UseUpdateUser = () => {
   const [error, setError] = useState<string>()
   const [isSuccess, setIsSuccess] = useState<boolean>()
