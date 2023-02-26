@@ -7,6 +7,8 @@ import {
   sendPasswordResetEmail
 } from 'firebase/auth'
 import { useState } from 'react'
+import { User } from '../types/user'
+import { restApiRequest } from '../utils/api'
 
 export const useSignUp = () => {
   const [signUpError, setSignUpError] = useState<{
@@ -28,6 +30,11 @@ export const useSignUp = () => {
         email,
         password
       )
+      restApiRequest<any>({
+        url: 'users',
+        method: 'POST',
+        data: { email, username: email, name, external_id: response.user.uid }
+      })
       setSignUpError({
         isLoading: false,
         error: null,

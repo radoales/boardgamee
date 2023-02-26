@@ -18,6 +18,8 @@ const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
   const { user, signOut } = useAuth()
   const { data: userDetails } = UseGetUserById(user.id)
 
+  console.log('userDetails', userDetails)
+
   return userDetails ? (
     <View style={authStyles.scrollViewContainer}>
       <ScrollView>
