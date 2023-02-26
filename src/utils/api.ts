@@ -6,7 +6,7 @@ export const restApiRequest = async <T>({
   method = 'GET',
   data
 }: RequestOptions<T>): Promise<T> => {
-  const response = await Axios.request<T>({
+  const response = await Axios.request<ApiResponse<T>>({
     method,
     headers: {
       'x-hasura-admin-secret':
@@ -15,16 +15,16 @@ export const restApiRequest = async <T>({
     url: `${REST_API_URL}/${url}`,
     data
   })
-  return response.data
+  return response.data.data
 }
 
 export function getStrapiURL(path: string) {
   return `${REST_API_URL}${path}`
 }
 
-// interface ApiResponse<T> {
-//   data: T
-// }
+interface ApiResponse<T> {
+  data: T
+}
 
 interface RequestOptions<T> {
   url: string

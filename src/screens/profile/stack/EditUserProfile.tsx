@@ -10,6 +10,7 @@ import { useFeedback } from '../../../hooks/feedback'
 import { EditUserProfileScreenRouteProp } from '../../../types/navigation'
 
 const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   navigation
 }) => {
   const [name, setName] = useState<string>('')

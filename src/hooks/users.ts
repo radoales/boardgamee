@@ -46,20 +46,11 @@ export const UseGetUserFriendsById = (
 }
 
 export const UseGetUserById = (id: string): { data?: User } => {
-  const [data, setData] = useState<any>()
-  // useEffect(() => {
-  //   const db = getDatabase(firebaseApp)
-  //   const dbRef = ref(db, `users/${id}`)
-  //   onValue(dbRef, (snapshot) => {
-  //     const data = snapshot.val()
-  //     setData(data.accountDetails)
-  //   })
-  // }, [id])
+  const [data, setData] = useState<User>()
   const getData = async (id: string) => {
     try {
       const response = await restApiRequest<User[]>({ url: `users/${id}` })
-      console.log('response', response)
-      setData(response.users[0])
+      setData(response[0])
     } catch (error) {}
   }
 
