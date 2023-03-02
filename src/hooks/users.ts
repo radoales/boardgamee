@@ -10,14 +10,15 @@ export const UseGetUsers = (): { data?: User[]; isLoading: boolean } => {
   const [data, setData] = useState<User[]>()
   const [isLoading, setIsLoading] = useState(true)
 
+  const getData = async () => {
+    try {
+      const response = await restApiRequest<User[]>({ url: `users}` })
+      setData(response)
+    } catch (error) {}
+  }
+
   useEffect(() => {
-    const db = getDatabase(firebaseApp)
-    const dbRef = ref(db, 'users')
-    onValue(dbRef, (snapshot) => {
-      const data: { [key: string]: { accountDetails: User } } = snapshot.val()
-      setData(Object.values(data).map((user) => user.accountDetails))
-      setIsLoading(false)
-    })
+    getData()
   }, [])
 
   return { data, isLoading }
