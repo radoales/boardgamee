@@ -1,10 +1,10 @@
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Image, StyleSheet, Text, View } from 'react-native'
-import { useAuth } from '../../auth/AuthUserprovider'
-import {
-  UseAddGameToMyGamesWithUserId,
-  UseRemoveGamefromMyGamesWithUserId
-} from '../../hooks/favoriteGames'
+// import { useAuth } from '../../auth/AuthUserprovider'
+// import {
+//   UseAddGameToMyGamesWithUserId,
+//   UseRemoveGamefromMyGamesWithUserId
+// } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
 
 interface ScrollViewCardProps {
@@ -24,13 +24,13 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
   players,
   rating,
   index,
-  length,
-  id,
-  gameIds
+  length
+  // id,
+  // gameIds
 }) => {
-  const { user, isAuthenticated } = useAuth()
-  const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
-  const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
+  // const { user, isAuthenticated } = useAuth()
+  // const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
+  // const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
 
   return (
     <View
@@ -40,7 +40,7 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
         index === length - 1 && styles.LastChild
       ]}
     >
-      {isAuthenticated && (
+      {/* {isAuthenticated && (
         <FontAwesome
           onPress={() =>
             !gameIds?.includes(id) ? addToMyGames(id) : removeFromMyGames(id)
@@ -55,7 +55,7 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
             zIndex: 2
           }}
         />
-      )}
+      )} */}
       <View style={styles.imageContainer}>
         <Image source={{ uri: imageUrl }} style={styles.image} />
         <Text ellipsizeMode='tail' style={styles.title}>

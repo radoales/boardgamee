@@ -7,11 +7,13 @@ import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons'
 import {
   ActivityIndicator,
   Image,
+  Linking,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
   ToastAndroid,
+  TouchableOpacity,
   useWindowDimensions,
   View
 } from 'react-native'
@@ -28,7 +30,6 @@ import React, { useContext, useState, useEffect } from 'react'
 import { GameContext } from '../../hooks/gameContext'
 import { useGetBoardgamesByIds } from '../../hooks/games'
 import RenderHTML, { defaultSystemFonts } from 'react-native-render-html'
-import { Link } from '@react-navigation/native'
 
 const GameDetails: React.FC = () => {
   const { selectedGame } = useContext(GameContext)
@@ -141,10 +142,13 @@ const GameDetails: React.FC = () => {
           </View>
           <View style={styles.section}>
             <Text style={[styles.title, styles.sectionTitle]}>Details</Text>
-            <View>
-              <Text style={styles.detailTitle}>Rules</Text>
-              <Link to={game.rules_url}>{game.rules_url}</Link>
-            </View>
+            <TouchableOpacity
+              onPressOut={() => Linking.openURL(game.rules_url)}
+            >
+              <Text style={styles.detailTitle}>
+                Click here for official rules
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       ) : (

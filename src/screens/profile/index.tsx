@@ -2,7 +2,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { useAuth } from '../../auth/AuthUserprovider'
 import SignIn from './stack/SignIn'
 import SignUp from './stack/SignUp'
-import { useEffect } from 'react'
 import EditUserProfile from './stack/EditUserProfile'
 import PassswordReset from './stack/PasswordReset'
 import Friends from './stack/Friends'
@@ -22,8 +21,7 @@ export type ProfileRootStackParamList = {
 
 const Stack = createStackNavigator<ProfileRootStackParamList>()
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ProfileTabScreen = ({ navigation }: any) => {
+const ProfileTabScreen = () => {
   const { isAuthenticated } = useAuth()
 
   return (
