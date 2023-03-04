@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useEffect, useState } from 'react'
-import { Button, Keyboard, ScrollView, Text, View } from 'react-native'
+import { Keyboard, ScrollView, Text, View } from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import colors from '../../../styles/colors'
 import PatitoInput from '../../../components/common/PatitoInput'
@@ -8,6 +8,8 @@ import authStyles from './style'
 import { UseGetUserById, UseUpdateUser } from '../../../hooks/users'
 import { useFeedback } from '../../../hooks/feedback'
 import { EditUserProfileScreenRouteProp } from '../../../types/navigation'
+import PatitoButton from '../../../components/common/PatitoButton'
+import { StackScreenRoute } from '../../../utils/routes'
 
 const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
@@ -29,7 +31,10 @@ const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
   useEffect(() => {
     if (isSuccess) {
       Keyboard.dismiss()
+      navigation.popToTop()
+      navigation.replace(StackScreenRoute.USER_PROFILE)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess])
 
   return (
@@ -58,7 +63,7 @@ const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
                 value={name}
               />
               <View style={authStyles.button}>
-                <Button
+                <PatitoButton
                   title='Save'
                   onPress={() =>
                     updateUser(userDetails.id, name, userDetails.email)

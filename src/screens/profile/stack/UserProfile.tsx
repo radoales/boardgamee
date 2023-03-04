@@ -14,10 +14,18 @@ import PatitoButton from '../../../components/common/PatitoButton'
 import { UseGetUserById } from '../../../hooks/users'
 import { UserProfileScreenRouteProp } from '../../../types/navigation'
 import LoadingSpinner from '../../../components/common/LoadingSpinner'
+import { useEffect } from 'react'
 
 const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
-  const { user, signOut } = useAuth()
+  const { user, signOut, isAuthenticated } = useAuth()
   const { data: userDetails } = UseGetUserById(user.id)
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigation.replace(StackScreenRoute.SIGN_IN)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated])
 
   return userDetails ? (
     <View style={authStyles.scrollViewContainer}>

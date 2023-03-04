@@ -21,7 +21,7 @@ import PatitoButton from '../../../components/common/PatitoButton'
 const SignIn: React.FC<SignInScreenRouteProp> = ({ navigation }) => {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
-  const { signIn, error } = useAuth()
+  const { signIn, error, isAuthenticated } = useAuth()
   const [passwordError, setPasswordError] = useState(false)
 
   const handleSubmit = () => {
@@ -51,6 +51,13 @@ const SignIn: React.FC<SignInScreenRouteProp> = ({ navigation }) => {
       }
     }
   }, [error])
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigation.replace(StackScreenRoute.USER_PROFILE)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated])
 
   return (
     <View style={authStyles.scrollViewContainer}>
