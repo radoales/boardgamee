@@ -60,12 +60,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   primaryBackground: {
-    backgroundColor: colors.blue[500]
+    backgroundColor: colors.blue[600]
   },
   secondaryBackground: {
     backgroundColor: colors.white,
     borderWidth: 1,
-    borderColor: colors.blue[500]
+    borderColor: colors.blue[600]
   },
   icon: {
     paddingRight: 10
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     color: colors.white
   },
   secondaryTitleColor: {
-    color: colors.blue[500]
+    color: colors.blue[600]
   }
 })
 export default PatitoButton

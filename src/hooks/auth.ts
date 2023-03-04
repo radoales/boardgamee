@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile,
   sendPasswordResetEmail
 } from 'firebase/auth'
 import { useState } from 'react'
+import { User } from '../types/user'
+import { restApiRequest } from '../utils/api'
 
 export const useSignUp = () => {
   const [signUpError, setSignUpError] = useState<{
@@ -28,6 +30,11 @@ export const useSignUp = () => {
         email,
         password
       )
+      restApiRequest<Partial<User>>({
+        url: 'users',
+        method: 'POST',
+        data: { email, username: email, external_id: response.user.uid }
+      })
       setSignUpError({
         isLoading: false,
         error: null,
@@ -97,39 +104,4 @@ export const useLogOut = () => {
     } catch (error: any) {}
   }
   return { handleLogOut }
-}
-
-export const useUpdateUserProfile = () => {
-  const [updateUserProfileError, setUpdateUserProfileError] = useState<{
-    isLoading: boolean
-    error: null | string
-    isSuccess: null | boolean
-  }>({
-    isLoading: false,
-    error: null,
-    isSuccess: null
-  })
-  const handleUpdateUserProfile = async (name: string) => {
-    const auth = getAuth()
-    setUpdateUserProfileError({ isLoading: true, error: null, isSuccess: null })
-    try {
-      if (auth.currentUser) {
-        await updateProfile(auth.currentUser, {
-          displayName: name
-        })
-      }
-      setUpdateUserProfileError({
-        isLoading: false,
-        error: null,
-        isSuccess: true
-      })
-    } catch (error: any) {
-      setUpdateUserProfileError({
-        isLoading: false,
-        error: error.code,
-        isSuccess: false
-      })
-    }
-  }
-  return { handleUpdateUserProfile, updateUserProfileError }
 }

@@ -10,14 +10,15 @@ export const UseGetUsers = (): { data?: User[]; isLoading: boolean } => {
   const [data, setData] = useState<User[]>()
   const [isLoading, setIsLoading] = useState(true)
 
+  const getData = async () => {
+    try {
+      const response = await restApiRequest<User[]>({ url: `users}` })
+      setData(response)
+    } catch (error) {}
+  }
+
   useEffect(() => {
-    const db = getDatabase(firebaseApp)
-    const dbRef = ref(db, 'users')
-    onValue(dbRef, (snapshot) => {
-      const data: { [key: string]: { accountDetails: User } } = snapshot.val()
-      setData(Object.values(data).map((user) => user.accountDetails))
-      setIsLoading(false)
-    })
+    getData()
   }, [])
 
   return { data, isLoading }
@@ -47,54 +48,20 @@ export const UseGetUserFriendsById = (
 
 export const UseGetUserById = (id: string): { data?: User } => {
   const [data, setData] = useState<User>()
-  useEffect(() => {
-    const db = getDatabase(firebaseApp)
-    const dbRef = ref(db, `users/${id}`)
-    onValue(dbRef, (snapshot) => {
-      const data = snapshot.val()
-      setData(data.accountDetails)
-    })
-  }, [id])
-
-  return { data }
-}
-
-export const UseGetUsersFromRest = () => {
-  const [data, setData] = useState<User[]>([])
-  const getData = async () => {
+  const getData = async (id: string) => {
     try {
-      const users = await restApiRequest<User[]>({ url: 'users' })
-      setData(users)
+      const response = await restApiRequest<User[]>({ url: `users/${id}` })
+      setData(response[0])
     } catch (error) {}
   }
 
   useEffect(() => {
-    getData()
-  }, [])
+    if (id) {
+      getData(id)
+    }
+  }, [id])
 
   return { data }
-}
-
-export const UseCreateUser = () => {
-  const [error, setError] = useState<string>()
-  const [isSuccess, setIsSuccess] = useState<boolean>()
-  const [isError, setIsError] = useState<boolean>()
-  const createUser = (id: string, email: string) => {
-    const db = getDatabase()
-    set(ref(db, `users/${id}/accountDetails`), {
-      id,
-      email
-    })
-      .then(() => {
-        setIsSuccess(true)
-      })
-      .catch((error) => {
-        setIsError(true)
-        setError(error)
-      })
-  }
-
-  return { createUser, isSuccess, isError, error }
 }
 
 export const UseUpdateUser = () => {
@@ -104,11 +71,10 @@ export const UseUpdateUser = () => {
   const updateUser = (id: string, name: string, email: string) => {
     setIsSuccess(undefined)
     setIsError(undefined)
-    const db = getDatabase()
-    set(ref(db, `users/${id}/accountDetails`), {
-      name,
-      email,
-      id
+    restApiRequest<Partial<User>>({
+      url: 'users',
+      method: 'PUT',
+      data: { id, name, email, username: name }
     })
       .then(() => {
         setIsSuccess(true)

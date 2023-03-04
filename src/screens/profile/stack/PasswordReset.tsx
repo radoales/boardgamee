@@ -1,7 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useEffect, useState } from 'react'
 import {
-  Button,
   Image,
   Platform,
   ScrollView,
@@ -16,6 +15,7 @@ import { StackScreenRoute } from '../../../utils/routes'
 import PatitoInput from '../../../components/common/PatitoInput'
 import authStyles from './style'
 import { PasswordResetScreenRouteProp } from '../../../types/navigation'
+import PatitoButton from '../../../components/common/PatitoButton'
 
 const PassswordReset: React.FC<PasswordResetScreenRouteProp> = ({
   navigation
@@ -86,7 +86,7 @@ const PassswordReset: React.FC<PasswordResetScreenRouteProp> = ({
               type='email-address'
             />
             <View style={authStyles.button}>
-              <Button title='Reset' onPress={handleSubmit} />
+              <PatitoButton title='Reset password' onPress={handleSubmit} />
             </View>
           </View>
         </View>

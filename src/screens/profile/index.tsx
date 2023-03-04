@@ -22,16 +22,10 @@ export type ProfileRootStackParamList = {
 
 const Stack = createStackNavigator<ProfileRootStackParamList>()
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ProfileTabScreen = ({ navigation }: any) => {
   const { isAuthenticated } = useAuth()
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigation.navigate(StackScreenRoute.USER_PROFILE)
-    } else {
-      navigation.navigate(StackScreenRoute.SIGN_IN)
-    }
-  }, [isAuthenticated, navigation])
   return (
     <Stack.Navigator
       initialRouteName={
