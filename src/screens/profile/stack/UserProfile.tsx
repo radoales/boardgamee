@@ -13,6 +13,7 @@ import authStyles from './style'
 import PatitoButton from '../../../components/common/PatitoButton'
 import { UseGetUserById } from '../../../hooks/users'
 import { UserProfileScreenRouteProp } from '../../../types/navigation'
+import LoadingSpinner from '../../../components/common/LoadingSpinner'
 
 const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
   const { user, signOut } = useAuth()
@@ -49,21 +50,6 @@ const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Content</Text>
             <View style={styles.sectionContent}>
-              {/* <TouchableHighlight
-              onPress={() =>
-                navigation.navigate(StackScreenRoute.MY_GAMES)
-              }
-              activeOpacity={0.6}
-              underlayColor={colors.gray[200]}
-            >
-              <View style={styles.sectionItemRow}>
-                <View style={styles.sectionItem}>
-                  <Ionicons name='heart-outline' size={25} />
-                  <Text style={styles.sectionItetitle}>Favourite Games</Text>
-                </View>
-                <Ionicons name='chevron-forward' size={25} />
-              </View>
-            </TouchableHighlight> */}
               <TouchableHighlight
                 onPress={() => navigation.navigate(StackScreenRoute.FRIENDS)}
                 activeOpacity={0.6}
@@ -83,7 +69,7 @@ const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
       </ScrollView>
     </View>
   ) : (
-    <View></View>
+    <LoadingSpinner />
   )
 }
 
