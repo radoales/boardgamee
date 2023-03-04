@@ -3,26 +3,26 @@ import {
   Montserrat_400Regular,
   Montserrat_500Medium
 } from '@expo-google-fonts/montserrat'
-import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons'
+import { AntDesign, Ionicons } from '@expo/vector-icons'
 import {
   ActivityIndicator,
   Image,
   Linking,
-  Platform,
+  // Platform,
   ScrollView,
   StyleSheet,
   Text,
-  ToastAndroid,
+  // ToastAndroid,
   TouchableOpacity,
   useWindowDimensions,
   View
 } from 'react-native'
-import { useAuth } from '../../auth/AuthUserprovider'
-import {
-  UseAddGameToMyGamesWithUserId,
-  UseGetMyGamesByUserId,
-  UseRemoveGamefromMyGamesWithUserId
-} from '../../hooks/favoriteGames'
+// import { useAuth } from '../../auth/AuthUserprovider'
+// import {
+//   UseAddGameToMyGamesWithUserId,
+//   UseGetMyGamesByUserId,
+//   UseRemoveGamefromMyGamesWithUserId
+// } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
 import Rating from '../game/Rating'
@@ -33,10 +33,10 @@ import RenderHTML, { defaultSystemFonts } from 'react-native-render-html'
 
 const GameDetails: React.FC = () => {
   const { selectedGame } = useContext(GameContext)
-  const { isAuthenticated, user } = useAuth()
-  const { data: gameIds } = UseGetMyGamesByUserId(user.id)
-  const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
-  const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
+  // const { isAuthenticated, user } = useAuth()
+  // const { data: gameIds } = UseGetMyGamesByUserId(user.id)
+  // const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
+  // const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
   const { data: games, isLoading } = useGetBoardgamesByIds(selectedGame.id)
   const [game, setGame] = useState<Game>()
 
@@ -70,21 +70,21 @@ const GameDetails: React.FC = () => {
     return null
   }
 
-  const handleAdd = () => {
-    if (isAuthenticated) {
-      !gameIds?.includes(selectedGame.id)
-        ? addToMyGames(selectedGame.id)
-        : removeFromMyGames(selectedGame.id)
-    } else {
-      if (Platform.OS === 'android') {
-        ToastAndroid.showWithGravity(
-          'Login to save games',
-          ToastAndroid.SHORT,
-          ToastAndroid.TOP
-        )
-      }
-    }
-  }
+  // const handleAdd = () => {
+  //   if (isAuthenticated) {
+  //     !gameIds?.includes(selectedGame.id)
+  //       ? addToMyGames(selectedGame.id)
+  //       : removeFromMyGames(selectedGame.id)
+  //   } else {
+  //     if (Platform.OS === 'android') {
+  //       ToastAndroid.showWithGravity(
+  //         'Login to save games',
+  //         ToastAndroid.SHORT,
+  //         ToastAndroid.TOP
+  //       )
+  //     }
+  //   }
+  // }
   return (
     <View style={[styles.container]}>
       {isLoading ? (
@@ -104,12 +104,12 @@ const GameDetails: React.FC = () => {
                 <Text style={styles.type}>{game.type} </Text>
                 <Text style={styles.title}>{game.name}</Text>
               </View>
-              <FontAwesome
+              {/* <FontAwesome
                 onPress={handleAdd}
                 name={!gameIds?.includes(game.id) ? 'heart-o' : 'heart'}
                 size={40}
                 color={colors.orange}
-              />
+              /> */}
             </View>
             <View style={[styles.section, styles.detailSection]}>
               <View>

@@ -3,14 +3,14 @@ import {
   Montserrat_400Regular,
   Montserrat_500Medium
 } from '@expo-google-fonts/montserrat'
-import { FontAwesome } from '@expo/vector-icons'
+// import { FontAwesome } from '@expo/vector-icons'
 import { Image, StyleSheet, Text, View } from 'react-native'
-import { useAuth } from '../../auth/AuthUserprovider'
-import {
-  UseAddGameToMyGamesWithUserId,
-  UseGetMyGamesByUserId,
-  UseRemoveGamefromMyGamesWithUserId
-} from '../../hooks/favoriteGames'
+// import { useAuth } from '../../auth/AuthUserprovider'
+// import {
+//   UseAddGameToMyGamesWithUserId,
+//   UseGetMyGamesByUserId,
+//   UseRemoveGamefromMyGamesWithUserId
+// } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
 import Rating from '../game/Rating'
@@ -20,10 +20,10 @@ interface SearchResultProps {
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
-  const { user } = useAuth()
-  const { data: gameIds } = UseGetMyGamesByUserId(user.id)
-  const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
-  const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
+  // const { user } = useAuth()
+  // const { data: gameIds } = UseGetMyGamesByUserId(user.id)
+  // const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
+  // const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
 
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
@@ -47,7 +47,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
           </Text>
         </View>
       </View>
-      <View style={styles.heartIcon}>
+      {/* <View style={styles.heartIcon}>
         <FontAwesome
           onPress={() =>
             !gameIds?.includes(data.id)
@@ -58,7 +58,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
           size={40}
           color={colors.orange}
         />
-      </View>
+      </View> */}
     </View>
   )
 }
