@@ -9,28 +9,36 @@ import {
 import colors from '../../../styles/colors'
 import {
   UseAcceptInvite,
-  UseGetUserFriendsById,
-  UseGetUserInvitesById
+  UseGetUserById,
+  // UseGetUserFriendsById,
+  UseGetUserInvitesById,
+  UseGetUsers
 } from '../../../hooks/users'
 import { useAuth } from '../../../auth/AuthUserprovider'
-import UserCard from '../../../components/users/UserCard'
 import { FriendsScreenRouteProp } from '../../../types/navigation'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import PatitoInput from '../../../components/common/PatitoInput'
 import PatitoButton from '../../../components/common/PatitoButton'
 import { useState } from 'react'
+import InvitationCard from '../../../components/users/InvitationCard'
+import UserCard from '../../../components/users/UserCard'
 
 const Friends: React.FC<FriendsScreenRouteProp> = () => {
-  const { user } = useAuth()
+  const { user: loggedInUser } = useAuth()
+  const { data: user } = UseGetUserById(loggedInUser.id)
   const [value, setValue] = useState('')
-  const { data: users, isLoading } = UseGetUserFriendsById(user.id)
-  const { data: invites } = UseGetUserInvitesById(user.id)
+  const { data: users, isLoading: isLoadingusers } = UseGetUsers()
+  // const { data: users, isLoading } = UseGetUserFriendsById(user?.id ?? '')
+  const { data: invites, isLoading: isLoadingInvites } = UseGetUserInvitesById(
+    user?.id ?? ''
+  )
   const { accept } = UseAcceptInvite()
 
   return (
     <View style={[styles.container]}>
-      {isLoading && <ActivityIndicator size='large' />}
-      {users && (
+      {isLoadingusers && isLoadingInvites ? (
+        <ActivityIndicator size='large' />
+      ) : (
         <ScrollView>
           <View
             style={{
@@ -59,31 +67,42 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
           </View>
           <View style={styles.listContainer}>
             {invites && invites?.length > 0 ? (
-              invites?.map((invite, index) => (
-                <TouchableHighlight
-                  key={index}
-                  activeOpacity={0.6}
-                  underlayColor={colors.gray[200]}
-                  onPress={() => true}
-                >
-                  <View style={styles.inviteContainer}>
-                    <UserCard data={invite} />
-                    <View style={styles.approvalContainer}>
-                      <Ionicons
-                        name='checkmark-circle'
-                        size={45}
-                        color={colors.blue[600]}
-                        onPress={() => accept(invite.id)}
+              invites?.map((invite, index) => {
+                const inviteUser = users?.find(
+                  (user) =>
+                    user.id === invite.sender_id ||
+                    user.id === invite.receiver_id
+                )
+                return (
+                  <TouchableHighlight
+                    key={index}
+                    activeOpacity={0.6}
+                    underlayColor={colors.gray[200]}
+                    onPress={() => true}
+                  >
+                    <View style={styles.inviteContainer}>
+                      <InvitationCard
+                        userName={inviteUser?.username ?? ''}
+                        name={inviteUser?.name}
+                        createdAt={invite.created_at}
                       />
-                      <MaterialIcons
-                        name='cancel'
-                        size={45}
-                        color={colors.orange}
-                      />
+                      <View style={styles.approvalContainer}>
+                        <Ionicons
+                          name='checkmark-circle'
+                          size={45}
+                          color={colors.blue[600]}
+                          onPress={() => accept(invite.id)}
+                        />
+                        <MaterialIcons
+                          name='cancel'
+                          size={45}
+                          color={colors.orange}
+                        />
+                      </View>
                     </View>
-                  </View>
-                </TouchableHighlight>
-              ))
+                  </TouchableHighlight>
+                )
+              })
             ) : (
               <Text>No pending invites</Text>
             )}
@@ -92,7 +111,7 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
             <Text style={styles.sectionTitle}>Friends</Text>
           </View>
           <View style={styles.listContainer}>
-            {users.map((user, index) => (
+            {users?.map((user, index) => (
               <TouchableHighlight
                 key={index}
                 activeOpacity={0.6}

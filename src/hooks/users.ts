@@ -3,8 +3,8 @@ import { getDatabase, onValue, ref, set } from 'firebase/database'
 import { User } from '../types/user'
 import { firebaseApp } from '../../firebaseConfig'
 import { useAuth } from '../auth/AuthUserprovider'
-import { Invite } from '../types/invite'
 import { restApiRequest } from '../utils/api'
+import { Invitation } from '../models/invitation'
 
 export const UseGetUsers = (): { data?: User[]; isLoading: boolean } => {
   const [data, setData] = useState<User[]>()
@@ -12,8 +12,9 @@ export const UseGetUsers = (): { data?: User[]; isLoading: boolean } => {
 
   const getData = async () => {
     try {
-      const response = await restApiRequest<User[]>({ url: `users}` })
+      const response = await restApiRequest<User[]>({ url: `users` })
       setData(response)
+      setIsLoading(false)
     } catch (error) {}
   }
 
@@ -89,31 +90,30 @@ export const UseUpdateUser = () => {
 }
 
 export const UseGetUserInvitesById = (
-  id: string
+  user_id: string
 ): {
-  data?: Invite[]
+  data?: Invitation[]
   isLoading: boolean
 } => {
-  const [data, setData] = useState<Invite[]>()
+  const [data, setData] = useState<Invitation[]>()
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    const db = getDatabase(firebaseApp)
-    const dbRef = ref(db, `users/${id}/invites`)
-    onValue(dbRef, (snapshot) => {
-      const data: {
-        [key: string]: Invite
-      } = snapshot.val()
-      setData(
-        data
-          ? Object.values(data)
-              .filter((invite) => invite.status === 'received')
-              .map((invite) => invite)
-          : []
-      )
+  const getData = async () => {
+    try {
+      const response = await restApiRequest<Invitation[]>({
+        url: `invitations/${user_id}`
+      })
+      setData(response)
       setIsLoading(false)
-    })
-  }, [id])
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    if (user_id) {
+      getData()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user_id])
 
   return { data, isLoading }
 }
