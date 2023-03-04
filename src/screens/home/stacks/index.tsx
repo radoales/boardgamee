@@ -23,7 +23,7 @@ const HomeScreen: React.FC<HomeStackScreenRouteProp> = () => {
 
   return (
     <View style={[styles.container]}>
-      {data?.games?.length ? (
+      {!isLoading ? (
         <ScrollView refreshControl={<RefreshControl refreshing={isLoading} />}>
           <View style={styles.inner}>
             <BoardGameScrollView
