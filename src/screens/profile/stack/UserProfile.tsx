@@ -3,7 +3,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableHighlight,
+  // TouchableHighlight,
   View
 } from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
@@ -55,7 +55,7 @@ const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
               <PatitoButton title='Log out' onPress={() => signOut()} />
             </View>
           </View>
-          <View style={styles.section}>
+          {/* <View style={styles.section}>
             <Text style={styles.sectionTitle}>Content</Text>
             <View style={styles.sectionContent}>
               <TouchableHighlight
@@ -72,7 +72,7 @@ const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
                 </View>
               </TouchableHighlight>
             </View>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </View>
