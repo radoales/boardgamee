@@ -1,12 +1,13 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useState } from 'react'
-import { Button, Image, ScrollView, Text, View } from 'react-native'
+import { Image, ScrollView, Text, View } from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import colors from '../../../styles/colors'
 import PatitoInput from '../../../components/common/PatitoInput'
 import authStyles from './style'
 import { StackScreenRoute } from '../../../utils/routes'
 import { SignUpScreenRouteProp } from '../../../types/navigation'
+import PatitoButton from '../../../components/common/PatitoButton'
 
 const SignUp: React.FC<SignUpScreenRouteProp> = ({ navigation }) => {
   const [email, setEmail] = useState<string>()
@@ -21,9 +22,9 @@ const SignUp: React.FC<SignUpScreenRouteProp> = ({ navigation }) => {
   }
 
   return (
-    <View style={authStyles.container}>
+    <View style={authStyles.scrollViewContainer}>
       <ScrollView>
-        <View style={authStyles.scrollViewContainer}>
+        <View style={authStyles.container}>
           <View style={authStyles.logoContainer}>
             <Image
               style={authStyles.logo}
@@ -78,7 +79,7 @@ const SignUp: React.FC<SignUpScreenRouteProp> = ({ navigation }) => {
               isPassword
             />
             <View style={authStyles.button}>
-              <Button title='Sign up' onPress={handleSubmit} />
+              <PatitoButton title='Sign up' onPress={handleSubmit} />
             </View>
             <Text
               style={authStyles.link}

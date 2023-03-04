@@ -1,7 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useEffect, useState } from 'react'
 import {
-  Button,
   Image,
   Platform,
   ScrollView,
@@ -17,6 +16,7 @@ import PatitoInput from '../../../components/common/PatitoInput'
 import authStyles from './style'
 import { StackScreenRoute } from '../../../utils/routes'
 import { SignInScreenRouteProp } from '../../../types/navigation'
+import PatitoButton from '../../../components/common/PatitoButton'
 
 const SignIn: React.FC<SignInScreenRouteProp> = ({ navigation }) => {
   const [email, setEmail] = useState<string>()
@@ -97,7 +97,7 @@ const SignIn: React.FC<SignInScreenRouteProp> = ({ navigation }) => {
               isPassword
             />
             <View style={authStyles.button}>
-              <Button title='Sign in' onPress={handleSubmit} />
+              <PatitoButton title='Sign in' onPress={handleSubmit} />
             </View>
             <View style={authStyles.center}>
               <Text
