@@ -17,16 +17,16 @@ import {
 import { useAuth } from '../../../auth/AuthUserprovider'
 import { FriendsScreenRouteProp } from '../../../types/navigation'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
-import PatitoInput from '../../../components/common/PatitoInput'
-import PatitoButton from '../../../components/common/PatitoButton'
-import { useState } from 'react'
+// import PatitoInput from '../../../components/common/PatitoInput'
+// import PatitoButton from '../../../components/common/PatitoButton'
+// import { useState } from 'react'
 import InvitationCard from '../../../components/users/InvitationCard'
 import UserCard from '../../../components/users/UserCard'
 
 const Friends: React.FC<FriendsScreenRouteProp> = () => {
   const { user: loggedInUser } = useAuth()
   const { data: user } = UseGetUserById(loggedInUser.id)
-  const [value, setValue] = useState('')
+  // const [value, setValue] = useState('')
   const { data: users, isLoading: isLoadingusers } = UseGetUsers()
   // const { data: users, isLoading } = UseGetUserFriendsById(user?.id ?? '')
   const { data: invites, isLoading: isLoadingInvites } = UseGetUserInvitesById(
@@ -36,11 +36,11 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
 
   return (
     <View style={[styles.container]}>
-      {isLoadingusers && isLoadingInvites ? (
+      {isLoadingusers || isLoadingInvites ? (
         <ActivityIndicator size='large' />
       ) : (
         <ScrollView>
-          <View
+          {/* <View
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -60,8 +60,7 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
               style={{ width: 100, height: 45 }}
               title='Send'
             />
-          </View>
-
+          </View> */}
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Pending</Text>
           </View>
@@ -69,9 +68,7 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
             {invites && invites?.length > 0 ? (
               invites?.map((invite, index) => {
                 const inviteUser = users?.find(
-                  (user) =>
-                    user.id === invite.sender_id ||
-                    user.id === invite.receiver_id
+                  (user) => user.id === invite.sender_id
                 )
                 return (
                   <TouchableHighlight
