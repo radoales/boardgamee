@@ -10,7 +10,7 @@ import colors from '../../../styles/colors'
 import {
   UseAcceptInvite,
   UseGetUserById,
-  // UseGetUserFriendsById,
+  UseGetUserFriendsById,
   UseGetUserInvitesById,
   UseGetUsers
 } from '../../../hooks/users'
@@ -28,7 +28,7 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
   const { data: user } = UseGetUserById(loggedInUser.id)
   // const [value, setValue] = useState('')
   const { data: users, isLoading: isLoadingusers } = UseGetUsers()
-  // const { data: users, isLoading } = UseGetUserFriendsById(user?.id ?? '')
+  const { data: friends, isLoading } = UseGetUserFriendsById(user?.id ?? '')
   const { data: invites, isLoading: isLoadingInvites } = UseGetUserInvitesById(
     user?.id ?? ''
   )
@@ -36,7 +36,7 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
 
   return (
     <View style={[styles.container]}>
-      {isLoadingusers || isLoadingInvites ? (
+      {isLoadingusers || isLoadingInvites || isLoading ? (
         <ActivityIndicator size='large' />
       ) : (
         <ScrollView>
@@ -108,7 +108,7 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
             <Text style={styles.sectionTitle}>Friends</Text>
           </View>
           <View style={styles.listContainer}>
-            {users?.map((user, index) => (
+            {friends?.map((user, index) => (
               <TouchableHighlight
                 key={index}
                 activeOpacity={0.6}

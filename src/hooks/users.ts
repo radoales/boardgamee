@@ -26,7 +26,7 @@ export const UseGetUsers = (): { data?: User[]; isLoading: boolean } => {
 }
 
 export const UseGetUserFriendsById = (
-  id: string
+  user_id: string
 ): {
   data?: User[]
   isLoading: boolean
@@ -34,15 +34,36 @@ export const UseGetUserFriendsById = (
   const [data, setData] = useState<User[]>()
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    const db = getDatabase(firebaseApp)
-    const dbRef = ref(db, `users/${id}/friends`)
-    onValue(dbRef, (snapshot) => {
-      const data: { [key: string]: { accountDetails: User } } = snapshot.val()
-      setData(Object.values(data).map((user) => user.accountDetails))
+  const getUsersData = async () => {
+    try {
+      const invitationsResponse = await restApiRequest<Invitation[]>({
+        url: `invitations/${user_id}`
+      })
+
+      const userIds = invitationsResponse
+        .filter((invite) => invite.status === 1)
+        .map((invite) =>
+          invite.sender_id === user_id ? invite.receiver_id : invite.sender_id
+        )
+
+      const response = await restApiRequest<{ ids: string[] }, User[]>({
+        url: `users_by_ids`,
+        method: 'POST',
+        data: {
+          ids: userIds
+        }
+      })
+      setData(response)
       setIsLoading(false)
-    })
-  }, [id])
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    if (user_id) {
+      getUsersData()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user_id])
 
   return { data, isLoading }
 }

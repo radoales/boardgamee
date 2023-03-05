@@ -1,12 +1,12 @@
 import { REST_API_URL } from '@env'
 import Axios from 'axios'
 
-export const restApiRequest = async <T>({
+export const restApiRequest = async <T, R = void>({
   url,
   method = 'GET',
   data
-}: RequestOptions<T>): Promise<T> => {
-  const response = await Axios.request<ApiResponse<T>>({
+}: RequestOptions<T>): Promise<R extends void ? T : R> => {
+  const response = await Axios.request<ApiResponse<R extends void ? T : R>>({
     method,
     headers: {
       'x-hasura-admin-secret':
