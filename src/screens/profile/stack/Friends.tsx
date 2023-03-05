@@ -30,9 +30,7 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
   const { data: friends, isLoading } = UseGetUserFriendsById(user?.id ?? '')
   const { data: invites, isLoading: isLoadingInvites } =
     UseGetUserInvitationsById(user?.id ?? '')
-  const { updateInvitation, data } = UseUpdateInvitation()
-
-  console.log('data', data)
+  const { updateInvitation } = UseUpdateInvitation()
 
   return (
     <View style={[styles.container]}>

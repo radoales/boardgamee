@@ -1,64 +1,35 @@
-import { useEffect, useState } from 'react'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { queryClient } from '../../App'
 import { User } from '../types/user'
 import { restApiRequest } from '../utils/api'
 
 export const UseGetUsers = (): { data?: User[]; isLoading: boolean } => {
-  const [data, setData] = useState<User[]>()
-  const [isLoading, setIsLoading] = useState(true)
-
-  const getData = async () => {
-    try {
-      const response = await restApiRequest<User[]>({ url: `users` })
-      setData(response)
-      setIsLoading(false)
-    } catch (error) {}
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
-
-  return { data, isLoading }
+  return useQuery(['users'], async () => {
+    return await restApiRequest<User[]>({ url: `users` })
+  })
 }
 
 export const UseGetUserById = (id: string): { data?: User } => {
-  const [data, setData] = useState<User>()
-  const getData = async (id: string) => {
-    try {
-      const response = await restApiRequest<User[]>({ url: `users/${id}` })
-      setData(response[0])
-    } catch (error) {}
-  }
+  return useQuery([`users/${id}`], async () => {
+    const response = await restApiRequest<User[]>({ url: `users/${id}` })
 
-  useEffect(() => {
-    if (id) {
-      getData(id)
-    }
-  }, [id])
-
-  return { data }
+    return response.length ? response[0] : undefined
+  })
 }
 
 export const UseUpdateUser = () => {
-  const [error, setError] = useState<string>()
-  const [isSuccess, setIsSuccess] = useState<boolean>()
-  const [isError, setIsError] = useState<boolean>()
-  const updateUser = (id: string, name: string, email: string) => {
-    setIsSuccess(undefined)
-    setIsError(undefined)
-    restApiRequest<Partial<User>>({
-      url: 'users',
-      method: 'PUT',
-      data: { id, name, email, username: name }
-    })
-      .then(() => {
-        setIsSuccess(true)
+  return useMutation(
+    async (values: Partial<User>) => {
+      restApiRequest<Partial<User>>({
+        url: 'users',
+        method: 'PUT',
+        data: values
       })
-      .catch((error) => {
-        setIsError(true)
-        setError(error)
-      })
-  }
-
-  return { updateUser, isSuccess, isError, error }
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['users'])
+      }
+    }
+  )
 }

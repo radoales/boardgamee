@@ -19,8 +19,8 @@ const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
   const { user } = useAuth()
 
   const { data: userDetails } = UseGetUserById(user.id)
-  const { updateUser, error, isError, isSuccess } = UseUpdateUser()
-  useFeedback(isSuccess, isError, error ?? 'success')
+  const { mutate: updateUser, error, isError, isSuccess } = UseUpdateUser()
+  useFeedback(isSuccess, isError, (error as string) ?? 'success')
 
   useEffect(() => {
     if (userDetails?.name) {
@@ -66,7 +66,12 @@ const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
                 <PatitoButton
                   title='Save'
                   onPress={() =>
-                    updateUser(userDetails.id, name, userDetails.email)
+                    updateUser({
+                      id: userDetails.id,
+                      name,
+                      email: userDetails.email,
+                      username: userDetails.username
+                    })
                   }
                 />
               </View>
