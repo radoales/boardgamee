@@ -7,13 +7,7 @@ import {
   View
 } from 'react-native'
 import colors from '../../../styles/colors'
-import {
-  UseAcceptInvite,
-  UseGetUserById,
-  UseGetUserFriendsById,
-  UseGetUserInvitesById,
-  UseGetUsers
-} from '../../../hooks/users'
+import { UseGetUserById, UseGetUsers } from '../../../hooks/users'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import { FriendsScreenRouteProp } from '../../../types/navigation'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
@@ -22,6 +16,11 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 // import { useState } from 'react'
 import InvitationCard from '../../../components/users/InvitationCard'
 import UserCard from '../../../components/users/UserCard'
+import {
+  UseGetUserFriendsById,
+  UseGetUserInvitationsById,
+  UseUpdateInvitation
+} from '../../../hooks/friends'
 
 const Friends: React.FC<FriendsScreenRouteProp> = () => {
   const { user: loggedInUser } = useAuth()
@@ -29,10 +28,11 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
   // const [value, setValue] = useState('')
   const { data: users, isLoading: isLoadingusers } = UseGetUsers()
   const { data: friends, isLoading } = UseGetUserFriendsById(user?.id ?? '')
-  const { data: invites, isLoading: isLoadingInvites } = UseGetUserInvitesById(
-    user?.id ?? ''
-  )
-  const { accept } = UseAcceptInvite()
+  const { data: invites, isLoading: isLoadingInvites } =
+    UseGetUserInvitationsById(user?.id ?? '')
+  const { updateInvitation, data } = UseUpdateInvitation()
+
+  console.log('data', data)
 
   return (
     <View style={[styles.container]}>
@@ -66,40 +66,44 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
           </View>
           <View style={styles.listContainer}>
             {invites && invites?.length > 0 ? (
-              invites?.map((invite, index) => {
-                const inviteUser = users?.find(
-                  (user) => user.id === invite.sender_id
-                )
-                return (
-                  <TouchableHighlight
-                    key={index}
-                    activeOpacity={0.6}
-                    underlayColor={colors.gray[200]}
-                    onPress={() => true}
-                  >
-                    <View style={styles.inviteContainer}>
-                      <InvitationCard
-                        userName={inviteUser?.username ?? ''}
-                        name={inviteUser?.name}
-                        createdAt={invite.created_at}
-                      />
-                      <View style={styles.approvalContainer}>
-                        <Ionicons
-                          name='checkmark-circle'
-                          size={45}
-                          color={colors.blue[600]}
-                          onPress={() => accept(invite.id)}
+              invites
+                .filter((invite) => invite.status === 0)
+                ?.map((invite, index) => {
+                  console.log('invite', invite)
+                  const inviteUser = users?.find(
+                    (user) => user.id === invite.sender_id
+                  )
+                  return (
+                    <TouchableHighlight
+                      key={index}
+                      activeOpacity={0.6}
+                      underlayColor={colors.gray[200]}
+                      onPress={() => true}
+                    >
+                      <View style={styles.inviteContainer}>
+                        <InvitationCard
+                          userName={inviteUser?.username ?? ''}
+                          name={inviteUser?.name}
+                          createdAt={invite.created_at}
                         />
-                        <MaterialIcons
-                          name='cancel'
-                          size={45}
-                          color={colors.orange}
-                        />
+                        <View style={styles.approvalContainer}>
+                          <Ionicons
+                            name='checkmark-circle'
+                            size={45}
+                            color={colors.blue[600]}
+                            onPress={() => updateInvitation(invite.id, 1)}
+                          />
+                          <MaterialIcons
+                            name='cancel'
+                            size={45}
+                            color={colors.orange}
+                            onPress={() => updateInvitation(invite.id, 2)}
+                          />
+                        </View>
                       </View>
-                    </View>
-                  </TouchableHighlight>
-                )
-              })
+                    </TouchableHighlight>
+                  )
+                })
             ) : (
               <Text>No pending invites</Text>
             )}
