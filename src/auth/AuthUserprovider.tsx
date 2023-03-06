@@ -3,7 +3,6 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { createContext, useContext, useState, useEffect, useMemo } from 'react'
 import {
   useLogOut,
-  // useUpdateUserProfile,
   useResetPassword,
   useSignIn,
   useSignUp
@@ -48,8 +47,6 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
   const { handleSignIn, signInError } = useSignIn()
   const { handleLogOut } = useLogOut()
   const { handleResetPassword, resetPasswordError } = useResetPassword()
-  // const { handleUpdateUserProfile, updateUserProfileError } =
-  //   useUpdateUserProfile()
   const { handleSignUp, signUpError } = useSignUp()
 
   useEffect(() => {
@@ -69,7 +66,6 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
         handleSignIn(email, password),
       signOut: () => handleLogOut(),
       resetPassword: (email: string) => handleResetPassword(email),
-      // updateUserProfile: (name: string) => handleUpdateUserProfile(name),
       error: error,
       resetPasswordError,
       signUpError

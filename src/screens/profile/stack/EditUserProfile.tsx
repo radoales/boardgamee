@@ -19,7 +19,12 @@ const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
   const { user } = useAuth()
 
   const { data: userDetails } = UseGetUserById(user.id)
-  const { mutate: updateUser, error, isError, isSuccess } = UseUpdateUser()
+  const {
+    mutate: updateUser,
+    error,
+    isError,
+    isSuccess
+  } = UseUpdateUser(user.id)
   useFeedback(isSuccess, isError, (error as string) ?? 'success')
 
   useEffect(() => {

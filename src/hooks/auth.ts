@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail
 } from 'firebase/auth'
 import { useState } from 'react'
+import { auth } from '../../firebaseConfig'
 import { User } from '../types/user'
 import { restApiRequest } from '../utils/api'
 
@@ -22,7 +22,6 @@ export const useSignUp = () => {
     isSuccess: null
   })
   const handleSignUp = async (email: string, password: string) => {
-    const auth = getAuth()
     setSignUpError({ isLoading: true, error: null, isSuccess: null })
     try {
       const response = await createUserWithEmailAndPassword(
@@ -57,7 +56,6 @@ export const useSignIn = () => {
     error: null
   })
   const handleSignIn = async (email: string, password: string) => {
-    const auth = getAuth()
     setSignInError({ isLoading: true, error: null })
     try {
       await signInWithEmailAndPassword(auth, email, password)
@@ -80,7 +78,6 @@ export const useResetPassword = () => {
     isSuccess: null
   })
   const handleResetPassword = async (email: string) => {
-    const auth = getAuth()
     setResetPasswordError({ isLoading: true, error: null, isSuccess: null })
     try {
       await sendPasswordResetEmail(auth, email)
@@ -98,7 +95,6 @@ export const useResetPassword = () => {
 
 export const useLogOut = () => {
   const handleLogOut = async () => {
-    const auth = getAuth()
     try {
       await signOut(auth)
     } catch (error: any) {}

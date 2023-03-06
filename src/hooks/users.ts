@@ -23,10 +23,10 @@ export const UseGetUserById = (id: string): { data?: User } => {
   )
 }
 
-export const UseUpdateUser = () => {
+export const UseUpdateUser = (id: string) => {
   return useMutation(
     async (values: Partial<User>) => {
-      restApiRequest<Partial<User>>({
+      return await restApiRequest<Partial<User>>({
         url: 'users',
         method: 'PUT',
         data: values
@@ -34,7 +34,8 @@ export const UseUpdateUser = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['users'])
+        queryClient.invalidateQueries([`users/${id}`])
+        queryClient.invalidateQueries([`users`])
       }
     }
   )
