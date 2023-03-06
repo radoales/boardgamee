@@ -5,7 +5,7 @@ import {
 } from '@expo-google-fonts/montserrat'
 import { StyleSheet, Text, View } from 'react-native'
 import colors from '../../styles/colors'
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { FontAwesome, FontAwesome5, Ionicons } from '@expo/vector-icons'
 import { User } from '../../types/user'
 import { Invite } from '../../types/invite'
 import PatitoButton from '../common/PatitoButton'
@@ -13,9 +13,14 @@ import PatitoButton from '../common/PatitoButton'
 interface UserCardProps {
   data: User | Invite
   addFriend?: () => void
+  removeFriend?: () => void
 }
 
-const UserCard: React.FC<UserCardProps> = ({ data, addFriend }) => {
+const UserCard: React.FC<UserCardProps> = ({
+  data,
+  addFriend,
+  removeFriend
+}) => {
   const [] = useFonts({
     Montserrat_400Regular,
     Montserrat_500Medium
@@ -34,14 +39,31 @@ const UserCard: React.FC<UserCardProps> = ({ data, addFriend }) => {
           <Text style={styles.header}>{data.username}</Text>
         </View>
       </View>
+      {removeFriend && (
+        <View style={styles.btn}>
+          <PatitoButton
+            type={'secondary'}
+            onPress={removeFriend}
+            icon={
+              <FontAwesome5
+                name='user-minus'
+                size={16}
+                color={colors.blue[600]}
+              />
+            }
+            title={'Remove'}
+          />
+        </View>
+      )}
       {addFriend && (
         <View style={styles.btn}>
           <PatitoButton
+            type={'primary'}
             onPress={addFriend}
             icon={
               <FontAwesome name='user-plus' size={16} color={colors.white} />
             }
-            title='Add friend'
+            title={'Invite'}
           />
         </View>
       )}

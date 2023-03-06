@@ -13,7 +13,7 @@ interface PatitoButton {
   style?: StyleProp<ViewStyle>
   title: string
   onPress: () => void
-  type?: 'primary' | 'secondary'
+  type?: 'primary' | 'secondary' | 'danger'
 }
 
 const PatitoButton: React.FC<PatitoButton> = ({
@@ -30,7 +30,9 @@ const PatitoButton: React.FC<PatitoButton> = ({
         style,
         type === 'primary'
           ? styles.primaryBackground
-          : styles.secondaryBackground
+          : type === 'secondary'
+          ? styles.secondaryBackground
+          : styles.dangerBackground
       ]}
       onPress={onPress}
     >
@@ -58,6 +60,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 35,
     alignItems: 'center'
+  },
+  dangerBackground: {
+    backgroundColor: colors.orange
   },
   primaryBackground: {
     backgroundColor: colors.blue[600]

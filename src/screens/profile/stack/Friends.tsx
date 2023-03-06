@@ -133,7 +133,10 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
                 underlayColor={colors.gray[200]}
                 onPress={() => true}
               >
-                <UserCard data={user} />
+                <UserCard
+                  data={user}
+                  removeFriend={() => updateInvitation({})}
+                />
               </TouchableHighlight>
             ))}
           </View>
