@@ -19,7 +19,6 @@ import { useEffect } from 'react'
 const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
   const { user, signOut, isAuthenticated } = useAuth()
   const { data: userDetails } = UseGetUserById(user.id)
-
   useEffect(() => {
     if (!isAuthenticated) {
       navigation.replace(StackScreenRoute.SIGN_IN)

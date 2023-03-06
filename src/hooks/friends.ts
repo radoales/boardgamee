@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getDatabase, onValue, ref, set } from 'firebase/database'
 import { User } from '../types/user'
-import { useAuth } from '../auth/AuthUserprovider'
 import { restApiRequest } from '../utils/api'
 import { Invitation } from '../models/invitation'
 import { useQuery } from '@tanstack/react-query'
@@ -87,40 +85,4 @@ export const UseGetUserInvitationsById = (
   }, [user_id])
 
   return { data, isLoading }
-}
-
-export const UseAcceptInvite = () => {
-  const [error, setError] = useState<string>()
-  const [isSuccess, setIsSuccess] = useState<boolean>()
-  const [isError, setIsError] = useState<boolean>()
-
-  const { user: loggedUser } = useAuth()
-
-  const accept = (id: string) => {
-    setIsSuccess(undefined)
-    setIsError(undefined)
-    const db = getDatabase()
-
-    const dbRef = ref(db, `users/${id}/accountDetails`)
-    onValue(dbRef, (snapshot) => {
-      const user: User = snapshot.val()
-      if (user) {
-        set(
-          ref(db, `users/${loggedUser.id}/friends/${user.id}/accountDetails`),
-          user
-        )
-          .then(() => {
-            set(ref(db, `users/${loggedUser.id}/invites/${user.id}`), null)
-            set(ref(db, `users/${user.id}/invites/${user.id}`), null)
-            setIsSuccess(true)
-          })
-          .catch((error) => {
-            setIsError(true)
-            setError(error)
-          })
-      }
-    })
-  }
-
-  return { accept, isSuccess, isError, error }
 }

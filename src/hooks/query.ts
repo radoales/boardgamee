@@ -1,29 +1,26 @@
-import React from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import NetInfo from '@react-native-community/netinfo'
 import { Platform } from 'react-native'
 import { onlineManager } from '@tanstack/react-query'
 import { useFocusEffect } from '@react-navigation/native'
 
 export const useOnlineManager = () => {
-  React.useEffect(() => {
-    // React Query already supports on reconnect auto refetch in web browser
+  useEffect(() => {
     if (Platform.OS !== 'web') {
-      return NetInfo.addEventListener((state) => {
-        onlineManager.setOnline(
-          state.isConnected != null &&
-            state.isConnected &&
-            Boolean(state.isInternetReachable)
-        )
+      onlineManager.setEventListener((setOnline) => {
+        return NetInfo.addEventListener((state) => {
+          setOnline(!!state.isConnected)
+        })
       })
     }
   }, [])
 }
 
 export const useRefreshOnFocus = <T>(refetch: () => Promise<T>) => {
-  const firstTimeRef = React.useRef(true)
+  const firstTimeRef = useRef(true)
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (firstTimeRef.current) {
         firstTimeRef.current = false
         return

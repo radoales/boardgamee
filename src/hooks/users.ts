@@ -10,11 +10,17 @@ export const UseGetUsers = (): { data?: User[]; isLoading: boolean } => {
 }
 
 export const UseGetUserById = (id: string): { data?: User } => {
-  return useQuery([`users/${id}`], async () => {
-    const response = await restApiRequest<User[]>({ url: `users/${id}` })
+  return useQuery(
+    [`users/${id}`],
+    async () => {
+      const response = await restApiRequest<User[]>({ url: `users/${id}` })
 
-    return response.length ? response[0] : undefined
-  })
+      return response.length ? response[0] : undefined
+    },
+    {
+      enabled: !!id
+    }
+  )
 }
 
 export const UseUpdateUser = () => {
