@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
 import { User } from '../types/user'
 import { restApiRequest } from '../utils/api'
 import { Invitation } from '../models/invitation'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { queryClient } from '../../App'
 
 export const UseGetUserFriendsById = (
   user_id: string
@@ -10,7 +10,7 @@ export const UseGetUserFriendsById = (
   data?: User[]
   isLoading: boolean
 } => {
-  return useQuery(['firends'], async () => {
+  return useQuery(['friends'], async () => {
     const invitationsResponse = await restApiRequest<Invitation[]>({
       url: `invitations/${user_id}`
     })
@@ -31,58 +31,45 @@ export const UseGetUserFriendsById = (
   })
 }
 
-export const UseUpdateInvitation = () => {
-  const [error, setError] = useState<string>()
-  const [isSuccess, setIsSuccess] = useState<boolean>()
-  const [isError, setIsError] = useState<boolean>()
-  const [data, setData] = useState<Invitation>()
-
-  const updateInvitation = async (id: string, status: 0 | 1 | 2) => {
-    setIsSuccess(undefined)
-    setIsError(undefined)
-
-    try {
-      const response = await restApiRequest<Partial<Invitation>, Invitation>({
+export const useCreateInvitation = () => {
+  return useMutation(
+    async (params: Partial<Invitation>) => {
+      return restApiRequest<Partial<Invitation>>({
         url: 'invitations',
-        method: 'PUT',
-        data: { id, status }
+        method: 'POST',
+        data: params
       })
-      setData(response)
-      setIsSuccess(true)
-    } catch (error) {
-      setIsError(true)
-      setError(error as string)
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['friends'])
+        queryClient.invalidateQueries(['invitations'])
+      }
     }
-  }
-
-  return { updateInvitation, isSuccess, isError, error, data }
+  )
 }
 
-export const UseGetUserInvitationsById = (
-  user_id: string
-): {
-  data?: Invitation[]
-  isLoading: boolean
-} => {
-  const [data, setData] = useState<Invitation[]>()
-  const [isLoading, setIsLoading] = useState(true)
-
-  const getData = async () => {
-    try {
-      const response = await restApiRequest<Invitation[]>({
-        url: `invitations/${user_id}`
+export const UseUpdateInvitation = () => {
+  return useMutation(
+    async (params: Partial<Invitation>) => {
+      return await restApiRequest<Partial<Invitation>, Invitation>({
+        url: 'invitations',
+        method: 'PUT',
+        data: params
       })
-      setData(response)
-      setIsLoading(false)
-    } catch (error) {}
-  }
-
-  useEffect(() => {
-    if (user_id) {
-      getData()
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['friends'])
+        queryClient.invalidateQueries(['invitations'])
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user_id])
-
-  return { data, isLoading }
+  )
+}
+export const UseGetUserInvitationsById = (user_id: string) => {
+  return useQuery(['invitations'], async () => {
+    return await restApiRequest<Invitation[]>({
+      url: `invitations/${user_id}`
+    })
+  })
 }

@@ -1,5 +1,4 @@
 import {
-  ActivityIndicator,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,28 +13,31 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 // import PatitoInput from '../../../components/common/PatitoInput'
 // import PatitoButton from '../../../components/common/PatitoButton'
 // import { useState } from 'react'
-import InvitationCard from '../../../components/users/InvitationCard'
+import InvitationCard from '../../../components/cards/InvitationCard'
 import UserCard from '../../../components/users/UserCard'
 import {
+  useCreateInvitation,
   UseGetUserFriendsById,
   UseGetUserInvitationsById,
   UseUpdateInvitation
 } from '../../../hooks/friends'
+import LoadingSpinner from '../../../components/common/LoadingSpinner'
 
 const Friends: React.FC<FriendsScreenRouteProp> = () => {
   const { user: loggedInUser } = useAuth()
-  const { data: user } = UseGetUserById(loggedInUser.id)
+  const { data: authUser } = UseGetUserById(loggedInUser.id)
   // const [value, setValue] = useState('')
   const { data: users, isLoading: isLoadingusers } = UseGetUsers()
-  const { data: friends, isLoading } = UseGetUserFriendsById(user?.id ?? '')
+  const { data: friends, isLoading } = UseGetUserFriendsById(authUser?.id ?? '')
   const { data: invites, isLoading: isLoadingInvites } =
-    UseGetUserInvitationsById(user?.id ?? '')
-  const { updateInvitation } = UseUpdateInvitation()
+    UseGetUserInvitationsById(authUser?.id ?? '')
+  const { mutate: updateInvitation } = UseUpdateInvitation()
+  const { mutate: createInvite } = useCreateInvitation()
 
   return (
     <View style={[styles.container]}>
       {isLoadingusers || isLoadingInvites || isLoading ? (
-        <ActivityIndicator size='large' />
+        <LoadingSpinner />
       ) : (
         <ScrollView>
           {/* <View
@@ -59,53 +61,67 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
               title='Send'
             />
           </View> */}
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Pending</Text>
-          </View>
-          <View style={styles.listContainer}>
-            {invites && invites?.length > 0 ? (
-              invites
-                .filter((invite) => invite.status === 0)
-                ?.map((invite, index) => {
-                  console.log('invite', invite)
-                  const inviteUser = users?.find(
-                    (user) => user.id === invite.sender_id
-                  )
-                  return (
-                    <TouchableHighlight
-                      key={index}
-                      activeOpacity={0.6}
-                      underlayColor={colors.gray[200]}
-                      onPress={() => true}
-                    >
-                      <View style={styles.inviteContainer}>
-                        <InvitationCard
-                          userName={inviteUser?.username ?? ''}
-                          name={inviteUser?.name}
-                          createdAt={invite.created_at}
-                        />
-                        <View style={styles.approvalContainer}>
-                          <Ionicons
-                            name='checkmark-circle'
-                            size={45}
-                            color={colors.blue[600]}
-                            onPress={() => updateInvitation(invite.id, 1)}
-                          />
-                          <MaterialIcons
-                            name='cancel'
-                            size={45}
-                            color={colors.orange}
-                            onPress={() => updateInvitation(invite.id, 2)}
-                          />
-                        </View>
-                      </View>
-                    </TouchableHighlight>
-                  )
-                })
-            ) : (
-              <Text>No pending invites</Text>
+          {invites &&
+            invites.filter((invite) => invite.status === 0)?.length > 0 && (
+              <>
+                <View style={styles.sectionHeader}>
+                  <Text style={styles.sectionTitle}>Pending</Text>
+                </View>
+                <View style={styles.listContainer}>
+                  {invites && invites?.length > 0 ? (
+                    invites
+                      .filter((invite) => invite.status === 0)
+                      ?.map((invite, index) => {
+                        const inviteUser = users?.find(
+                          (user) => user.id === invite.receiver_id
+                        )
+                        return (
+                          <TouchableHighlight
+                            key={index}
+                            activeOpacity={0.6}
+                            underlayColor={colors.gray[200]}
+                            onPress={() => true}
+                          >
+                            <View style={styles.inviteContainer}>
+                              <InvitationCard
+                                userName={inviteUser?.username ?? ''}
+                                name={inviteUser?.name}
+                                createdAt={invite.created_at}
+                              />
+                              <View style={styles.approvalContainer}>
+                                <Ionicons
+                                  name='checkmark-circle'
+                                  size={45}
+                                  color={colors.blue[600]}
+                                  onPress={() =>
+                                    updateInvitation({
+                                      id: invite.id,
+                                      status: 1
+                                    })
+                                  }
+                                />
+                                <MaterialIcons
+                                  name='cancel'
+                                  size={45}
+                                  color={colors.orange}
+                                  onPress={() =>
+                                    updateInvitation({
+                                      id: invite.id,
+                                      status: 2
+                                    })
+                                  }
+                                />
+                              </View>
+                            </View>
+                          </TouchableHighlight>
+                        )
+                      })
+                  ) : (
+                    <Text>No pending invites</Text>
+                  )}
+                </View>
+              </>
             )}
-          </View>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Friends</Text>
           </View>
@@ -120,6 +136,33 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
                 <UserCard data={user} />
               </TouchableHighlight>
             ))}
+          </View>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>All users</Text>
+          </View>
+          <View style={styles.listContainer}>
+            {users
+              ?.filter(
+                (user) => !friends?.some((friend) => friend.id === user.id)
+              )
+              ?.map((user, index) => (
+                <TouchableHighlight
+                  key={index}
+                  activeOpacity={0.6}
+                  underlayColor={colors.gray[200]}
+                  onPress={() => true}
+                >
+                  <UserCard
+                    addFriend={() =>
+                      createInvite({
+                        sender_id: authUser?.id,
+                        receiver_id: user.id
+                      })
+                    }
+                    data={user}
+                  />
+                </TouchableHighlight>
+              ))}
           </View>
         </ScrollView>
       )}

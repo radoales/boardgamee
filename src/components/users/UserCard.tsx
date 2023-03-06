@@ -5,15 +5,17 @@ import {
 } from '@expo-google-fonts/montserrat'
 import { StyleSheet, Text, View } from 'react-native'
 import colors from '../../styles/colors'
-import { Ionicons } from '@expo/vector-icons'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { User } from '../../types/user'
 import { Invite } from '../../types/invite'
+import PatitoButton from '../common/PatitoButton'
 
 interface UserCardProps {
   data: User | Invite
+  addFriend?: () => void
 }
 
-const UserCard: React.FC<UserCardProps> = ({ data }) => {
+const UserCard: React.FC<UserCardProps> = ({ data, addFriend }) => {
   const [] = useFonts({
     Montserrat_400Regular,
     Montserrat_500Medium
@@ -21,15 +23,28 @@ const UserCard: React.FC<UserCardProps> = ({ data }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <View style={styles.userIcon}>
-          <Ionicons name='person' size={25} color={colors.blue[50]} />
+      <View style={styles.details}>
+        <View style={styles.imageContainer}>
+          <View style={styles.userIcon}>
+            <Ionicons name='person' size={25} color={colors.blue[50]} />
+          </View>
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.name}>{data.name}</Text>
+          <Text style={styles.header}>{data.username}</Text>
         </View>
       </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.name}>{data.name}</Text>
-        <Text style={styles.header}>{data.username}</Text>
-      </View>
+      {addFriend && (
+        <View style={styles.btn}>
+          <PatitoButton
+            onPress={addFriend}
+            icon={
+              <FontAwesome name='user-plus' size={16} color={colors.white} />
+            }
+            title='Add friend'
+          />
+        </View>
+      )}
     </View>
   )
 }
@@ -37,9 +52,17 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: '3%'
+  },
+  details: {
+    display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'flex-start',
     marginVertical: '3%'
   },
+  btn: { width: 120 },
   imageContainer: {
     display: 'flex',
     flexDirection: 'column',
