@@ -36,7 +36,9 @@ const UserCard: React.FC<UserCardProps> = ({
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.name}>{data.name}</Text>
-          <Text style={styles.header}>{data.username}</Text>
+          <Text numberOfLines={1} style={styles.header}>
+            {data.username}
+          </Text>
         </View>
       </View>
       {removeFriend && (
@@ -82,7 +84,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginVertical: '3%'
+    marginVertical: '3%',
+    width: 200
   },
   btn: { width: 120 },
   imageContainer: {
@@ -104,6 +107,7 @@ const styles = StyleSheet.create({
   name: {
     fontFamily: 'Montserrat_400Regular',
     fontSize: 20,
+    fontWeight: '700',
     lineHeight: 24,
     color: '#000',
     marginBottom: 2

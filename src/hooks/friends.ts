@@ -66,10 +66,28 @@ export const UseUpdateInvitation = () => {
     }
   )
 }
+
 export const UseGetUserInvitationsById = (user_id: string) => {
   return useQuery(['invitations'], async () => {
     return await restApiRequest<Invitation[]>({
       url: `invitations/${user_id}`
     })
   })
+}
+
+export const UseDeleteInvitation = () => {
+  return useMutation(
+    async (id: string) => {
+      return await restApiRequest<Partial<Invitation>>({
+        url: `invitations/${id}`,
+        method: 'DELETE'
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['friends'])
+        queryClient.invalidateQueries(['invitations'])
+      }
+    }
+  )
 }

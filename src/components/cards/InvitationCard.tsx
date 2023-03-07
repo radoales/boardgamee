@@ -31,10 +31,12 @@ const InvitationCard: React.FC<InvitationCardProps> = ({
         </View>
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.name}>
+        <Text numberOfLines={1} style={styles.name}>
+          {name ?? userName}
+        </Text>
+        <Text style={styles.header}>
           {new Date(createdAt).toLocaleDateString()}
         </Text>
-        <Text style={styles.header}>{name ?? userName}</Text>
       </View>
     </View>
   )
@@ -44,7 +46,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginVertical: '3%'
+    marginVertical: '3%',
+    maxWidth: 250
   },
   imageContainer: {
     display: 'flex',

@@ -17,6 +17,7 @@ import InvitationCard from '../../../components/cards/InvitationCard'
 import UserCard from '../../../components/users/UserCard'
 import {
   useCreateInvitation,
+  UseDeleteInvitation,
   UseGetUserFriendsById,
   UseGetUserInvitationsById,
   UseUpdateInvitation
@@ -33,6 +34,7 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
     UseGetUserInvitationsById(authUser?.id ?? '')
   const { mutate: updateInvitation } = UseUpdateInvitation()
   const { mutate: createInvite } = useCreateInvitation()
+  const { mutate: deleteInvitation } = UseDeleteInvitation()
 
   return (
     <View style={[styles.container]}>
@@ -89,27 +91,24 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
                                 createdAt={invite.created_at}
                               />
                               <View style={styles.approvalContainer}>
-                                <Ionicons
-                                  name='checkmark-circle'
-                                  size={45}
-                                  color={colors.blue[600]}
-                                  onPress={() =>
-                                    updateInvitation({
-                                      id: invite.id,
-                                      status: 1
-                                    })
-                                  }
-                                />
+                                {authUser?.id !== invite.sender_id && (
+                                  <Ionicons
+                                    name='checkmark-circle'
+                                    size={45}
+                                    color={colors.blue[600]}
+                                    onPress={() =>
+                                      updateInvitation({
+                                        id: invite.id,
+                                        status: 1
+                                      })
+                                    }
+                                  />
+                                )}
                                 <MaterialIcons
                                   name='cancel'
                                   size={45}
                                   color={colors.orange}
-                                  onPress={() =>
-                                    updateInvitation({
-                                      id: invite.id,
-                                      status: 2
-                                    })
-                                  }
+                                  onPress={() => deleteInvitation(invite.id)}
                                 />
                               </View>
                             </View>
@@ -122,31 +121,51 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
                 </View>
               </>
             )}
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Friends</Text>
-          </View>
-          <View style={styles.listContainer}>
-            {friends?.map((user, index) => (
-              <TouchableHighlight
-                key={index}
-                activeOpacity={0.6}
-                underlayColor={colors.gray[200]}
-                onPress={() => true}
-              >
-                <UserCard
-                  data={user}
-                  removeFriend={() => updateInvitation({})}
-                />
-              </TouchableHighlight>
-            ))}
-          </View>
+          {friends && friends?.length > 0 && (
+            <>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionTitle}>Friends</Text>
+              </View>
+              <View style={styles.listContainer}>
+                {friends?.map((user, index) => (
+                  <TouchableHighlight
+                    key={index}
+                    activeOpacity={0.6}
+                    underlayColor={colors.gray[200]}
+                    onPress={() => true}
+                  >
+                    <UserCard
+                      data={user}
+                      removeFriend={() =>
+                        deleteInvitation(
+                          invites?.find(
+                            (invite) =>
+                              invite.status === 1 &&
+                              (invite.sender_id === user.id ||
+                                invite.receiver_id === user.id) &&
+                              (invite.sender_id === authUser?.id ||
+                                invite.receiver_id === authUser?.id)
+                          )?.id ?? ''
+                        )
+                      }
+                    />
+                  </TouchableHighlight>
+                ))}
+              </View>
+            </>
+          )}
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>All users</Text>
           </View>
           <View style={styles.listContainer}>
             {users
               ?.filter(
-                (user) => !friends?.some((friend) => friend.id === user.id)
+                (user) =>
+                  !invites?.some(
+                    (invite) =>
+                      invite.sender_id === user.id ||
+                      invite.receiver_id === user.id
+                  )
               )
               ?.map((user, index) => (
                 <TouchableHighlight
