@@ -36,7 +36,10 @@ const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
           <View style={authStyles.inner}>
             <View style={styles.userInfo}>
               <View style={authStyles.center}>
-                <Text style={styles.userName}>{userDetails.name}</Text>
+                <Text style={styles.name}>{userDetails.name}</Text>
+              </View>
+              <View style={authStyles.center}>
+                <Text style={styles.userName}>@{userDetails.username}</Text>
               </View>
               <View style={authStyles.center}>
                 <Text style={authStyles.userEmail}>{userDetails.email}</Text>
@@ -87,6 +90,10 @@ const styles = StyleSheet.create({
     paddingBottom: 16
   },
   userName: {
+    fontSize: 20,
+    color: colors.gray[600]
+  },
+  name: {
     fontSize: 30,
     color: colors.gray[900]
   },

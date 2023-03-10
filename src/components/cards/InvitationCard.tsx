@@ -10,14 +10,9 @@ import { Ionicons } from '@expo/vector-icons'
 interface InvitationCardProps {
   name?: string
   userName: string
-  createdAt: string
 }
 
-const InvitationCard: React.FC<InvitationCardProps> = ({
-  createdAt,
-  userName,
-  name
-}) => {
+const InvitationCard: React.FC<InvitationCardProps> = ({ userName, name }) => {
   const [] = useFonts({
     Montserrat_400Regular,
     Montserrat_500Medium
@@ -34,9 +29,7 @@ const InvitationCard: React.FC<InvitationCardProps> = ({
         <Text numberOfLines={1} style={styles.name}>
           {name ?? userName}
         </Text>
-        <Text style={styles.header}>
-          {new Date(createdAt).toLocaleDateString()}
-        </Text>
+        <Text style={styles.header}>{userName}</Text>
       </View>
     </View>
   )
@@ -47,7 +40,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginVertical: '3%',
-    maxWidth: 250
+    maxWidth: '65%'
   },
   imageContainer: {
     display: 'flex',
@@ -68,6 +61,7 @@ const styles = StyleSheet.create({
   name: {
     fontFamily: 'Montserrat_400Regular',
     fontSize: 20,
+    fontWeight: '700',
     lineHeight: 24,
     color: '#000',
     marginBottom: 2

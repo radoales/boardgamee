@@ -85,9 +85,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginVertical: '3%',
-    width: 200
+    maxWidth: '60%'
   },
-  btn: { width: 120 },
+  btn: { maxWidth: '35%' },
   imageContainer: {
     display: 'flex',
     flexDirection: 'column',

@@ -75,7 +75,10 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
                       .filter((invite) => invite.status === 0)
                       ?.map((invite, index) => {
                         const inviteUser = users?.find(
-                          (user) => user.id === invite.receiver_id
+                          (user) =>
+                            authUser?.id !== invite.receiver_id &&
+                            (user.id !== invite.receiver_id ||
+                              user.id !== invite.sender_id)
                         )
                         return (
                           <TouchableHighlight
@@ -88,7 +91,6 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
                               <InvitationCard
                                 userName={inviteUser?.username ?? ''}
                                 name={inviteUser?.name}
-                                createdAt={invite.created_at}
                               />
                               <View style={styles.approvalContainer}>
                                 {authUser?.id !== invite.sender_id && (

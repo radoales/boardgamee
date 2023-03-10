@@ -60,7 +60,7 @@ const ProfileTabScreen = () => {
         name={StackScreenRoute.FRIENDS}
         component={Friends}
         options={{
-          title: '',
+          title: 'Friends',
           headerTitleAlign: 'center'
         }}
       />

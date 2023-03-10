@@ -53,7 +53,7 @@ const PatitoButton: React.FC<PatitoButton> = ({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 25,
+    borderRadius: 8,
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'row',
