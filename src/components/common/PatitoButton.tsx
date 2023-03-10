@@ -7,6 +7,7 @@ import {
   ViewStyle
 } from 'react-native'
 import colors from '../../styles/colors'
+import LoadingSpinner from './LoadingSpinner'
 
 interface PatitoButton {
   icon?: JSX.Element
@@ -14,6 +15,7 @@ interface PatitoButton {
   title: string
   onPress: () => void
   type?: 'primary' | 'secondary' | 'danger'
+  isLoading?: boolean
 }
 
 const PatitoButton: React.FC<PatitoButton> = ({
@@ -21,10 +23,12 @@ const PatitoButton: React.FC<PatitoButton> = ({
   title,
   style,
   onPress,
-  type = 'primary'
+  type = 'primary',
+  isLoading
 }) => {
   return (
     <Pressable
+      disabled={isLoading}
       style={[
         styles.container,
         style,
@@ -32,21 +36,28 @@ const PatitoButton: React.FC<PatitoButton> = ({
           ? styles.primaryBackground
           : type === 'secondary'
           ? styles.secondaryBackground
-          : styles.dangerBackground
+          : styles.dangerBackground,
+        isLoading && styles.loading
       ]}
       onPress={onPress}
     >
-      {icon && <View style={styles.icon}>{icon}</View>}
-      <Text
-        style={[
-          styles.title,
-          type === 'primary'
-            ? styles.primiryTitleColor
-            : styles.secondaryTitleColor
-        ]}
-      >
-        {title}
-      </Text>
+      {isLoading ? (
+        <LoadingSpinner color='white' size={30} />
+      ) : (
+        <>
+          {icon && <View style={styles.icon}>{icon}</View>}
+          <Text
+            style={[
+              styles.title,
+              type === 'primary'
+                ? styles.primiryTitleColor
+                : styles.secondaryTitleColor
+            ]}
+          >
+            {title}
+          </Text>
+        </>
+      )}
     </Pressable>
   )
 }
@@ -83,6 +94,9 @@ const styles = StyleSheet.create({
   },
   secondaryTitleColor: {
     color: colors.blue[600]
+  },
+  loading: {
+    opacity: 0.7
   }
 })
 export default PatitoButton

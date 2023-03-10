@@ -23,7 +23,8 @@ const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
     mutate: updateUser,
     error,
     isError,
-    isSuccess
+    isSuccess,
+    isLoading
   } = UseUpdateUser(user.id)
   useFeedback(isSuccess, isError, (error as string) ?? 'success')
 
@@ -69,6 +70,7 @@ const EditUserProfile: React.FC<EditUserProfileScreenRouteProp> = ({
               />
               <View style={authStyles.button}>
                 <PatitoButton
+                  isLoading={isLoading}
                   title='Save'
                   onPress={() =>
                     updateUser({
