@@ -42,7 +42,7 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
   const auth = getAuth()
   const [authUser, setAuthUser] = useState({} as AuthUser)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>()
   const { handleSignIn, signInError } = useSignIn()
   const { handleLogOut } = useLogOut()
@@ -60,10 +60,14 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
       user: authUser,
       isLoading: isLoading,
       isAuthenticated: isAuthenticated,
-      signUp: (email: string, password: string) =>
-        handleSignUp(email, password),
-      signIn: (email: string, password: string) =>
-        handleSignIn(email, password),
+      signUp: (email: string, password: string) => {
+        setIsLoading(true)
+        handleSignUp(email, password)
+      },
+      signIn: (email: string, password: string) => {
+        setIsLoading(true)
+        handleSignIn(email, password)
+      },
       signOut: () => handleLogOut(),
       resetPassword: (email: string) => handleResetPassword(email),
       error: error,
@@ -85,9 +89,10 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
         })
       } else {
         setIsAuthenticated(false)
-        setIsLoading(false)
+        // setIsLoading(false)
         setAuthUser({} as AuthUser)
       }
+      setIsLoading(signInError.isLoading)
     })
   }, [auth, signInError, signUpError])
 

@@ -21,7 +21,7 @@ import PatitoButton from '../../../components/common/PatitoButton'
 const SignIn: React.FC<SignInScreenRouteProp> = ({ navigation }) => {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
-  const { signIn, error, isAuthenticated } = useAuth()
+  const { signIn, error, isAuthenticated, isLoading } = useAuth()
   const [passwordError, setPasswordError] = useState(false)
 
   const handleSubmit = () => {
@@ -30,13 +30,6 @@ const SignIn: React.FC<SignInScreenRouteProp> = ({ navigation }) => {
       setPasswordError(false)
     } else {
       setPasswordError(true)
-      if (Platform.OS === 'android') {
-        ToastAndroid.showWithGravity(
-          'please fill in the missing fields!',
-          ToastAndroid.SHORT,
-          ToastAndroid.TOP
-        )
-      }
     }
   }
 
@@ -104,7 +97,11 @@ const SignIn: React.FC<SignInScreenRouteProp> = ({ navigation }) => {
               isPassword
             />
             <View style={authStyles.button}>
-              <PatitoButton title='Sign in' onPress={handleSubmit} />
+              <PatitoButton
+                isLoading={isLoading}
+                title='Sign in'
+                onPress={handleSubmit}
+              />
             </View>
             <View style={authStyles.center}>
               <Text
