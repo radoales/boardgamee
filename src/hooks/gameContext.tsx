@@ -16,7 +16,7 @@ export const GameContext = createContext({} as GameContextProp)
 
 export const GameProvider: React.FC<Props> = ({ children }) => {
   const [selectedGame, setSelectedGame] = useState({} as Game)
-  const [userId, setUserId] = useState<string>()
+  const [userId, setUserId] = useState<string>('')
 
   return (
     <GameContext.Provider
