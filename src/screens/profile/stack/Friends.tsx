@@ -10,24 +10,20 @@ import { UseGetUserById, UseGetUsers } from '../../../hooks/users'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import { FriendsScreenRouteProp } from '../../../types/navigation'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
-// import PatitoInput from '../../../components/common/PatitoInput'
-// import PatitoButton from '../../../components/common/PatitoButton'
-// import { useState } from 'react'
 import InvitationCard from '../../../components/cards/InvitationCard'
-import UserCard from '../../../components/users/UserCard'
+import UserCard from '../../../components/cards/UserCard'
 import {
   useCreateInvitation,
   UseDeleteInvitation,
-  UseGetUserFriendsById,
   UseGetUserInvitationsById,
   UseUpdateInvitation
-} from '../../../hooks/friends'
+} from '../../../hooks/invitations'
 import LoadingSpinner from '../../../components/common/LoadingSpinner'
+import { UseGetUserFriendsById } from '../../../hooks/friends'
 
 const Friends: React.FC<FriendsScreenRouteProp> = () => {
   const { user: loggedInUser } = useAuth()
   const { data: authUser } = UseGetUserById(loggedInUser.id)
-  // const [value, setValue] = useState('')
   const { data: users, isLoading: isLoadingusers } = UseGetUsers()
   const { data: friends, isLoading } = UseGetUserFriendsById(authUser?.id ?? '')
   const { data: invites, isLoading: isLoadingInvites } =
@@ -42,27 +38,6 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
         <LoadingSpinner />
       ) : (
         <ScrollView>
-          {/* <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: '100%',
-              alignItems: 'center',
-              paddingHorizontal: '3%',
-              marginBottom: 10
-            }}
-          >
-            <PatitoInput
-              value={value}
-              onChange={(e) => setValue(e.nativeEvent.text)}
-              style={{ flex: 1, marginRight: 10 }}
-            />
-            <PatitoButton
-              onPress={() => true}
-              style={{ width: 100, height: 45 }}
-              title='Send'
-            />
-          </View> */}
           {invites &&
             invites.filter((invite) => invite.status === 0)?.length > 0 && (
               <>
@@ -75,10 +50,7 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
                       .filter((invite) => invite.status === 0)
                       ?.map((invite, index) => {
                         const inviteUser = users?.find(
-                          (user) =>
-                            authUser?.id !== invite.receiver_id &&
-                            (user.id !== invite.receiver_id ||
-                              user.id !== invite.sender_id)
+                          (user) => user.id === invite.userId
                         )
                         return (
                           <TouchableHighlight
@@ -93,7 +65,7 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
                                 name={inviteUser?.name}
                               />
                               <View style={styles.approvalContainer}>
-                                {authUser?.id !== invite.sender_id && (
+                                {invite.type === 'received' && (
                                   <Ionicons
                                     name='checkmark-circle'
                                     size={45}
@@ -142,11 +114,7 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
                         deleteInvitation(
                           invites?.find(
                             (invite) =>
-                              invite.status === 1 &&
-                              (invite.sender_id === user.id ||
-                                invite.receiver_id === user.id) &&
-                              (invite.sender_id === authUser?.id ||
-                                invite.receiver_id === authUser?.id)
+                              invite.status === 1 && invite.userId === user.id
                           )?.id ?? ''
                         )
                       }
@@ -162,12 +130,7 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
           <View style={styles.listContainer}>
             {users
               ?.filter(
-                (user) =>
-                  !invites?.some(
-                    (invite) =>
-                      invite.sender_id === user.id ||
-                      invite.receiver_id === user.id
-                  )
+                (user) => !invites?.some((invite) => invite.userId === user.id)
               )
               ?.map((user, index) => (
                 <TouchableHighlight
