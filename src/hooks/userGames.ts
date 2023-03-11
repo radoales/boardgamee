@@ -7,22 +7,28 @@ import { UserGameDto } from '../models/userGame'
 export const useCreateUserGame = () => {
   return useMutation(
     async (params: UserGameDto) => {
+      let gameId
       const gamesResponse = await restApiRequest<Game[]>({
         url: `games/${params.game_id}`
       })
+      gameId = gamesResponse.length > 0 ? gamesResponse[0].id : ''
       if (gamesResponse.length === 0) {
-        await restApiRequest<GameDto>({
+        const newGame: Game = await restApiRequest<Partial<Game>>({
           url: 'games',
           method: 'POST',
           data: {
             game_id: params.game_id
           }
         })
+        gameId = newGame.game_id
       }
       return restApiRequest<UserGameDto>({
         url: 'usersgames',
         method: 'POST',
-        data: params
+        data: {
+          game_id: gameId,
+          user_id: params.user_id
+        }
       })
     },
     {
