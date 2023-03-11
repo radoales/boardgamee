@@ -3,7 +3,7 @@ import { queryClient } from '../../App'
 import { User } from '../types/user'
 import { restApiRequest } from '../utils/api'
 
-export const UseGetUsers = (): { data?: User[]; isLoading: boolean } => {
+export const UseGetUsers = () => {
   return useQuery(['users'], async () => {
     return await restApiRequest<User[]>({ url: `users` })
   })

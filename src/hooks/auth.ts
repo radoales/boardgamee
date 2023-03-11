@@ -32,7 +32,11 @@ export const useSignUp = () => {
       restApiRequest<Partial<User>>({
         url: 'users',
         method: 'POST',
-        data: { email, username: email, external_id: response.user.uid }
+        data: {
+          email,
+          username: email.split('@')[1],
+          external_id: response.user.uid
+        }
       })
       setSignUpError({
         isLoading: false,

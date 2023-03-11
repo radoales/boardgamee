@@ -3,12 +3,7 @@ import { restApiRequest } from '../utils/api'
 import { Invitation } from '../models/invitation'
 import { useQuery } from '@tanstack/react-query'
 
-export const UseGetUserFriendsById = (
-  user_id: string
-): {
-  data?: User[]
-  isLoading: boolean
-} => {
+export const UseGetUserFriendsById = (user_id: string) => {
   return useQuery(['friends'], async () => {
     const invitationsResponse = await restApiRequest<Invitation[]>({
       url: `invitations/${user_id}`

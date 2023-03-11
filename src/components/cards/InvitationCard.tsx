@@ -55,8 +55,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat_500Medium',
     fontSize: 14,
     lineHeight: 24,
-    color: colors.gray[700],
-    textTransform: 'capitalize'
+    color: colors.gray[700]
   },
   name: {
     fontFamily: 'Montserrat_400Regular',

@@ -1,4 +1,5 @@
 import {
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -24,20 +25,41 @@ import { UseGetUserFriendsById } from '../../../hooks/friends'
 const Friends: React.FC<FriendsScreenRouteProp> = () => {
   const { user: loggedInUser } = useAuth()
   const { data: authUser } = UseGetUserById(loggedInUser.id)
-  const { data: users, isLoading: isLoadingusers } = UseGetUsers()
-  const { data: friends, isLoading } = UseGetUserFriendsById(authUser?.id ?? '')
-  const { data: invites, isLoading: isLoadingInvites } =
-    UseGetUserInvitationsById(authUser?.id ?? '')
+  const {
+    data: users,
+    isLoading: isLoadingusers,
+    refetch: refetchUsers
+  } = UseGetUsers()
+  const {
+    data: friends,
+    isLoading,
+    refetch: refetchFriends
+  } = UseGetUserFriendsById(authUser?.id ?? '')
+  const {
+    data: invites,
+    isLoading: isLoadingInvites,
+    refetch: refetchInvites
+  } = UseGetUserInvitationsById(authUser?.id ?? '')
   const { mutate: updateInvitation } = UseUpdateInvitation()
   const { mutate: createInvite } = useCreateInvitation()
   const { mutate: deleteInvitation } = UseDeleteInvitation()
+
+  const refetchAll = () => {
+    refetchFriends()
+    refetchUsers()
+    refetchInvites()
+  }
 
   return (
     <View style={[styles.container]}>
       {isLoadingusers || isLoadingInvites || isLoading ? (
         <LoadingSpinner />
       ) : (
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={isLoading} onRefresh={refetchAll} />
+          }
+        >
           {invites &&
             invites.filter((invite) => invite.status === 0)?.length > 0 && (
               <>
