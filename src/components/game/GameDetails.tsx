@@ -3,7 +3,7 @@ import {
   Montserrat_400Regular,
   Montserrat_500Medium
 } from '@expo-google-fonts/montserrat'
-import { AntDesign, Ionicons } from '@expo/vector-icons'
+import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons'
 import {
   ActivityIndicator,
   Image,
@@ -28,11 +28,13 @@ import { Game } from '../../types/boardgame'
 import Rating from '../game/Rating'
 import React, { useContext, useState, useEffect } from 'react'
 import { GameContext } from '../../hooks/gameContext'
-import { useGetBoardgamesByIds } from '../../hooks/games'
 import RenderHTML, { defaultSystemFonts } from 'react-native-render-html'
+import { useGetBoardgamesByIds } from '../../hooks/atlasGames'
+import { useCreateUserGame } from '../../hooks/userGames'
 
 const GameDetails: React.FC = () => {
-  const { selectedGame } = useContext(GameContext)
+  const { selectedGame, userId } = useContext(GameContext)
+  const { mutate: addGame } = useCreateUserGame()
   // const { isAuthenticated, user } = useAuth()
   // const { data: gameIds } = UseGetMyGamesByUserId(user.id)
   // const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
@@ -70,21 +72,12 @@ const GameDetails: React.FC = () => {
     return null
   }
 
-  // const handleAdd = () => {
-  //   if (isAuthenticated) {
-  //     !gameIds?.includes(selectedGame.id)
-  //       ? addToMyGames(selectedGame.id)
-  //       : removeFromMyGames(selectedGame.id)
-  //   } else {
-  //     if (Platform.OS === 'android') {
-  //       ToastAndroid.showWithGravity(
-  //         'Login to save games',
-  //         ToastAndroid.SHORT,
-  //         ToastAndroid.TOP
-  //       )
-  //     }
-  //   }
-  // }
+  const handleAdd = () => {
+    addGame({
+      game_id: selectedGame.id,
+      user_id: userId
+    })
+  }
   return (
     <View style={[styles.container]}>
       {isLoading ? (
@@ -104,12 +97,14 @@ const GameDetails: React.FC = () => {
                 <Text style={styles.type}>{game.type} </Text>
                 <Text style={styles.title}>{game.name}</Text>
               </View>
-              {/* <FontAwesome
-                onPress={handleAdd}
-                name={!gameIds?.includes(game.id) ? 'heart-o' : 'heart'}
-                size={40}
-                color={colors.orange}
-              /> */}
+              {userId.length && (
+                <FontAwesome
+                  onPress={handleAdd}
+                  name={'heart'}
+                  size={40}
+                  color={colors.orange}
+                />
+              )}
             </View>
             <View style={[styles.section, styles.detailSection]}>
               <View>
