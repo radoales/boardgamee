@@ -13,16 +13,17 @@ export const useCreateUserGame = () => {
       })
       gameId = gamesResponse.length > 0 ? gamesResponse[0].id : ''
       if (gamesResponse.length === 0) {
-        const newGame: Game = await restApiRequest<Partial<Game>>({
+        const newGame: Game = await restApiRequest<GameDto, Game>({
           url: 'games',
           method: 'POST',
           data: {
             game_id: params.game_id
           }
         })
-        gameId = newGame.game_id
+        gameId = newGame.id
       }
-      return restApiRequest<UserGameDto>({
+
+      return await restApiRequest<UserGameDto>({
         url: 'usersgames',
         method: 'POST',
         data: {
