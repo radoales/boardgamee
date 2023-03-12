@@ -97,7 +97,7 @@ const GameDetails: React.FC = () => {
                 <Text style={styles.type}>{game.type} </Text>
                 <Text style={styles.title}>{game.name}</Text>
               </View>
-              {userId.length && (
+              {userId.length > 0 && (
                 <FontAwesome
                   onPress={handleAdd}
                   name={'heart'}
