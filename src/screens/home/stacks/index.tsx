@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import colors from '../../../styles/colors'
 
-import { useGetPopularBoardgames } from '../../../hooks/games'
+import { useGetPopularBoardgames } from '../../../hooks/atlasGames'
 import BoardGameScrollView from '../../../components/scrollviews/BoardGamesScrollView'
 import { HomeStackScreenRouteProp } from '../../../types/navigation'
 import FadeInView from '../../../components/common/FadeIn'

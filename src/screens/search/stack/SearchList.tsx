@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import PatitoInput from '../../../components/common/PatitoInput'
 import { Ionicons } from '@expo/vector-icons'
-import { useGetBoardgames } from '../../../hooks/games'
+import { useGetBoardgames } from '../../../hooks/atlasGames'
 import { StackScreenRoute } from '../../../utils/routes'
 import SearchResult from '../../../components/search/SearchResult'
 import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'

@@ -14,10 +14,12 @@ import PatitoButton from '../../../components/common/PatitoButton'
 import { UseGetUserById } from '../../../hooks/users'
 import { UserProfileScreenRouteProp } from '../../../types/navigation'
 import LoadingSpinner from '../../../components/common/LoadingSpinner'
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
+import { GameContext } from '../../../hooks/gameContext'
 
 const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
   const { user, signOut, isAuthenticated } = useAuth()
+  const { setUserId } = useContext(GameContext)
   const { data: userDetails } = UseGetUserById(user.id)
   useEffect(() => {
     if (!isAuthenticated) {
@@ -25,6 +27,12 @@ const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated])
+  useEffect(() => {
+    if (userDetails) {
+      setUserId(userDetails.id)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userDetails])
 
   return userDetails ? (
     <View style={authStyles.scrollViewContainer}>

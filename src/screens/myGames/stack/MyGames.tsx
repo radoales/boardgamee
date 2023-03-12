@@ -6,7 +6,7 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
-import { useGetBoardgamesByIds } from '../../../hooks/games'
+import { useGetBoardgamesByIds } from '../../../hooks/atlasGames'
 import SearchResult from '../../../components/search/SearchResult'
 import colors from '../../../styles/colors'
 import { UseGetMyGamesByUserId } from '../../../hooks/favoriteGames'
