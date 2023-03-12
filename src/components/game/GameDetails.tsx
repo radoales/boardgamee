@@ -21,7 +21,7 @@ import {
 // import {
 //   useAddToFavoriteGames,
 //   UseGetMyGamesByUserId,
-//   UseRemoveGamefromMyGamesWithUserId
+//   useRemoveFromFavoriteGames
 // } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
@@ -38,7 +38,7 @@ const GameDetails: React.FC = () => {
   // const { isAuthenticated, user } = useAuth()
   // const { data: gameIds } = UseGetMyGamesByUserId(user.id)
   // const { addToMyGames } = useAddToFavoriteGames(user.id)
-  // const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
+  // const { removeFromMyGames } = useRemoveFromFavoriteGames(user.id)
   const { data: games, isLoading } = useGetBoardgamesByIds(selectedGame.id)
   const [game, setGame] = useState<Game>()
 

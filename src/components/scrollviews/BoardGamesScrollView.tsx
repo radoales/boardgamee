@@ -7,7 +7,6 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
-import { useAuth } from '../../auth/AuthUserprovider'
 import { UseGetMyGamesByUserId } from '../../hooks/favoriteGames'
 import { GameContext } from '../../hooks/gameContext'
 import { HomeRootStackParamList } from '../../screens/home'
@@ -26,14 +25,15 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
   title
 }) => {
   const { navigate } = useNavigation<NavigationProp<HomeRootStackParamList>>()
-  const { user } = useAuth()
-  // const { data: gameIds } = UseGetMyGamesByUserId(user.id)
-  const { setSelectedGame } = useContext(GameContext)
+
+  const { setSelectedGame, userId } = useContext(GameContext)
+
+  const { data: myGames } = UseGetMyGamesByUserId(userId)
+
   const handlePress = (item: Game) => {
     setSelectedGame(item)
     navigate(StackScreenRoute.GAME_DETAILS, { title: item ? item.name : '' })
   }
-
   return (
     <View style={styles.scroll}>
       <Text style={styles.scrollTitle}>{title}</Text>
@@ -55,7 +55,7 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
                 index={index}
                 length={data.length}
                 id={item.id}
-                gameIds={''}
+                gameIds={myGames ?? ''}
               />
             </TouchableHighlight>
           ))}

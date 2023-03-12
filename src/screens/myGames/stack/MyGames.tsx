@@ -19,21 +19,21 @@ import { useFeedback } from '../../../hooks/feedback'
 
 const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
   const [inputText, setInputText] = useState<string>('')
-  const { user, isAuthenticated } = useAuth()
-  // const { data: gameIds } = UseGetMyGamesByUserId(user.id)
+  const { isAuthenticated } = useAuth()
   const { data, isLoading, isSuccess, isError, error } = useGetBoardgamesByIds(
     inputText,
     'id,name,type,average_user_rating,num_user_ratings,thumb_url'
   )
-  const { setSelectedGame } = useContext(GameContext)
+  const { setSelectedGame, userId } = useContext(GameContext)
+  const { data: myGames } = UseGetMyGamesByUserId(userId)
 
   useFeedback(isSuccess, isError, error ?? undefined)
 
-  // useEffect(() => {
-  //   if (gameIds) {
-  //     setInputText(gameIds)
-  //   }
-  // }, [gameIds])
+  useEffect(() => {
+    if (myGames) {
+      setInputText(myGames)
+    }
+  }, [myGames])
 
   const handlePress = (item: Game) => {
     setSelectedGame(item)

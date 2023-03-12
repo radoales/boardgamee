@@ -9,7 +9,7 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 // import {
 //   useAddToFavoriteGames,
 //   UseGetMyGamesByUserId,
-//   UseRemoveGamefromMyGamesWithUserId
+//   useRemoveFromFavoriteGames
 // } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
@@ -23,7 +23,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
   // const { user } = useAuth()
   // const { data: gameIds } = UseGetMyGamesByUserId(user.id)
   // const { addToMyGames } = useAddToFavoriteGames(user.id)
-  // const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
+  // const { removeFromMyGames } = useRemoveFromFavoriteGames(user.id)
 
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
