@@ -12,31 +12,47 @@ import BoardGameScrollView from '../../../components/scrollviews/BoardGamesScrol
 import { HomeStackScreenRouteProp } from '../../../types/navigation'
 import FadeInView from '../../../components/common/FadeIn'
 import { useFeedback } from '../../../hooks/feedback'
+import { useContext } from 'react'
+import { GameContext } from '../../../hooks/gameContext'
+import { UseGetMyGamesByUserId } from '../../../hooks/favoriteGames'
 
 const HomeScreen: React.FC<HomeStackScreenRouteProp> = () => {
   const { data, error, isError, isSuccess, isLoading } =
     useGetPopularBoardgames(
       'id,name,type,average_user_rating,num_user_ratings,thumb_url,min_players,max_players'
     )
+  const { userId } = useContext(GameContext)
+
+  const { data: myGames } = UseGetMyGamesByUserId(userId)
 
   useFeedback(isSuccess, isError, error ?? undefined)
 
   return (
     <View style={[styles.container]}>
       {!isLoading ? (
-        <ScrollView refreshControl={<RefreshControl refreshing={isLoading} />}>
-          <View style={styles.inner}>
-            <BoardGameScrollView
-              title='Featured Games'
-              data={data?.games.slice(4) ?? []}
-            />
-            <BoardGameScrollView
-              title='New Games'
-              data={data?.games.slice(6) ?? []}
-            />
-            <BoardGameScrollView title='More Games' data={data?.games ?? []} />
-          </View>
-        </ScrollView>
+        myGames && (
+          <ScrollView
+            refreshControl={<RefreshControl refreshing={isLoading} />}
+          >
+            <View style={styles.inner}>
+              <BoardGameScrollView
+                myGames={myGames}
+                title='Featured Games'
+                data={data?.games.slice(4) ?? []}
+              />
+              <BoardGameScrollView
+                myGames={myGames}
+                title='New Games'
+                data={data?.games.slice(6) ?? []}
+              />
+              <BoardGameScrollView
+                myGames={myGames}
+                title='More Games'
+                data={data?.games ?? []}
+              />
+            </View>
+          </ScrollView>
+        )
       ) : (
         <FadeInView
           style={{

@@ -7,8 +7,8 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
-import { UseGetMyGamesByUserId } from '../../hooks/favoriteGames'
 import { GameContext } from '../../hooks/gameContext'
+import { UserGame } from '../../models/userGame'
 import { HomeRootStackParamList } from '../../screens/home'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
@@ -18,17 +18,16 @@ import ScrollViewCard from '../cards/ScrollViewCard'
 interface BoardGameScrollViewProps {
   data: Game[]
   title: string
+  myGames: UserGame[]
 }
 
 const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
   data,
-  title
+  title,
+  myGames
 }) => {
   const { navigate } = useNavigation<NavigationProp<HomeRootStackParamList>>()
-
-  const { setSelectedGame, userId } = useContext(GameContext)
-
-  const { data: myGames } = UseGetMyGamesByUserId(userId)
+  const { setSelectedGame } = useContext(GameContext)
 
   const handlePress = (item: Game) => {
     setSelectedGame(item)
