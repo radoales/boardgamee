@@ -7,6 +7,7 @@ import {
   useRemoveFromFavoriteGames
 } from '../../hooks/favoriteGames'
 import { GameContext } from '../../hooks/gameContext'
+import { UserGame } from '../../models/userGame'
 import colors from '../../styles/colors'
 
 interface ScrollViewCardProps {
@@ -17,7 +18,7 @@ interface ScrollViewCardProps {
   index: number
   length: number
   id: string
-  gameIds: string
+  myGames: UserGame[]
 }
 
 const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
@@ -28,12 +29,12 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
   index,
   length,
   id,
-  gameIds
+  myGames
 }) => {
   const { isAuthenticated } = useAuth()
   const { userId } = useContext(GameContext)
   const { mutate: addToMyGames } = useAddToFavoriteGames(userId)
-  const { mutate: removeFromMyGames } = useRemoveFromFavoriteGames(userId)
+  const { mutate: removeFromMyGames } = useRemoveFromFavoriteGames()
 
   return (
     <View
@@ -45,8 +46,26 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
     >
       {isAuthenticated && (
         <FontAwesome
-          onPress={() => (!gameIds?.includes(id) ? addToMyGames(id) : {})}
-          name={!gameIds?.includes(id) ? 'heart-o' : 'heart'}
+          onPress={() =>
+            !myGames
+              .map((game) => game.game_id)
+              .join(',')
+              ?.includes(id)
+              ? addToMyGames(id)
+              : removeFromMyGames(
+                  myGames.find((game) => {
+                    return game.game_id === id
+                  })?.id ?? ''
+                )
+          }
+          name={
+            !myGames
+              ?.map((game) => game.game_id)
+              .join(',')
+              .includes(id)
+              ? 'heart-o'
+              : 'heart'
+          }
           size={30}
           color={colors.orange}
           style={{

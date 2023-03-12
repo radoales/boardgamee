@@ -11,7 +11,7 @@ export const UseGetMyGamesByUserId = (id: string) => {
         url: `usersgames/${id}`
       })
 
-      return response.map((game) => game.game_id).join(',')
+      return response
     },
     {
       enabled: !!id
@@ -40,7 +40,7 @@ export const useAddToFavoriteGames = (userId: string) => {
   )
 }
 
-export const useRemoveFromFavoriteGames = (userId: string) => {
+export const useRemoveFromFavoriteGames = () => {
   return useMutation(
     async (id: string) => {
       return await restApiRequest<Partial<UserGame>>({

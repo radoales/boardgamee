@@ -1,4 +1,5 @@
 export interface UserGame {
+  id: string
   game_id: string
   user_id: string
   created_at: string

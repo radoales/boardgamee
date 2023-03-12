@@ -31,7 +31,7 @@ const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
 
   useEffect(() => {
     if (myGames) {
-      setInputText(myGames)
+      setInputText(myGames.map((game) => game.game_id).join(','))
     }
   }, [myGames])
 
