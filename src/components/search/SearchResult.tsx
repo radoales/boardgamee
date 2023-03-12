@@ -7,7 +7,7 @@ import {
 import { Image, StyleSheet, Text, View } from 'react-native'
 // import { useAuth } from '../../auth/AuthUserprovider'
 // import {
-//   UseAddGameToMyGamesWithUserId,
+//   useAddToFavoriteGames,
 //   UseGetMyGamesByUserId,
 //   UseRemoveGamefromMyGamesWithUserId
 // } from '../../hooks/favoriteGames'
@@ -22,7 +22,7 @@ interface SearchResultProps {
 const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
   // const { user } = useAuth()
   // const { data: gameIds } = UseGetMyGamesByUserId(user.id)
-  // const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
+  // const { addToMyGames } = useAddToFavoriteGames(user.id)
   // const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
 
   const [fontsLoaded] = useFonts({

@@ -27,7 +27,7 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
 }) => {
   const { navigate } = useNavigation<NavigationProp<HomeRootStackParamList>>()
   const { user } = useAuth()
-  const { data: gameIds } = UseGetMyGamesByUserId(user.id)
+  // const { data: gameIds } = UseGetMyGamesByUserId(user.id)
   const { setSelectedGame } = useContext(GameContext)
   const handlePress = (item: Game) => {
     setSelectedGame(item)
@@ -55,7 +55,7 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
                 index={index}
                 length={data.length}
                 id={item.id}
-                gameIds={gameIds}
+                gameIds={''}
               />
             </TouchableHighlight>
           ))}

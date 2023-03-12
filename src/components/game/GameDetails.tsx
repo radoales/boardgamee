@@ -19,7 +19,7 @@ import {
 } from 'react-native'
 // import { useAuth } from '../../auth/AuthUserprovider'
 // import {
-//   UseAddGameToMyGamesWithUserId,
+//   useAddToFavoriteGames,
 //   UseGetMyGamesByUserId,
 //   UseRemoveGamefromMyGamesWithUserId
 // } from '../../hooks/favoriteGames'
@@ -30,14 +30,14 @@ import React, { useContext, useState, useEffect } from 'react'
 import { GameContext } from '../../hooks/gameContext'
 import RenderHTML, { defaultSystemFonts } from 'react-native-render-html'
 import { useGetBoardgamesByIds } from '../../hooks/atlasGames'
-import { useCreateUserGame } from '../../hooks/userGames'
+import { useAddToFavoriteGames } from '../../hooks/favoriteGames'
 
 const GameDetails: React.FC = () => {
   const { selectedGame, userId } = useContext(GameContext)
-  const { mutate: addGame } = useCreateUserGame()
+  const { mutate: addGame } = useAddToFavoriteGames(userId)
   // const { isAuthenticated, user } = useAuth()
   // const { data: gameIds } = UseGetMyGamesByUserId(user.id)
-  // const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
+  // const { addToMyGames } = useAddToFavoriteGames(user.id)
   // const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
   const { data: games, isLoading } = useGetBoardgamesByIds(selectedGame.id)
   const [game, setGame] = useState<Game>()
@@ -73,10 +73,7 @@ const GameDetails: React.FC = () => {
   }
 
   const handleAdd = () => {
-    addGame({
-      game_id: selectedGame.id,
-      user_id: userId
-    })
+    addGame(selectedGame.id)
   }
   return (
     <View style={[styles.container]}>

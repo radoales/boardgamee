@@ -2,7 +2,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Image, StyleSheet, Text, View } from 'react-native'
 // import { useAuth } from '../../auth/AuthUserprovider'
 // import {
-//   UseAddGameToMyGamesWithUserId,
+//   useAddToFavoriteGames,
 //   UseRemoveGamefromMyGamesWithUserId
 // } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
@@ -29,7 +29,7 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
   // gameIds
 }) => {
   // const { user, isAuthenticated } = useAuth()
-  // const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
+  // const { addToMyGames } = useAddToFavoriteGames(user.id)
   // const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
 
   return (
