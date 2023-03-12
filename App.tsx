@@ -17,9 +17,7 @@ import {
 import { useOnlineManager } from './src/hooks/query'
 import { useEffect } from 'react'
 
-LogBox.ignoreLogs([
-  `AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storag`
-])
+LogBox.ignoreLogs([''])
 
 export const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 2 } }

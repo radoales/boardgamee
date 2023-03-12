@@ -89,7 +89,6 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
         })
       } else {
         setIsAuthenticated(false)
-        // setIsLoading(false)
         setAuthUser({} as AuthUser)
       }
       setIsLoading(signInError.isLoading)

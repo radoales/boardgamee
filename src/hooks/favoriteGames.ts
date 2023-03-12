@@ -1,74 +1,58 @@
-import { getDatabase } from 'firebase/database'
-import { useEffect, useState } from 'react'
-import { firebaseApp } from '../../firebaseConfig'
-const db = getDatabase(firebaseApp)
+import { restApiRequest } from '../utils/api'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { queryClient } from '../../App'
+import { UserGame, UserGameDto } from '../models/userGame'
 
-export const UseGetMyGamesByUserId = (id: string): { data: string } => {
-  const [data, setData] = useState<string>(' ')
+export const UseGetMyGamesByUserId = (id: string) => {
+  return useQuery(
+    ['usergames'],
+    async () => {
+      const response = await restApiRequest<UserGame[]>({
+        url: `usersgames/${id}`
+      })
 
-  useEffect(() => {
-    // const db = getDatabase(firebaseApp)
-    // const dbRef = ref(db, `users/${id}/games/gameList`)
-    // onValue(dbRef, (snapshot) => {
-    //   const data = snapshot.val()
-    //   setData(data ?? '')
-    // })
-  }, [id])
-
-  return { data }
+      return response
+    },
+    {
+      enabled: !!id
+    }
+  )
 }
 
-export const UseAddGameToMyGamesWithUserId = (id: string) => {
-  const [error, setError] = useState<string>()
-  const [isSuccess, setIsSuccess] = useState<boolean>()
-  const [isError, setIsError] = useState<boolean>()
-
-  const gameIds = UseGetMyGamesByUserId(id)
-
-  const addToMyGames = (gameId: string) => {
-    // if (!gameIds.data.includes(gameId)) {
-    //   const db = getDatabase(firebaseApp)
-    //   set(ref(db, `users/${id}/games`), {
-    //     gameList: gameIds.data.concat(`${gameId},`)
-    //   })
-    //     .then(() => {
-    //       setIsSuccess(true)
-    //     })
-    //     .catch((error) => {
-    //       setIsError(true)
-    //       setError(error)
-    //     })
-    // }
-  }
-
-  return { addToMyGames, isSuccess, isError, error }
+export const useAddToFavoriteGames = (userId: string) => {
+  return useMutation(
+    async (gameId: string) => {
+      return await restApiRequest<UserGameDto>({
+        url: 'usersgames',
+        method: 'POST',
+        data: {
+          game_id: gameId,
+          user_id: userId
+        }
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['games'])
+        queryClient.invalidateQueries(['usergames'])
+      }
+    }
+  )
 }
 
-export const UseRemoveGamefromMyGamesWithUserId = (id: string) => {
-  const [error, setError] = useState<string>()
-  const [isSuccess, setIsSuccess] = useState<boolean>()
-  const [isError, setIsError] = useState<boolean>()
-
-  const gameIds = UseGetMyGamesByUserId(id)
-
-  const removeFromMyGames = (gameId: string) => {
-    // if (gameIds.data.includes(gameId)) {
-    //   const db = getDatabase(firebaseApp)
-    //   set(ref(db, `users/${id}/games`), {
-    //     gameList: gameIds.data
-    //       .split(',')
-    //       .filter((id) => id !== gameId)
-    //       .join(',')
-    //   })
-    //     .then(() => {
-    //       setIsSuccess(true)
-    //     })
-    //     .catch((error) => {
-    //       setIsError(true)
-    //       setError(error)
-    //     })
-    // }
-  }
-
-  return { removeFromMyGames, isSuccess, isError, error }
+export const useRemoveFromFavoriteGames = () => {
+  return useMutation(
+    async (id: string) => {
+      return await restApiRequest<Partial<UserGame>>({
+        url: `usersgames/${id}`,
+        method: 'DELETE'
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['games'])
+        queryClient.invalidateQueries(['usergames'])
+      }
+    }
+  )
 }

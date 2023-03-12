@@ -19,9 +19,9 @@ import {
 } from 'react-native'
 // import { useAuth } from '../../auth/AuthUserprovider'
 // import {
-//   UseAddGameToMyGamesWithUserId,
+//   useAddToFavoriteGames,
 //   UseGetMyGamesByUserId,
-//   UseRemoveGamefromMyGamesWithUserId
+//   useRemoveFromFavoriteGames
 // } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
@@ -30,15 +30,17 @@ import React, { useContext, useState, useEffect } from 'react'
 import { GameContext } from '../../hooks/gameContext'
 import RenderHTML, { defaultSystemFonts } from 'react-native-render-html'
 import { useGetBoardgamesByIds } from '../../hooks/atlasGames'
-import { useCreateUserGame } from '../../hooks/userGames'
+import {
+  useAddToFavoriteGames,
+  UseGetMyGamesByUserId,
+  useRemoveFromFavoriteGames
+} from '../../hooks/favoriteGames'
 
 const GameDetails: React.FC = () => {
   const { selectedGame, userId } = useContext(GameContext)
-  const { mutate: addGame } = useCreateUserGame()
-  // const { isAuthenticated, user } = useAuth()
-  // const { data: gameIds } = UseGetMyGamesByUserId(user.id)
-  // const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
-  // const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
+  const { data: myGames } = UseGetMyGamesByUserId(userId)
+  const { mutate: addToMyGames } = useAddToFavoriteGames(userId)
+  const { mutate: removeFromMyGames } = useRemoveFromFavoriteGames()
   const { data: games, isLoading } = useGetBoardgamesByIds(selectedGame.id)
   const [game, setGame] = useState<Game>()
 
@@ -73,11 +75,17 @@ const GameDetails: React.FC = () => {
   }
 
   const handleAdd = () => {
-    addGame({
-      game_id: selectedGame.id,
-      user_id: userId
-    })
+    addToMyGames(selectedGame.id)
   }
+
+  const handleRemove = () => {
+    removeFromMyGames(
+      myGames?.find((game) => {
+        return game.game_id === selectedGame.id
+      })?.id ?? ''
+    )
+  }
+
   return (
     <View style={[styles.container]}>
       {isLoading ? (
@@ -99,8 +107,22 @@ const GameDetails: React.FC = () => {
               </View>
               {userId.length > 0 && (
                 <FontAwesome
-                  onPress={handleAdd}
-                  name={'heart'}
+                  onPress={
+                    !myGames
+                      ?.map((game) => game.game_id)
+                      .join(',')
+                      .includes(selectedGame.id)
+                      ? handleAdd
+                      : handleRemove
+                  }
+                  name={
+                    !myGames
+                      ?.map((game) => game.game_id)
+                      .join(',')
+                      .includes(selectedGame.id)
+                      ? 'heart-o'
+                      : 'heart'
+                  }
                   size={40}
                   color={colors.orange}
                 />

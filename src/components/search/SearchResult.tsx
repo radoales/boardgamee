@@ -3,14 +3,15 @@ import {
   Montserrat_400Regular,
   Montserrat_500Medium
 } from '@expo-google-fonts/montserrat'
-// import { FontAwesome } from '@expo/vector-icons'
+import { useContext } from 'react'
+import { FontAwesome } from '@expo/vector-icons'
 import { Image, StyleSheet, Text, View } from 'react-native'
-// import { useAuth } from '../../auth/AuthUserprovider'
-// import {
-//   UseAddGameToMyGamesWithUserId,
-//   UseGetMyGamesByUserId,
-//   UseRemoveGamefromMyGamesWithUserId
-// } from '../../hooks/favoriteGames'
+import {
+  useAddToFavoriteGames,
+  UseGetMyGamesByUserId,
+  useRemoveFromFavoriteGames
+} from '../../hooks/favoriteGames'
+import { GameContext } from '../../hooks/gameContext'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
 import Rating from '../game/Rating'
@@ -20,10 +21,10 @@ interface SearchResultProps {
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
-  // const { user } = useAuth()
-  // const { data: gameIds } = UseGetMyGamesByUserId(user.id)
-  // const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
-  // const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
+  const { userId } = useContext(GameContext)
+  const { mutate: addToMyGames } = useAddToFavoriteGames(userId)
+  const { data: myGames } = UseGetMyGamesByUserId(userId)
+  const { mutate: removeFromMyGames } = useRemoveFromFavoriteGames()
 
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular,
@@ -32,6 +33,19 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
   if (!fontsLoaded) {
     return null
   }
+
+  const handleAdd = () => {
+    addToMyGames(data.id)
+  }
+
+  const handleRemove = () => {
+    removeFromMyGames(
+      myGames?.find((game) => {
+        return game.game_id === data.id
+      })?.id ?? ''
+    )
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.gameInfo}>
@@ -47,18 +61,28 @@ const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
           </Text>
         </View>
       </View>
-      {/* <View style={styles.heartIcon}>
+      <View style={styles.heartIcon}>
         <FontAwesome
-          onPress={() =>
-            !gameIds?.includes(data.id)
-              ? addToMyGames(data.id)
-              : removeFromMyGames(data.id)
+          onPress={
+            !myGames
+              ?.map((game) => game.game_id)
+              .join(',')
+              .includes(data.id)
+              ? handleAdd
+              : handleRemove
           }
-          name={!gameIds?.includes(data.id) ? 'heart-o' : 'heart'}
+          name={
+            !myGames
+              ?.map((game) => game.game_id)
+              .join(',')
+              .includes(data.id)
+              ? 'heart-o'
+              : 'heart'
+          }
           size={40}
           color={colors.orange}
         />
-      </View> */}
+      </View>
     </View>
   )
 }

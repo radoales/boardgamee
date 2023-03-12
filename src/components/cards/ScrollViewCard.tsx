@@ -1,10 +1,13 @@
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { useContext } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
-// import { useAuth } from '../../auth/AuthUserprovider'
-// import {
-//   UseAddGameToMyGamesWithUserId,
-//   UseRemoveGamefromMyGamesWithUserId
-// } from '../../hooks/favoriteGames'
+import { useAuth } from '../../auth/AuthUserprovider'
+import {
+  useAddToFavoriteGames,
+  useRemoveFromFavoriteGames
+} from '../../hooks/favoriteGames'
+import { GameContext } from '../../hooks/gameContext'
+import { UserGame } from '../../models/userGame'
 import colors from '../../styles/colors'
 
 interface ScrollViewCardProps {
@@ -15,7 +18,7 @@ interface ScrollViewCardProps {
   index: number
   length: number
   id: string
-  gameIds: string
+  myGames: UserGame[]
 }
 
 const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
@@ -24,13 +27,14 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
   players,
   rating,
   index,
-  length
-  // id,
-  // gameIds
+  length,
+  id,
+  myGames
 }) => {
-  // const { user, isAuthenticated } = useAuth()
-  // const { addToMyGames } = UseAddGameToMyGamesWithUserId(user.id)
-  // const { removeFromMyGames } = UseRemoveGamefromMyGamesWithUserId(user.id)
+  const { isAuthenticated } = useAuth()
+  const { userId } = useContext(GameContext)
+  const { mutate: addToMyGames } = useAddToFavoriteGames(userId)
+  const { mutate: removeFromMyGames } = useRemoveFromFavoriteGames()
 
   return (
     <View
@@ -40,12 +44,28 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
         index === length - 1 && styles.LastChild
       ]}
     >
-      {/* {isAuthenticated && (
+      {isAuthenticated && (
         <FontAwesome
           onPress={() =>
-            !gameIds?.includes(id) ? addToMyGames(id) : removeFromMyGames(id)
+            !myGames
+              .map((game) => game.game_id)
+              .join(',')
+              ?.includes(id)
+              ? addToMyGames(id)
+              : removeFromMyGames(
+                  myGames.find((game) => {
+                    return game.game_id === id
+                  })?.id ?? ''
+                )
           }
-          name={!gameIds?.includes(id) ? 'heart-o' : 'heart'}
+          name={
+            !myGames
+              ?.map((game) => game.game_id)
+              .join(',')
+              .includes(id)
+              ? 'heart-o'
+              : 'heart'
+          }
           size={30}
           color={colors.orange}
           style={{
@@ -55,7 +75,7 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
             zIndex: 2
           }}
         />
-      )} */}
+      )}
       <View style={styles.imageContainer}>
         <Image source={{ uri: imageUrl }} style={styles.image} />
         <Text ellipsizeMode='tail' style={styles.title}>
