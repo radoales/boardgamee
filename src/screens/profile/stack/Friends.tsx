@@ -77,8 +77,8 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
                         return (
                           <TouchableHighlight
                             key={index}
-                            activeOpacity={0.6}
-                            underlayColor={colors.gray[200]}
+                            activeOpacity={1}
+                            underlayColor={colors.gray[50]}
                             onPress={() => true}
                           >
                             <View style={styles.inviteContainer}>
@@ -126,8 +126,8 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
                 {friends?.map((user, index) => (
                   <TouchableHighlight
                     key={index}
-                    activeOpacity={0.6}
-                    underlayColor={colors.gray[200]}
+                    activeOpacity={1}
+                    underlayColor={colors.gray[50]}
                     onPress={() => true}
                   >
                     <UserCard
@@ -152,13 +152,15 @@ const Friends: React.FC<FriendsScreenRouteProp> = () => {
           <View style={styles.listContainer}>
             {users
               ?.filter(
-                (user) => !invites?.some((invite) => invite.userId === user.id)
+                (user) =>
+                  !invites?.some((invite) => invite.userId === user.id) &&
+                  user.id !== authUser?.id
               )
               ?.map((user, index) => (
                 <TouchableHighlight
                   key={index}
-                  activeOpacity={0.6}
-                  underlayColor={colors.gray[200]}
+                  activeOpacity={1}
+                  underlayColor={colors.gray[50]}
                   onPress={() => true}
                 >
                   <UserCard
