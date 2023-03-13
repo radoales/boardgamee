@@ -38,7 +38,6 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
       <Text style={styles.scrollTitle}>{title}</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {data &&
-          myGames &&
           data.map((item, index) => (
             <TouchableHighlight
               key={item.id}

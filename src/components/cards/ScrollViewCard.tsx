@@ -18,7 +18,7 @@ interface ScrollViewCardProps {
   index: number
   length: number
   id: string
-  myGames: UserGame[]
+  myGames?: UserGame[]
 }
 
 const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
@@ -48,7 +48,7 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
         <FontAwesome
           onPress={() =>
             !myGames
-              .map((game) => game.game_id)
+              ?.map((game) => game.game_id)
               .join(',')
               ?.includes(id)
               ? addToMyGames(id)
