@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Image, ScrollView, Text, View } from 'react-native'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import colors from '../../../styles/colors'
@@ -13,13 +13,22 @@ const SignUp: React.FC<SignUpScreenRouteProp> = ({ navigation }) => {
   const [email, setEmail] = useState<string>()
   const [password, setPassword] = useState<string>()
   const [repeatPassword, setRepeatPassword] = useState<string>()
-  const { signUp } = useAuth()
+  const { signUp, isLoading, isAuthenticated } = useAuth()
+  const [isDone, setIsDone] = useState(false)
 
   const handleSubmit = () => {
     if (email && password && password === repeatPassword) {
-      signUp(email, password)
+      setIsDone(signUp(email, password))
     }
   }
+
+  useEffect(() => {
+    if (isAuthenticated && !isDone) {
+      navigation.popToTop()
+      navigation.replace(StackScreenRoute.USER_PROFILE)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated])
 
   return (
     <View style={authStyles.scrollViewContainer}>
@@ -79,7 +88,11 @@ const SignUp: React.FC<SignUpScreenRouteProp> = ({ navigation }) => {
               isPassword
             />
             <View style={authStyles.button}>
-              <PatitoButton title='Sign up' onPress={handleSubmit} />
+              <PatitoButton
+                isLoading={isLoading}
+                title='Sign up'
+                onPress={handleSubmit}
+              />
             </View>
             <Text
               style={authStyles.link}

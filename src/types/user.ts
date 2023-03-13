@@ -5,3 +5,8 @@ export interface User extends AuthUser {
   name?: string
   external_id: string
 }
+
+export interface UserDto {
+  email: string
+  password: string
+}

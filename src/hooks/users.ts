@@ -9,7 +9,7 @@ export const UseGetUsers = () => {
   })
 }
 
-export const UseGetUserById = (id: string): { data?: User } => {
+export const UseGetUserById = (id: string, enabled?: boolean) => {
   return useQuery(
     [`users/${id}`],
     async () => {
@@ -18,7 +18,7 @@ export const UseGetUserById = (id: string): { data?: User } => {
       return response.length ? response[0] : undefined
     },
     {
-      enabled: !!id
+      enabled: !!id && enabled
     }
   )
 }

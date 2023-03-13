@@ -1,54 +1,52 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useMutation } from '@tanstack/react-query'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  deleteUser
 } from 'firebase/auth'
 import { useState } from 'react'
+import { queryClient } from '../../App'
 import { auth } from '../../firebaseConfig'
-import { User } from '../types/user'
+import { User, UserDto } from '../types/user'
 import { restApiRequest } from '../utils/api'
 
 export const useSignUp = () => {
-  const [signUpError, setSignUpError] = useState<{
-    isLoading: boolean
-    error: null | string
-    isSuccess: null | boolean
-    id?: string
-  }>({
-    isLoading: false,
-    error: null,
-    isSuccess: null
-  })
-  const handleSignUp = async (email: string, password: string) => {
-    setSignUpError({ isLoading: true, error: null, isSuccess: null })
-    try {
+  return useMutation(
+    async (params: UserDto) => {
       const response = await createUserWithEmailAndPassword(
         auth,
-        email,
-        password
+        params.email,
+        params.password
       )
-      restApiRequest<Partial<User>>({
-        url: 'users',
-        method: 'POST',
-        data: {
-          email,
-          username: email.split('@')[1],
-          external_id: response.user.uid
+
+      if (response.user) {
+        const restApiUserResponse = await restApiRequest<Partial<User>>({
+          url: 'users',
+          method: 'POST',
+          data: {
+            email: params.email,
+            username: params.email.split('@')[0],
+            external_id: response.user.uid
+          }
+        })
+
+        if (!restApiUserResponse) {
+          deleteUser(response.user)
+        } else {
+          return restApiUserResponse
         }
-      })
-      setSignUpError({
-        isLoading: false,
-        error: null,
-        isSuccess: true,
-        id: response.user.uid
-      })
-    } catch (error: any) {
-      setSignUpError({ isLoading: false, error: error.code, isSuccess: false })
+      }
+    },
+    {
+      onSuccess: (user: any) => {
+        queryClient.invalidateQueries([`users/${user.id}`])
+        queryClient.invalidateQueries([`users`])
+      }
     }
-  }
-  return { handleSignUp, signUpError }
+  )
 }
 
 export const useSignIn = () => {

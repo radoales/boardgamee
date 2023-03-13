@@ -18,9 +18,10 @@ import { useEffect, useContext } from 'react'
 import { GameContext } from '../../../hooks/gameContext'
 
 const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
-  const { user, signOut, isAuthenticated } = useAuth()
+  const { user, signOut, isAuthenticated, isSignUpError } = useAuth()
   const { setUserId } = useContext(GameContext)
-  const { data: userDetails } = UseGetUserById(user.id)
+  const { data: userDetails } = UseGetUserById(user.id, !isSignUpError)
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigation.replace(StackScreenRoute.SIGN_IN)

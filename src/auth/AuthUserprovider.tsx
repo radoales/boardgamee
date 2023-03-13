@@ -13,18 +13,13 @@ interface ContextValue {
   user: AuthUser
   isLoading: boolean
   isAuthenticated: boolean
-  signUp: (email: string, password: string) => void
+  signUp: (email: string, password: string) => boolean
   signIn: (email: string, password: string) => void
   signOut: () => void
   // updateUserProfile: (name: string) => void
   resetPassword: (email: string) => void
   error?: string | null
-  signUpError?: {
-    isLoading: boolean
-    error: string | null
-    isSuccess: boolean | null
-    id?: string
-  }
+  isSignUpError?: boolean
   resetPasswordError: {
     isLoading: boolean
     error: string | null
@@ -47,7 +42,11 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
   const { handleSignIn, signInError } = useSignIn()
   const { handleLogOut } = useLogOut()
   const { handleResetPassword, resetPasswordError } = useResetPassword()
-  const { handleSignUp, signUpError } = useSignUp()
+  const {
+    mutate: handleSignUp,
+    isSuccess,
+    isLoading: isSignUpError
+  } = useSignUp()
 
   useEffect(() => {
     if (typeof signInError.error === 'string') {
@@ -62,7 +61,8 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
       isAuthenticated: isAuthenticated,
       signUp: (email: string, password: string) => {
         setIsLoading(true)
-        handleSignUp(email, password)
+        handleSignUp({ email, password })
+        return isSuccess
       },
       signIn: (email: string, password: string) => {
         setIsLoading(true)
@@ -72,7 +72,7 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
       resetPassword: (email: string) => handleResetPassword(email),
       error: error,
       resetPasswordError,
-      signUpError
+      isSignUpError
     }),
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,9 +91,9 @@ export const AuthUserProvider: React.FC<AuthUserContext> = ({ children }) => {
         setIsAuthenticated(false)
         setAuthUser({} as AuthUser)
       }
-      setIsLoading(signInError.isLoading)
+      setIsLoading(signInError.isLoading || isSignUpError)
     })
-  }, [auth, signInError, signUpError])
+  }, [auth, signInError, isSignUpError])
 
   return (
     <AuthUserContext.Provider value={{ ...values }}>
