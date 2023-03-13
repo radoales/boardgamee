@@ -30,29 +30,25 @@ const HomeScreen: React.FC<HomeStackScreenRouteProp> = () => {
   return (
     <View style={[styles.container]}>
       {!isLoading ? (
-        myGames && (
-          <ScrollView
-            refreshControl={<RefreshControl refreshing={isLoading} />}
-          >
-            <View style={styles.inner}>
-              <BoardGameScrollView
-                myGames={myGames}
-                title='Featured Games'
-                data={data?.games.slice(4) ?? []}
-              />
-              <BoardGameScrollView
-                myGames={myGames}
-                title='New Games'
-                data={data?.games.slice(6) ?? []}
-              />
-              <BoardGameScrollView
-                myGames={myGames}
-                title='More Games'
-                data={data?.games ?? []}
-              />
-            </View>
-          </ScrollView>
-        )
+        <ScrollView refreshControl={<RefreshControl refreshing={isLoading} />}>
+          <View style={styles.inner}>
+            <BoardGameScrollView
+              myGames={myGames}
+              title='Featured Games'
+              data={data?.games.slice(4) ?? []}
+            />
+            <BoardGameScrollView
+              myGames={myGames}
+              title='New Games'
+              data={data?.games.slice(6) ?? []}
+            />
+            <BoardGameScrollView
+              myGames={myGames}
+              title='More Games'
+              data={data?.games ?? []}
+            />
+          </View>
+        </ScrollView>
       ) : (
         <FadeInView
           style={{

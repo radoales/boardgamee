@@ -18,7 +18,7 @@ import ScrollViewCard from '../cards/ScrollViewCard'
 interface BoardGameScrollViewProps {
   data: Game[]
   title: string
-  myGames: UserGame[]
+  myGames?: UserGame[]
 }
 
 const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
