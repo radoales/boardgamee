@@ -23,14 +23,21 @@ const HomeScreen: React.FC<HomeStackScreenRouteProp> = () => {
     )
   const { userId } = useContext(GameContext)
 
-  const { data: myGames } = UseGetMyGamesByUserId(userId)
+  const { data: myGames, refetch } = UseGetMyGamesByUserId(userId)
 
   useFeedback(isSuccess, isError, error ?? undefined)
 
   return (
     <View style={[styles.container]}>
       {!isLoading ? (
-        <ScrollView refreshControl={<RefreshControl refreshing={isLoading} />}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={isLoading}
+              onRefresh={() => refetch()}
+            />
+          }
+        >
           <View style={styles.inner}>
             <BoardGameScrollView
               myGames={myGames}
