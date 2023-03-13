@@ -9,6 +9,7 @@ import {
 import { GameContext } from '../../hooks/gameContext'
 import { UserGame } from '../../models/userGame'
 import colors from '../../styles/colors'
+import { AntDesign } from '@expo/vector-icons'
 
 interface ScrollViewCardProps {
   imageUrl: string
@@ -45,36 +46,52 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
       ]}
     >
       {isAuthenticated && (
-        <FontAwesome
-          onPress={() =>
+        <View
+          style={[
+            styles.favoriteBox,
             !myGames
               ?.map((game) => game.game_id)
               .join(',')
               ?.includes(id)
-              ? addToMyGames(id)
-              : removeFromMyGames(
-                  myGames.find((game) => {
-                    return game.game_id === id
-                  })?.id ?? ''
-                )
-          }
-          name={
-            !myGames
-              ?.map((game) => game.game_id)
-              .join(',')
-              .includes(id)
-              ? 'heart-o'
-              : 'heart'
-          }
-          size={30}
-          color={colors.orange}
-          style={{
-            position: 'absolute',
-            right: 10,
-            bottom: 80,
-            zIndex: 2
-          }}
-        />
+              ? styles.inMygamesColor
+              : styles.notInMygamesColor
+          ]}
+        >
+          <AntDesign
+            onPress={() =>
+              !myGames
+                ?.map((game) => game.game_id)
+                .join(',')
+                ?.includes(id)
+                ? addToMyGames(id)
+                : removeFromMyGames(
+                    myGames.find((game) => {
+                      return game.game_id === id
+                    })?.id ?? ''
+                  )
+            }
+            name={
+              myGames
+                ?.map((game) => game.game_id)
+                .join(',')
+                .includes(id)
+                ? 'check'
+                : 'plus'
+            }
+            size={25}
+            color={
+              myGames
+                ?.map((game) => game.game_id)
+                .join(',')
+                ?.includes(id)
+                ? colors.gray[700]
+                : colors.gray[50]
+            }
+            style={{
+              zIndex: 2
+            }}
+          />
+        </View>
       )}
       <View style={styles.imageContainer}>
         <Image source={{ uri: imageUrl }} style={styles.image} />
@@ -107,14 +124,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
+    paddingTop: 30,
     borderColor: colors.gray[700],
     backgroundColor: colors.white,
     borderRadius: 5,
-    height: 200,
-    aspectRatio: 0.8,
+    height: 220,
+    aspectRatio: 0.7,
     marginHorizontal: 5,
     marginTop: 20,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    borderWidth: 0.3,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3
   },
   firstChild: {
     marginLeft: 10
@@ -154,6 +182,21 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '300',
     paddingLeft: 5
+  },
+  favoriteBox: {
+    position: 'absolute',
+    right: 0,
+    zIndex: 1,
+    padding: 2,
+    paddingVertical: 6,
+    borderBottomStartRadius: 16,
+    borderTopEndRadius: 6
+  },
+  inMygamesColor: {
+    backgroundColor: colors.orange
+  },
+  notInMygamesColor: {
+    backgroundColor: colors.gray[400]
   }
 })
 

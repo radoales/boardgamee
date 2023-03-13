@@ -42,7 +42,7 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
             <TouchableHighlight
               key={item.id}
               activeOpacity={0.6}
-              underlayColor={colors.gray[200]}
+              underlayColor={colors.blue[50]}
               onPress={() => handlePress(item)}
             >
               <ScrollViewCard

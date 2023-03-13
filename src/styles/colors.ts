@@ -35,7 +35,7 @@ const colors = {
     '800': '#606060',
     '900': '#3c3c3c'
   },
-  orange: '#D67213',
+  orange: '#D99151',
   lightGreen: '#C0F716',
   pink: '#E321ED',
   white: '#fff'
