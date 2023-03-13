@@ -48,7 +48,7 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
       {isAuthenticated && (
         <View
           style={[
-            styles.like,
+            styles.favoriteBox,
             !myGames
               ?.map((game) => game.game_id)
               .join(',')
@@ -71,21 +71,21 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
                   )
             }
             name={
-              !myGames
+              myGames
                 ?.map((game) => game.game_id)
                 .join(',')
                 .includes(id)
                 ? 'check'
                 : 'plus'
             }
-            size={30}
+            size={25}
             color={
               myGames
                 ?.map((game) => game.game_id)
                 .join(',')
                 ?.includes(id)
-                ? colors.gray[50]
-                : colors.white
+                ? colors.gray[700]
+                : colors.gray[50]
             }
             style={{
               zIndex: 2
@@ -132,7 +132,17 @@ const styles = StyleSheet.create({
     aspectRatio: 0.7,
     marginHorizontal: 5,
     marginTop: 20,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    borderWidth: 0.3,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3
   },
   firstChild: {
     marginLeft: 10
@@ -173,13 +183,14 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     paddingLeft: 5
   },
-  like: {
+  favoriteBox: {
     position: 'absolute',
     right: 0,
     zIndex: 1,
     padding: 2,
     paddingVertical: 6,
-    borderBottomStartRadius: 4
+    borderBottomStartRadius: 16,
+    borderTopEndRadius: 6
   },
   inMygamesColor: {
     backgroundColor: colors.orange
