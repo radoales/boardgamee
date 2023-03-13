@@ -23,36 +23,39 @@ const HomeScreen: React.FC<HomeStackScreenRouteProp> = () => {
     )
   const { userId } = useContext(GameContext)
 
-  const { data: myGames } = UseGetMyGamesByUserId(userId)
+  const { data: myGames, refetch } = UseGetMyGamesByUserId(userId)
 
   useFeedback(isSuccess, isError, error ?? undefined)
 
   return (
     <View style={[styles.container]}>
       {!isLoading ? (
-        myGames && (
-          <ScrollView
-            refreshControl={<RefreshControl refreshing={isLoading} />}
-          >
-            <View style={styles.inner}>
-              <BoardGameScrollView
-                myGames={myGames}
-                title='Featured Games'
-                data={data?.games.slice(4) ?? []}
-              />
-              <BoardGameScrollView
-                myGames={myGames}
-                title='New Games'
-                data={data?.games.slice(6) ?? []}
-              />
-              <BoardGameScrollView
-                myGames={myGames}
-                title='More Games'
-                data={data?.games ?? []}
-              />
-            </View>
-          </ScrollView>
-        )
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={isLoading}
+              onRefresh={() => refetch()}
+            />
+          }
+        >
+          <View style={styles.inner}>
+            <BoardGameScrollView
+              myGames={myGames}
+              title='Featured Games'
+              data={data?.games.slice(4) ?? []}
+            />
+            <BoardGameScrollView
+              myGames={myGames}
+              title='New Games'
+              data={data?.games.slice(6) ?? []}
+            />
+            <BoardGameScrollView
+              myGames={myGames}
+              title='More Games'
+              data={data?.games ?? []}
+            />
+          </View>
+        </ScrollView>
       ) : (
         <FadeInView
           style={{

@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import {
   ActivityIndicator,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   TouchableHighlight,
@@ -25,7 +26,15 @@ const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
     'id,name,type,average_user_rating,num_user_ratings,thumb_url'
   )
   const { setSelectedGame, userId } = useContext(GameContext)
-  const { data: myGames } = UseGetMyGamesByUserId(userId)
+  const {
+    data: myGames,
+    refetch: refetchMyGames,
+    isLoading: isMyGamesLoading
+  } = UseGetMyGamesByUserId(userId)
+
+  const handleRefresh = () => {
+    refetchMyGames()
+  }
 
   useFeedback(isSuccess, isError, error ?? undefined)
 
@@ -43,9 +52,16 @@ const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
   return (
     <View style={[styles.container]}>
       {isAuthenticated && isLoading && <ActivityIndicator size='large' />}
-      {isAuthenticated && data && (
-        <ScrollView>
-          {data.games.map((item) => (
+      {isAuthenticated && (
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={isMyGamesLoading}
+              onRefresh={handleRefresh}
+            />
+          }
+        >
+          {data?.games.map((item) => (
             <TouchableHighlight
               key={item.id}
               activeOpacity={0.6}
