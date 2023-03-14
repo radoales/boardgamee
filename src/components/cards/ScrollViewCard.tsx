@@ -49,20 +49,14 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
         <View
           style={[
             styles.favoriteBox,
-            !myGames
-              ?.map((game) => game.game_id)
-              .join(',')
-              ?.includes(id)
+            !myGames?.some((game) => game.game_id === id)
               ? styles.inMygamesColor
               : styles.notInMygamesColor
           ]}
         >
           <AntDesign
             onPress={() =>
-              !myGames
-                ?.map((game) => game.game_id)
-                .join(',')
-                ?.includes(id)
+              !myGames?.some((game) => game.game_id === id)
                 ? addToMyGames(id)
                 : removeFromMyGames(
                     myGames.find((game) => {
@@ -71,19 +65,11 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
                   )
             }
             name={
-              myGames
-                ?.map((game) => game.game_id)
-                .join(',')
-                .includes(id)
-                ? 'check'
-                : 'plus'
+              myGames?.some((game) => game.game_id === id) ? 'check' : 'plus'
             }
             size={25}
             color={
-              myGames
-                ?.map((game) => game.game_id)
-                .join(',')
-                ?.includes(id)
+              myGames?.some((game) => game.game_id === id)
                 ? colors.gray[700]
                 : colors.gray[50]
             }
