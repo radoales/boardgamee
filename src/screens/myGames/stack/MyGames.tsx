@@ -10,10 +10,10 @@ import {
 import { useGetBoardgamesByIds } from '../../../hooks/atlasGames'
 import SearchResult from '../../../components/search/SearchResult'
 import colors from '../../../styles/colors'
-import { UseGetMyGamesByUserId } from '../../../hooks/favoriteGames'
+import { useGetMyGamesByUserId } from '../../../hooks/favoriteGames'
 import { useAuth } from '../../../auth/AuthUserprovider'
 import { MygamesScreenRouteProp } from '../../../types/navigation'
-import { GameContext } from '../../../hooks/gameContext'
+import { SessionContext } from '../../../hooks/sessionContext'
 import { StackScreenRoute } from '../../../utils/routes'
 import { Game } from '../../../types/boardgame'
 import { useFeedback } from '../../../hooks/feedback'
@@ -25,16 +25,21 @@ const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
     inputText,
     'id,name,type,average_user_rating,num_user_ratings,thumb_url'
   )
-  const { setSelectedGame, userId } = useContext(GameContext)
+  const { setSelectedGame, userGames, setUserGames } =
+    useContext(SessionContext)
   const {
     data: myGames,
     refetch: refetchMyGames,
     isLoading: isMyGamesLoading
-  } = UseGetMyGamesByUserId(userId)
+  } = useGetMyGamesByUserId()
 
   const handleRefresh = () => {
     refetchMyGames()
   }
+
+  useEffect(() => {
+    if (myGames?.length) setUserGames(myGames)
+  }, [myGames])
 
   useFeedback(isSuccess, isError, error ?? undefined)
 
@@ -61,19 +66,20 @@ const MyGames: React.FC<MygamesScreenRouteProp> = ({ navigation }) => {
             />
           }
         >
-          {data?.games.map((item) => (
-            <TouchableHighlight
-              key={item.id}
-              activeOpacity={0.6}
-              underlayColor={colors.gray[200]}
-              onPress={() => handlePress(item)}
-              style={styles.touchable}
-            >
-              <View style={styles.searchResultContainer}>
-                <SearchResult data={item} />
-              </View>
-            </TouchableHighlight>
-          ))}
+          {userGames.length > 0 &&
+            data?.games.map((item) => (
+              <TouchableHighlight
+                key={item.id}
+                activeOpacity={0.6}
+                underlayColor={colors.gray[200]}
+                onPress={() => handlePress(item)}
+                style={styles.touchable}
+              >
+                <View style={styles.searchResultContainer}>
+                  <SearchResult data={item} />
+                </View>
+              </TouchableHighlight>
+            ))}
         </ScrollView>
       )}
     </View>
