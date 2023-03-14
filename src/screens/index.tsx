@@ -1,4 +1,4 @@
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Ionicons, SimpleLineIcons } from '@expo/vector-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { TabScreenRoute } from '../utils/routes'
 import HomeTabScreen from './home'
@@ -26,13 +26,9 @@ const TabMenuStackNaigator: React.FC = () => {
             iconName = focused ? 'person' : 'person-outline'
           }
           return route.name === TabScreenRoute.MY_GAMES_TAB_SCREEN ? (
-            <MaterialCommunityIcons
-              name={
-                iconName as ComponentProps<
-                  typeof MaterialCommunityIcons
-                >['name']
-              }
-              size={35}
+            <SimpleLineIcons
+              name='puzzle'
+              size={size}
               color={colors.blue[600]}
             />
           ) : (
