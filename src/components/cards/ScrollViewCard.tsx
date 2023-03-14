@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     borderColor: colors.gray[700],
     backgroundColor: colors.white,
-    borderRadius: 5,
+    borderRadius: 6,
     height: 220,
     aspectRatio: 0.7,
     marginHorizontal: 5,
