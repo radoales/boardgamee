@@ -19,19 +19,14 @@ const TabMenuStackNaigator: React.FC = () => {
           if (route.name === TabScreenRoute.HOME_TAB_SCREEN) {
             iconName = focused ? 'home' : 'home-outline'
           } else if (route.name === TabScreenRoute.MY_GAMES_TAB_SCREEN) {
-            iconName = focused ? 'dice-multiple' : 'dice-multiple-outline'
+            iconName = focused ? 'bookmarks-sharp' : 'bookmarks-outline'
           } else if (route.name === TabScreenRoute.SEARCH_TAB_SCREEN) {
             iconName = focused ? 'search' : 'search-outline'
           } else if (route.name === TabScreenRoute.PROFILE_TAB_SCREEN) {
             iconName = focused ? 'person' : 'person-outline'
           }
-          return route.name === TabScreenRoute.MY_GAMES_TAB_SCREEN ? (
-            <SimpleLineIcons
-              name='puzzle'
-              size={size}
-              color={colors.blue[600]}
-            />
-          ) : (
+
+          return (
             <Ionicons
               name={iconName as ComponentProps<typeof Ionicons>['name']}
               size={size}
