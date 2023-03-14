@@ -8,10 +8,10 @@ import { FontAwesome } from '@expo/vector-icons'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import {
   useAddToFavoriteGames,
-  UseGetMyGamesByUserId,
+  useGetMyGamesByUserId,
   useRemoveFromFavoriteGames
 } from '../../hooks/favoriteGames'
-import { GameContext } from '../../hooks/gameContext'
+import { SessionContext } from '../../hooks/sessionContext'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
 import Rating from '../game/Rating'
@@ -21,9 +21,9 @@ interface SearchResultProps {
 }
 
 const SearchResult: React.FC<SearchResultProps> = ({ data }) => {
-  const { userId } = useContext(GameContext)
+  const { userId } = useContext(SessionContext)
   const { mutate: addToMyGames } = useAddToFavoriteGames(userId)
-  const { data: myGames } = UseGetMyGamesByUserId(userId)
+  const { data: myGames } = useGetMyGamesByUserId(userId)
   const { mutate: removeFromMyGames } = useRemoveFromFavoriteGames()
 
   const [fontsLoaded] = useFonts({

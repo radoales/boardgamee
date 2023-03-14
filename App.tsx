@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import TabMenuStackNaigator from './src/screens'
 import { AuthUserProvider } from './src/auth/AuthUserprovider'
 import { AppState, AppStateStatus, LogBox, Platform } from 'react-native'
-import { GameProvider } from './src/hooks/gameContext'
+import { GameProvider } from './src/hooks/sessionContext'
 import {
   useFonts,
   Montserrat_400Regular,
