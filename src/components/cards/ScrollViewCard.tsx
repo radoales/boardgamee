@@ -6,7 +6,7 @@ import {
   useAddToFavoriteGames,
   useRemoveFromFavoriteGames
 } from '../../hooks/favoriteGames'
-import { GameContext } from '../../hooks/gameContext'
+import { SessionContext } from '../../hooks/sessionContext'
 import { UserGame } from '../../models/userGame'
 import colors from '../../styles/colors'
 import { AntDesign } from '@expo/vector-icons'
@@ -33,7 +33,7 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
   myGames
 }) => {
   const { isAuthenticated } = useAuth()
-  const { userId } = useContext(GameContext)
+  const { userId } = useContext(SessionContext)
   const { mutate: addToMyGames } = useAddToFavoriteGames(userId)
   const { mutate: removeFromMyGames } = useRemoveFromFavoriteGames()
 
