@@ -2,19 +2,22 @@ import { restApiRequest } from '../utils/api'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { queryClient } from '../../App'
 import { UserGame, UserGameDto } from '../models/userGame'
+import { useContext } from 'react'
+import { SessionContext } from './sessionContext'
 
-export const UseGetMyGamesByUserId = (id: string) => {
+export const useGetMyGamesByUserId = () => {
+  const { userId } = useContext(SessionContext)
   return useQuery(
     ['usergames'],
     async () => {
       const response = await restApiRequest<UserGame[]>({
-        url: `usersgames/${id}`
+        url: `usersgames/${userId}`
       })
 
       return response
     },
     {
-      enabled: !!id
+      enabled: !!userId
     }
   )
 }

@@ -15,11 +15,11 @@ import { UseGetUserById } from '../../../hooks/users'
 import { UserProfileScreenRouteProp } from '../../../types/navigation'
 import LoadingSpinner from '../../../components/common/LoadingSpinner'
 import { useEffect, useContext } from 'react'
-import { GameContext } from '../../../hooks/gameContext'
+import { SessionContext } from '../../../hooks/sessionContext'
 
 const UserProfile: React.FC<UserProfileScreenRouteProp> = ({ navigation }) => {
   const { user, signOut, isAuthenticated, isSignUpError } = useAuth()
-  const { setUserId } = useContext(GameContext)
+  const { setUserId } = useContext(SessionContext)
   const { data: userDetails } = UseGetUserById(user.id, !isSignUpError)
 
   useEffect(() => {

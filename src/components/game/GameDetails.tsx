@@ -20,30 +20,27 @@ import {
 // import { useAuth } from '../../auth/AuthUserprovider'
 // import {
 //   useAddToFavoriteGames,
-//   UseGetMyGamesByUserId,
+//   useGetMyGamesByUserId,
 //   useRemoveFromFavoriteGames
 // } from '../../hooks/favoriteGames'
 import colors from '../../styles/colors'
 import { Game } from '../../types/boardgame'
 import Rating from '../game/Rating'
 import React, { useContext, useState, useEffect } from 'react'
-import { GameContext } from '../../hooks/gameContext'
+import { SessionContext } from '../../hooks/sessionContext'
 import RenderHTML, { defaultSystemFonts } from 'react-native-render-html'
 import { useGetBoardgamesByIds } from '../../hooks/atlasGames'
 import {
   useAddToFavoriteGames,
-  UseGetMyGamesByUserId,
   useRemoveFromFavoriteGames
 } from '../../hooks/favoriteGames'
 
 const GameDetails: React.FC = () => {
-  const { selectedGame, userId } = useContext(GameContext)
-  const { data: myGames } = UseGetMyGamesByUserId(userId)
+  const { selectedGame, userId, userGames } = useContext(SessionContext)
   const { mutate: addToMyGames } = useAddToFavoriteGames(userId)
   const { mutate: removeFromMyGames } = useRemoveFromFavoriteGames()
   const { data: games, isLoading } = useGetBoardgamesByIds(selectedGame.id)
   const [game, setGame] = useState<Game>()
-
   useEffect(() => {
     if (games) {
       setGame(games.games[0])
@@ -80,7 +77,7 @@ const GameDetails: React.FC = () => {
 
   const handleRemove = () => {
     removeFromMyGames(
-      myGames?.find((game) => {
+      userGames?.find((game) => {
         return game.game_id === selectedGame.id
       })?.id ?? ''
     )
@@ -108,18 +105,12 @@ const GameDetails: React.FC = () => {
               {userId.length > 0 && (
                 <FontAwesome
                   onPress={
-                    !myGames
-                      ?.map((game) => game.game_id)
-                      .join(',')
-                      .includes(selectedGame.id)
+                    !userGames.some((game) => game.game_id === selectedGame.id)
                       ? handleAdd
                       : handleRemove
                   }
                   name={
-                    !myGames
-                      ?.map((game) => game.game_id)
-                      .join(',')
-                      .includes(selectedGame.id)
+                    !userGames.some((game) => game.game_id === selectedGame.id)
                       ? 'heart-o'
                       : 'heart'
                   }

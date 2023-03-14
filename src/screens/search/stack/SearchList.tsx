@@ -14,7 +14,7 @@ import { StackScreenRoute } from '../../../utils/routes'
 import SearchResult from '../../../components/search/SearchResult'
 import { useFonts, Montserrat_400Regular } from '@expo-google-fonts/montserrat'
 import colors from '../../../styles/colors'
-import { GameContext } from '../../../hooks/gameContext'
+import { SessionContext } from '../../../hooks/sessionContext'
 import { Game } from '../../../types/boardgame'
 import { SearchListScreenRouteProp } from '../../../types/navigation'
 import { useFeedback } from '../../../hooks/feedback'
@@ -53,7 +53,7 @@ const SearchList: React.FC<SearchListScreenRouteProp> = ({ navigation }) => {
 
   useFeedback(isSuccess, isError, error ?? undefined)
 
-  const { setSelectedGame } = useContext(GameContext)
+  const { setSelectedGame } = useContext(SessionContext)
 
   const [fontsLoaded] = useFonts({
     Montserrat_400Regular

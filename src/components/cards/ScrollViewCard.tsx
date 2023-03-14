@@ -6,7 +6,7 @@ import {
   useAddToFavoriteGames,
   useRemoveFromFavoriteGames
 } from '../../hooks/favoriteGames'
-import { GameContext } from '../../hooks/gameContext'
+import { SessionContext } from '../../hooks/sessionContext'
 import { UserGame } from '../../models/userGame'
 import colors from '../../styles/colors'
 import { AntDesign } from '@expo/vector-icons'
@@ -33,7 +33,7 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
   myGames
 }) => {
   const { isAuthenticated } = useAuth()
-  const { userId } = useContext(GameContext)
+  const { userId } = useContext(SessionContext)
   const { mutate: addToMyGames } = useAddToFavoriteGames(userId)
   const { mutate: removeFromMyGames } = useRemoveFromFavoriteGames()
 
@@ -49,20 +49,14 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
         <View
           style={[
             styles.favoriteBox,
-            !myGames
-              ?.map((game) => game.game_id)
-              .join(',')
-              ?.includes(id)
+            !myGames?.some((game) => game.game_id === id)
               ? styles.inMygamesColor
               : styles.notInMygamesColor
           ]}
         >
           <AntDesign
             onPress={() =>
-              !myGames
-                ?.map((game) => game.game_id)
-                .join(',')
-                ?.includes(id)
+              !myGames?.some((game) => game.game_id === id)
                 ? addToMyGames(id)
                 : removeFromMyGames(
                     myGames.find((game) => {
@@ -71,19 +65,11 @@ const ScrollViewCard: React.FC<ScrollViewCardProps> = ({
                   )
             }
             name={
-              myGames
-                ?.map((game) => game.game_id)
-                .join(',')
-                .includes(id)
-                ? 'check'
-                : 'plus'
+              myGames?.some((game) => game.game_id === id) ? 'check' : 'plus'
             }
             size={25}
             color={
-              myGames
-                ?.map((game) => game.game_id)
-                .join(',')
-                ?.includes(id)
+              myGames?.some((game) => game.game_id === id)
                 ? colors.gray[700]
                 : colors.gray[50]
             }
@@ -127,7 +113,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     borderColor: colors.gray[700],
     backgroundColor: colors.white,
-    borderRadius: 5,
+    borderRadius: 6,
     height: 220,
     aspectRatio: 0.7,
     marginHorizontal: 5,

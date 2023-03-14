@@ -4,8 +4,9 @@ import HomeScreen from './stacks'
 import GameDetails from '../../components/game/GameDetails'
 import { useAuth } from '../../auth/AuthUserprovider'
 import { useContext, useEffect } from 'react'
-import { GameContext } from '../../hooks/gameContext'
+import { SessionContext } from '../../hooks/sessionContext'
 import { UseGetUserById } from '../../hooks/users'
+import { useGetMyGamesByUserId } from '../../hooks/favoriteGames'
 
 export type HomeRootStackParamList = {
   [StackScreenRoute.HOME]: undefined
@@ -16,12 +17,18 @@ const Stack = createStackNavigator<HomeRootStackParamList>()
 const HomeTabScreen = () => {
   const { user } = useAuth()
   const { data: userDetails } = UseGetUserById(user.id)
-  const { setUserId } = useContext(GameContext)
+  const { data: userGames } = useGetMyGamesByUserId()
+  const { setUserId, setUserGames } = useContext(SessionContext)
 
   useEffect(() => {
     if (userDetails) setUserId(userDetails.id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDetails])
+
+  useEffect(() => {
+    if (userGames) setUserGames(userGames)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userGames])
 
   return (
     <Stack.Navigator>

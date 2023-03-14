@@ -7,7 +7,7 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
-import { GameContext } from '../../hooks/gameContext'
+import { SessionContext } from '../../hooks/sessionContext'
 import { UserGame } from '../../models/userGame'
 import { HomeRootStackParamList } from '../../screens/home'
 import colors from '../../styles/colors'
@@ -27,7 +27,7 @@ const BoardGameScrollView: React.FC<BoardGameScrollViewProps> = ({
   myGames
 }) => {
   const { navigate } = useNavigation<NavigationProp<HomeRootStackParamList>>()
-  const { setSelectedGame } = useContext(GameContext)
+  const { setSelectedGame } = useContext(SessionContext)
 
   const handlePress = (item: Game) => {
     setSelectedGame(item)
